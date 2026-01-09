@@ -225,6 +225,9 @@ function handleLogin(event) {
     // Check test credentials
     const testUser = TEST_CREDENTIALS[email.toLowerCase()];
 
+    // Debug logging (remove in production)
+    console.log('Login attempt:', { email: email.toLowerCase(), hasUser: !!testUser });
+
     if (testUser && testUser.password === password) {
         // Valid test credentials
         localStorage.setItem('userRole', testUser.role);

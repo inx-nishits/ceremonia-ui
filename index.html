@@ -431,6 +431,24 @@
                         class="w-full bg-[#2A2826] text-white py-4 font-luz uppercase tracking-[0.2em] text-xs hover:bg-[#823AAF] transition-colors mt-8">Sign
                         In</button>
                 </form>
+
+                <!-- Test Credentials Quick Fill (For Demo/Testing) -->
+                <div class="mt-6 p-4 bg-[#F9F8F6] border border-[#E5E2DD] rounded">
+                    <p class="text-xs font-luz text-[#6B665F] mb-3 uppercase tracking-wide">Test Accounts:</p>
+                    <div class="flex gap-2">
+                        <button type="button"
+                            onclick="document.getElementById('login-email').value='user@ceremonia.com'; document.getElementById('login-password').value='test1234';"
+                            class="flex-1 text-xs py-2 px-3 border border-[#E5E2DD] hover:bg-white transition-colors font-luz">
+                            End User
+                        </button>
+                        <button type="button"
+                            onclick="document.getElementById('login-email').value='officiant@ceremonia.com'; document.getElementById('login-password').value='test1234';"
+                            class="flex-1 text-xs py-2 px-3 border border-[#E5E2DD] hover:bg-white transition-colors font-luz">
+                            Officiant
+                        </button>
+                    </div>
+                </div>
+
                 <div class="mt-8 text-center">
                     <button
                         onclick="document.getElementById('login-modal').classList.add('hidden'); document.getElementById('forgot-password-modal').classList.remove('hidden')"
