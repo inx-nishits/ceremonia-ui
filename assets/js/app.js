@@ -9,11 +9,12 @@ function toggleMobileMenu() {
     if (menu.classList.contains('hidden')) {
         menu.classList.remove('hidden');
         menu.classList.add('flex');
-        body.style.overflow = 'hidden';
+        // Don't set overflow hidden on body - let the menu handle scrolling
+        body.classList.add('menu-open');
     } else {
         menu.classList.add('hidden');
         menu.classList.remove('flex');
-        body.style.overflow = 'auto';
+        body.classList.remove('menu-open');
     }
 }
 
@@ -25,10 +26,11 @@ function toggleModal(modalId) {
 
     if (modal.classList.contains('hidden')) {
         modal.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
+        // Don't set overflow hidden on body - let the modal handle scrolling
+        document.body.classList.add('modal-open');
     } else {
         modal.classList.add('hidden');
-        document.body.style.overflow = 'auto';
+        document.body.classList.remove('modal-open');
     }
 }
 
@@ -39,7 +41,7 @@ document.addEventListener('keydown', function (event) {
         modals.forEach(modal => {
             if (!modal.classList.contains('hidden')) {
                 modal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
+                document.body.classList.remove('modal-open');
             }
         });
 
@@ -101,11 +103,11 @@ function togglePasswordVisibility(passwordId, toggleId) {
     const passwordInput = document.getElementById(passwordId);
     const toggleButton = document.getElementById(toggleId);
     const eyeIcon = document.getElementById(passwordId.replace('password', 'eye-icon'));
-    
+
     if (!passwordInput || !toggleButton) return;
-    
+
     const isPassword = passwordInput.type === 'password';
-    
+
     if (isPassword) {
         passwordInput.type = 'text';
         toggleButton.setAttribute('aria-label', 'Hide password');
@@ -126,7 +128,7 @@ function togglePasswordVisibility(passwordId, toggleId) {
             `;
         }
     }
-    
+
     // Announce to screen readers
     if (window.accessibilityUtils) {
         window.accessibilityUtils.announceToScreenReader(
@@ -163,7 +165,7 @@ function handleLogin(event) {
     const password = document.getElementById('login-password').value;
     const emailError = document.getElementById('login-email-error');
     const passwordError = document.getElementById('login-password-error');
-    
+
     // Reset errors
     if (emailError) {
         emailError.classList.add('hidden');
@@ -177,10 +179,10 @@ function handleLogin(event) {
             window.errorHandler.hideInlineError('login-password-error');
         }
     }
-    
+
     // Enhanced validation with email format check
     let hasErrors = false;
-    
+
     if (!email) {
         if (emailError && window.errorHandler) {
             window.errorHandler.showInlineError('login-email-error', 'Email is required');
@@ -201,7 +203,7 @@ function handleLogin(event) {
             hasErrors = true;
         }
     }
-    
+
     if (!password) {
         if (passwordError && window.errorHandler) {
             window.errorHandler.showInlineError('login-password-error', 'Password is required');
@@ -211,7 +213,7 @@ function handleLogin(event) {
         }
         hasErrors = true;
     }
-    
+
     if (hasErrors) {
         // Announce errors to screen readers
         if (window.accessibilityUtils) {
@@ -219,20 +221,20 @@ function handleLogin(event) {
         }
         return;
     }
-    
+
     // Check test credentials
     const testUser = TEST_CREDENTIALS[email.toLowerCase()];
-    
+
     if (testUser && testUser.password === password) {
         // Valid test credentials
         localStorage.setItem('userRole', testUser.role);
         localStorage.setItem('userEmail', email);
-        
+
         // Initialize mock data for this user
         if (window.mockData) {
             window.mockData.initializeMockData(email);
         }
-        
+
         // Set ceremony state based on role
         if (testUser.role === 'officiant') {
             // For Officiants, use hasCeremonies (plural)
@@ -256,11 +258,11 @@ function handleLogin(event) {
                 localStorage.setItem('ceremonyGenerated', 'false');
             }
         }
-        
+
         // Close login modal
         const loginModal = document.getElementById('login-modal');
         if (loginModal) loginModal.classList.add('hidden');
-        
+
         // Route based on ROLE FIRST (as per requirements)
         if (testUser.role === 'officiant') {
             // Officiants ALWAYS go to Dashboard (their home/workspace)
@@ -294,7 +296,7 @@ function handleLogin(event) {
             passwordError.textContent = 'Invalid email or password';
             passwordError.classList.remove('hidden');
         }
-        
+
         // Announce error to screen readers
         if (window.accessibilityUtils) {
             window.accessibilityUtils.announceToScreenReader('Invalid email or password', 'assertive');
@@ -303,14 +305,14 @@ function handleLogin(event) {
 }
 
 // Language Detection (Based on Browser)
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const savedLang = localStorage.getItem('preferredLanguage');
     if (!savedLang) {
         // Detect browser language
         const browserLang = navigator.language || navigator.userLanguage;
         const lang = browserLang.startsWith('fr') ? 'fr' : 'en';
         localStorage.setItem('preferredLanguage', lang);
-        
+
         // Update HTML lang attribute
         const htmlElement = document.documentElement;
         if (htmlElement) {

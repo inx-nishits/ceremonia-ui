@@ -122,7 +122,8 @@
     </nav>
 
     <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 z-[55] bg-[#F9F8F6] hidden flex-col animate-[fadeIn_0.3s_ease-out]">
+    <div id="mobile-menu"
+        class="fixed inset-0 z-[55] bg-[#F9F8F6] hidden flex-col animate-[fadeIn_0.3s_ease-out] overflow-y-auto">
 
         <!-- Mobile Menu Header -->
         <div class="flex justify-between items-center p-6 border-b border-[#E5E2DD]">
@@ -505,7 +506,7 @@
             const modal = document.getElementById('login-modal');
             if (modal) {
                 modal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
+                document.body.classList.add('modal-open');
 
                 // Trap focus in modal
                 if (window.accessibilityUtils) {
@@ -524,7 +525,7 @@
             const modal = document.getElementById('login-modal');
             if (modal) {
                 modal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
+                document.body.classList.remove('modal-open');
 
                 // Return focus (handled by trapFocus return function)
             }
@@ -543,7 +544,7 @@
             const modal = document.getElementById('forgot-password-modal');
             if (modal) {
                 modal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
+                document.body.classList.remove('modal-open');
             }
         }
 
