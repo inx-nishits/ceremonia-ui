@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Composing - CeremonIA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../assets/js/tailwind.config.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <style>
+        .breathe {
+            animation: breathe 4s infinite ease-in-out;
+        }
+
+        @keyframes breathe {
+
+            0%,
+            100% {
+                opacity: 0.3;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-[#F9F8F6] h-screen flex flex-col justify-center items-center overflow-hidden">
+
+    <div class="text-center max-w-xl px-6">
+        <h1 id="status-text"
+            class="font-goldney text-5xl md:text-6xl text-[#2A2826] mb-4 breathe transition-all duration-1000">
+            Generating your ceremony text...
+        </h1>
+        <p class="font-luz text-sm text-[#6B665F] leading-relaxed mb-8">
+            We're preparing your personalized ceremony using your answers and selected style. This may take a few moments. Please do not close this window.
+        </p>
+        <div class="h-px w-24 bg-[#2A2826]/20 mx-auto"></div>
+    </div>
+
+    <script src="../../assets/js/error-handler.js"></script>
+    <script>
+        const phases = [
+            "Generating your ceremony text...",
+            "Analyzing your answers...",
+            "Crafting your story...",
+            "Finalizing your ceremony..."
+        ];
+
+        let i = 0;
+        let attempts = 0;
+        const maxAttempts = 3;
+        const el = document.getElementById('status-text');
+        let generationInterval = null;
+        let timeoutId = null;
+
+        function startGeneration() {
+            attempts++;
+            i = 0;
+            
+            // Clear any existing intervals/timeouts
+            if (generationInterval) clearInterval(generationInterval);
+            if (timeoutId) clearTimeout(timeoutId);
+            
+            // Set timeout for error handling (simulate potential failure)
+            timeoutId = setTimeout(() => {
+                if (attempts < maxAttempts) {
+                    // Simulate potential failure (10% chance)
+                    if (Math.random() < 0.1) {
+                        handleGenerationError();
+                        return;
+                    }
+                }
+            }, 10000); // 10 second timeout
+            
+            generationInterval = setInterval(() => {
+                if (i < phases.length - 1) {
+                    i++;
+                    el.style.opacity = '0';
+                    setTimeout(() => {
+                        el.textContent = phases[i];
+                        el.style.opacity = '1';
+                    }, 1000);
+                } else {
+                    // Clear intervals
+                    clearInterval(generationInterval);
+                    clearTimeout(timeoutId);
+                    
+                    // Mark ceremony as generated
+                    localStorage.setItem('ceremonyGenerated', 'true');
+                    
+                    // Generate mock story if not exists
+                    if (window.mockData) {
+                        const userEmail = localStorage.getItem('userEmail');
+                        const mockStory = window.mockData.getMockStory();
+                        localStorage.setItem('ceremonyStory', JSON.stringify(mockStory));
+                    }
+                    
+                    // For Officiants: Add ceremony to list
+                    const userRole = localStorage.getItem('userRole');
+                    if (userRole === 'officiant') {
+                        // Add new ceremony to Officiant's list
+                        const ceremonies = window.mockData ? window.mockData.getMockCeremonies() : [];
+                        const newCeremony = {
+                            id: 'ceremony-' + Date.now(),
+                            coupleNames: localStorage.getItem('block1_coupleName') || 'New Ceremony',
+                            ceremonyName: localStorage.getItem('block1_ceremonyName') || 'New Ceremony',
+                            date: localStorage.getItem('block1_ceremonyDate') || new Date().toISOString().split('T')[0],
+                            lastEdited: 'Just now',
+                            status: 'completed',
+                            tone: localStorage.getItem('selectedTone') || 'Romantic',
+                            length: 'Full Length',
+                            location: localStorage.getItem('block2_ceremonyLocation') || ''
+                        };
+                        ceremonies.unshift(newCeremony); // Add to beginning
+                        localStorage.setItem('officiantCeremonies', JSON.stringify(ceremonies));
+                        localStorage.setItem('hasCeremonies', 'true');
+                        
+                        // Officiants go to Dashboard after generation
+                        window.location.href = '../dashboard.html';
+                    } else {
+                        // End Users go to Preview after generation
+                        window.location.href = 'preview.html';
+                    }
+                }
+            }, 2500);
+        }
+
+        function handleGenerationError() {
+            clearInterval(generationInterval);
+            clearTimeout(timeoutId);
+            
+            // Show error state
+            el.textContent = 'Generation failed';
+            el.style.opacity = '1';
+            
+            // Show error modal with retry
+            if (window.errorHandler) {
+                window.errorHandler.handleGenerationError(
+                    new Error('Generation failed'),
+                    function retry() {
+                        // Reset and retry
+                        attempts = 0;
+                        el.textContent = phases[0];
+                        startGeneration();
+                    }
+                );
+            } else {
+                // Fallback: show alert and retry button
+                if (confirm('Generation failed. Would you like to try again?')) {
+                    attempts = 0;
+                    el.textContent = phases[0];
+                    startGeneration();
+                }
+            }
+        }
+
+        // Start generation on page load
+        startGeneration();
+    </script>
+</body>
+
+</html>

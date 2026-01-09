@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - CeremonIA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../assets/js/tailwind.config.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+</head>
+
+<body class="bg-[#F9F8F6] min-h-screen flex flex-col items-center justify-center p-6 md:p-12 relative overflow-hidden">
+
+    <!-- Background Texture -->
+    <div class="absolute inset-0 z-0 opacity-5 pointer-events-none">
+        <img src="https://www.transparenttextures.com/patterns/cream-paper.png" alt="texture">
+    </div>
+
+    <!-- Nav -->
+    <nav class="absolute top-0 w-full p-4 md:p-8 flex justify-between items-center z-20">
+        <a href="../../index.html" class="block flex-shrink-0">
+            <img src="../../assets/images/logo-a.svg" alt="CeremonIA" class="h-12 md:h-16 w-auto max-w-[120px] md:max-w-none">
+        </a>
+        <a href="../../index.html"
+            class="font-luz text-[10px] md:text-xs uppercase tracking-[0.2em] text-[#6B665F] hover:text-[#823AAF] transition-colors whitespace-nowrap ml-2">Exit</a>
+    </nav>
+
+    <!-- Main Card Frame -->
+    <main
+        class="w-full max-w-4xl border border-[#E5E2DD] bg-white flex flex-col items-center justify-center relative p-6 md:p-8 lg:p-20 shadow-xl animate-[fadeInUp_0.5s_ease-out] z-10 min-h-[500px] md:min-h-[600px] mt-16 md:mt-20">
+
+        <h1 class="font-goldney text-4xl md:text-6xl text-center leading-tight mb-8 text-[#2A2826]">
+            Let's Create Your Ceremony Text
+        </h1>
+
+        <p class="font-luz text-base md:text-lg text-[#6B665F] leading-loose text-center max-w-2xl mb-12">
+            We'll guide you through a few question blocks to understand your ceremony details. Your answer will help us generate a personalized ceremony text tailored just for you.
+        </p>
+
+        <!-- Action Base -->
+        <div class="w-full flex flex-col items-end gap-6">
+            <button onclick="startQuestionnaire()"
+                class="bg-[#2A2826] text-white font-luz text-xs uppercase tracking-[0.25em] px-12 py-4 hover:bg-[#823AAF] transition-colors shadow-lg">
+                Start Questionnaire
+            </button>
+            <p class="font-luz text-xs text-[#6B665F] flex items-center gap-2">
+                <span class="text-[#823AAF]">⚠️</span>
+                Your progress will be saved automatically.
+            </p>
+        </div>
+
+    </main>
+
+    <script>
+        function startQuestionnaire() {
+            // Mark intro as seen (show once only)
+            localStorage.setItem('introSeen', 'true');
+            // Redirect to first questionnaire block
+            window.location.href = 'questionnaire.html?block=1';
+        }
+    </script>
+
+</body>
+
+</html>
+

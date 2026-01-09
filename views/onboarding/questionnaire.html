@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Interview - CeremonIA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../assets/js/tailwind.config.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+</head>
+
+<body class="bg-[#F9F8F6] min-h-screen flex flex-col p-6 md:p-12 relative overflow-hidden">
+
+    <!-- Background Texture -->
+    <div class="absolute inset-0 z-0 opacity-5 pointer-events-none">
+        <img src="https://www.transparenttextures.com/patterns/cream-paper.png" alt="texture">
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="absolute top-0 left-0 right-0 h-1 bg-[#E5E2DD] z-30">
+        <div id="progress-bar" class="h-full bg-[#823AAF] transition-all duration-500" style="width: 0%"></div>
+    </div>
+
+    <!-- Header -->
+    <nav class="absolute top-0 left-0 right-0 p-4 md:p-6 lg:p-8 flex justify-between items-center z-20 bg-[#F9F8F6]/95 backdrop-blur-sm">
+        <a href="../../index.html" class="font-goldney text-lg md:text-xl text-[#2A2826] flex-shrink-0">CeremonIA</a>
+        <a href="../../index.html" class="font-luz text-[10px] md:text-xs uppercase tracking-[0.2em] text-[#6B665F] hover:text-[#823AAF] transition-colors whitespace-nowrap ml-2">Go to Homepage</a>
+    </nav>
+
+    <!-- Progress and Auto-Save -->
+    <div class="absolute top-16 md:top-20 left-4 md:left-8 lg:left-12 right-4 md:right-8 lg:right-12 font-luz text-[10px] md:text-xs uppercase tracking-[0.2em] text-[#6B665F] z-20">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
+            <span class="whitespace-nowrap">Progress <span id="progress-percentage">0%</span></span>
+            <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" checked disabled class="w-3 h-3 md:w-4 md:h-4 text-[#823AAF] border-[#E5E2DD] rounded focus:ring-[#823AAF]">
+                <span class="text-[10px] md:text-xs normal-case">Answers auto-saved securely</span>
+            </label>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col items-center justify-center pt-28 md:pt-32 pb-20 md:pb-32 px-4 md:px-6 lg:px-12">
+        <div class="w-full max-w-4xl">
+            <!-- Block Title and Instructions -->
+            <div id="block-header" class="mb-8">
+                <!-- Will be populated by JavaScript -->
+            </div>
+
+            <!-- Q/A List -->
+            <div id="qa-list" class="space-y-6 mb-8">
+                <!-- Will be populated by JavaScript -->
+            </div>
+
+            <!-- Bottom Input Area (for current question) -->
+            <div id="input-area" class="mt-8 border-t border-[#E5E2DD] pt-6">
+                <div class="flex items-center gap-4">
+                    <div class="flex-1 relative">
+                        <label for="answer-input" class="sr-only">Type your answer</label>
+                        <input type="text" 
+                            id="answer-input" 
+                            placeholder="Type your answer here..."
+                            maxlength="500"
+                            aria-label="Type your answer"
+                            aria-describedby="answer-char-count answer-help"
+                            class="w-full bg-transparent border-b border-[#E5E2DD] py-3 focus:border-[#823AAF] outline-none font-luz text-sm text-[#2A2826] placeholder:text-[#6B665F]/50">
+                        <button type="button" 
+                            id="voice-input-btn" 
+                            onclick="toggleVoiceInput()"
+                            aria-label="Use voice input to speak your answer"
+                            class="absolute right-2 top-1/2 -translate-y-1/2 text-[#6B665F] hover:text-[#823AAF] transition-colors p-2">
+                            <svg id="voice-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z">
+                                </path>
+                            </svg>
+                        </button>
+                    </div>
+                    <button id="send-btn" 
+                        onclick="sendAnswer()"
+                        aria-label="Send answer"
+                        class="bg-[#2A2826] text-white font-luz text-xs uppercase tracking-[0.2em] px-6 py-3 hover:bg-[#823AAF] transition-colors">
+                        Send
+                    </button>
+                </div>
+                <div class="flex justify-between items-center mt-2">
+                    <p id="answer-help" class="text-xs text-[#6B665F]">Users can type their answer or speak it using voice input.</p>
+                    <span id="answer-char-count" class="text-xs text-[#6B665F]" aria-live="polite">0/500</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Navigation Buttons -->
+    <div class="absolute bottom-12 left-0 right-0 px-6 md:px-12 flex justify-end items-center gap-4 z-20">
+        <button id="back-button" 
+            onclick="goToPreviousBlock()"
+            aria-label="Go to previous block"
+            class="font-luz text-xs uppercase tracking-[0.2em] text-[#6B665F] hover:text-[#2A2826] transition-colors disabled:opacity-30 disabled:cursor-not-allowed">
+            Back Block
+        </button>
+        <button id="next-button" 
+            onclick="goToNextBlock()"
+            aria-label="Go to next block"
+            class="bg-[#2A2826] text-white font-luz text-xs uppercase tracking-[0.2em] px-8 py-3 hover:bg-[#823AAF] transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+            Next Block
+        </button>
+    </div>
+
+    <script src="../../assets/js/validation.js"></script>
+    <script>
+        // Setup character limit for answer input
+        document.addEventListener('DOMContentLoaded', function() {
+            const answerInput = document.getElementById('answer-input');
+            const charCount = document.getElementById('answer-char-count');
+            
+            if (answerInput && charCount && window.validationUtils) {
+                window.validationUtils.setupCharacterLimit('answer-input', 500, 'answer-char-count');
+            } else if (answerInput && charCount) {
+                // Fallback character counter
+                answerInput.addEventListener('input', function() {
+                    const remaining = 500 - this.value.length;
+                    charCount.textContent = `${this.value.length}/500`;
+                    if (remaining < 50) {
+                        charCount.classList.add('text-red-600');
+                        charCount.classList.remove('text-[#6B665F]');
+                    } else {
+                        charCount.classList.remove('text-red-600');
+                        charCount.classList.add('text-[#6B665F]');
+                    }
+                });
+            }
+        });
+
+        // Questionnaire Blocks Configuration (matching wireframe)
+        const questionnaireBlocks = [
+            {
+                id: 1,
+                title: "Block 1 - General Information",
+                instruction: "Please answer all questions to proceed to the next block. Once submitted, answers in this block cannot be edited.",
+                isLocked: false,
+                questions: [
+                    {
+                        id: 'coupleName',
+                        text: 'What is the name of the couple?',
+                        type: 'text',
+                        required: true,
+                        placeholder: 'e.g., Sarah & James'
+                    },
+                    {
+                        id: 'ceremonyName',
+                        text: 'What is the name of the ceremony?',
+                        type: 'text',
+                        required: true,
+                        placeholder: 'e.g., Sarah & James Union'
+                    },
+                    {
+                        id: 'ceremonyDate',
+                        text: 'What is the date of the ceremony?',
+                        type: 'text',
+                        required: true,
+                        placeholder: 'e.g., June 15, 2025'
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Block 2 - Personal Details",
+                instruction: "Answer the following questions. You can edit these answers later.",
+                isLocked: false,
+                questions: [
+                    {
+                        id: 'ceremonyLocation',
+                        text: 'Where will be the ceremony take place?',
+                        type: 'text',
+                        required: true
+                    },
+                    {
+                        id: 'meetStory',
+                        text: 'How did the couple meet?',
+                        type: 'textarea',
+                        required: true
+                    },
+                    {
+                        id: 'sharedHobby',
+                        text: 'What is a shared hobby they both enjoy?',
+                        type: 'text',
+                        required: true
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Block 3 - Connection",
+                instruction: "Answer the following questions. You can edit these answers later.",
+                isLocked: false,
+                questions: [
+                    {
+                        id: 'connection',
+                        text: 'What qualities or moments made you realize this was special?',
+                        type: 'textarea',
+                        required: true
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "Block 4 - Values",
+                instruction: "Answer the following questions. You can edit these answers later.",
+                isLocked: false,
+                questions: [
+                    {
+                        id: 'values',
+                        text: 'What values or principles guide your relationship?',
+                        type: 'textarea',
+                        required: true
+                    }
+                ]
+            },
+            {
+                id: 5,
+                title: "Block 5 - Future",
+                instruction: "Answer the following questions. You can edit these answers later.",
+                isLocked: false,
+                questions: [
+                    {
+                        id: 'future',
+                        text: 'What are your hopes and dreams for your life together?',
+                        type: 'textarea',
+                        required: true
+                    }
+                ]
+            }
+        ];
+
+        let currentBlockIndex = 0;
+        let currentQuestionIndex = 0;
+        const totalBlocks = questionnaireBlocks.length;
+        let recognition = null;
+        let isListening = false;
+
+        // Initialize Speech Recognition
+        function initSpeechRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                recognition.lang = 'en-US';
+
+                recognition.onresult = function(event) {
+                    const transcript = event.results[0][0].transcript;
+                    document.getElementById('answer-input').value = transcript;
+                    isListening = false;
+                    updateVoiceButton();
+                };
+
+                recognition.onerror = function(event) {
+                    console.error('Speech recognition error:', event.error);
+                    isListening = false;
+                    updateVoiceButton();
+                };
+
+                recognition.onend = function() {
+                    isListening = false;
+                    updateVoiceButton();
+                };
+            }
+        }
+
+        function toggleVoiceInput() {
+            if (!recognition) {
+                alert('Voice input is not supported in your browser. Please use Chrome or Edge.');
+                return;
+            }
+
+            if (isListening) {
+                recognition.stop();
+                isListening = false;
+            } else {
+                recognition.start();
+                isListening = true;
+            }
+            updateVoiceButton();
+        }
+
+        function updateVoiceButton() {
+            const btn = document.getElementById('voice-input-btn');
+            const icon = document.getElementById('voice-icon');
+            if (isListening) {
+                btn.classList.add('text-red-600', 'animate-pulse');
+                icon.innerHTML = `
+                    <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.3"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z">
+                    </path>
+                `;
+            } else {
+                btn.classList.remove('text-red-600', 'animate-pulse');
+                icon.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z">
+                    </path>
+                `;
+            }
+        }
+
+        // Load saved answers from localStorage
+        function loadSavedAnswers() {
+            const userEmail = localStorage.getItem('userEmail');
+            if (!userEmail || !window.mockData) return;
+
+            // Mock data is already initialized in app.js after login
+            // This function ensures answers are displayed if they exist
+            questionnaireBlocks.forEach(block => {
+                block.questions.forEach(question => {
+                    const saved = localStorage.getItem(`block${block.id}_${question.id}`);
+                    if (saved) {
+                        // Answer is already saved, will be displayed in loadBlock()
+                    }
+                });
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initSpeechRecognition();
+            loadSavedAnswers();
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const blockParam = parseInt(urlParams.get('block')) || 1;
+            currentBlockIndex = Math.max(0, Math.min(blockParam - 1, totalBlocks - 1));
+            
+            const block1Locked = localStorage.getItem('block1Locked') === 'true';
+            if (block1Locked && currentBlockIndex === 0) {
+                questionnaireBlocks[0].isLocked = true;
+            }
+            
+            loadBlock(currentBlockIndex);
+            updateProgress();
+        });
+
+        function loadBlock(index) {
+            const block = questionnaireBlocks[index];
+            const headerDiv = document.getElementById('block-header');
+            const qaListDiv = document.getElementById('qa-list');
+            
+            // Render header
+            headerDiv.innerHTML = `
+                <h2 class="font-goldney text-2xl text-[#2A2826] mb-2">${block.title}</h2>
+                <p class="font-luz text-sm text-[#6B665F] mb-4">${block.instruction}</p>
+            `;
+
+            // Check if locked
+            if (block.isLocked && index === 0) {
+                qaListDiv.innerHTML = renderLockedQA(block);
+                document.getElementById('input-area').style.display = 'none';
+                document.getElementById('back-button').style.display = 'none';
+                document.getElementById('next-button').textContent = 'Continue';
+                return;
+            }
+
+            // Render Q/A list
+            let qaHTML = '';
+            block.questions.forEach((question, qIndex) => {
+                const savedValue = localStorage.getItem(`block${block.id}_${question.id}`) || '';
+                const isAnswered = savedValue.trim() !== '';
+                qaHTML += renderQA(question, qIndex, isAnswered, savedValue);
+            });
+            qaListDiv.innerHTML = qaHTML;
+
+            // Find first unanswered question
+            currentQuestionIndex = block.questions.findIndex(q => {
+                const saved = localStorage.getItem(`block${block.id}_${q.id}`) || '';
+                return saved.trim() === '';
+            });
+
+            if (currentQuestionIndex === -1) {
+                // All answered
+                currentQuestionIndex = block.questions.length - 1;
+                document.getElementById('input-area').style.display = 'none';
+                document.getElementById('next-button').disabled = false;
+            } else {
+                // Show input for current question
+                document.getElementById('input-area').style.display = 'block';
+                const currentQ = block.questions[currentQuestionIndex];
+                const saved = localStorage.getItem(`block${block.id}_${currentQ.id}`) || '';
+                document.getElementById('answer-input').value = saved;
+                document.getElementById('answer-input').placeholder = `Type your answer for: ${currentQ.text}`;
+            }
+
+            // Update navigation
+            const backButton = document.getElementById('back-button');
+            const nextButton = document.getElementById('next-button');
+            if (backButton) {
+                backButton.style.display = index === 0 ? 'none' : 'block';
+            }
+            if (nextButton) {
+                nextButton.textContent = index === totalBlocks - 1 ? 'Continue' : 'Next Block';
+                nextButton.disabled = !isBlockComplete(block);
+            }
+        }
+
+        function renderQA(question, qIndex, isAnswered, savedValue) {
+            const qNum = qIndex + 1;
+            if (isAnswered) {
+                return `
+                    <div class="border-l-4 border-[#823AAF] pl-4 py-2">
+                        <div class="font-luz text-sm font-semibold text-[#2A2826] mb-1">Q. ${qNum} ${question.text}</div>
+                        <div class="font-luz text-sm text-[#6B665F]">A. ${qNum} ${savedValue}</div>
+                    </div>
+                `;
+            } else {
+                return `
+                    <div class="border-l-4 border-[#E5E2DD] pl-4 py-2">
+                        <div class="font-luz text-sm font-semibold text-[#2A2826] mb-1">Q. ${qNum} ${question.text}</div>
+                        <div class="font-luz text-sm text-[#6B665F] italic">A. ${qNum} [Waiting for your answer...]</div>
+                    </div>
+                `;
+            }
+        }
+
+        function renderLockedQA(block) {
+            let html = '';
+            block.questions.forEach((q, index) => {
+                const saved = localStorage.getItem(`block${block.id}_${q.id}`) || 'Not answered';
+                html += `
+                    <div class="border-l-4 border-[#823AAF] pl-4 py-2 opacity-60">
+                        <div class="font-luz text-sm font-semibold text-[#2A2826] mb-1">Q. ${index + 1} ${q.text}</div>
+                        <div class="font-luz text-sm text-[#6B665F]">A. ${index + 1} ${saved}</div>
+                    </div>
+                `;
+            });
+            return html;
+        }
+
+        function sendAnswer() {
+            const block = questionnaireBlocks[currentBlockIndex];
+            const currentQ = block.questions[currentQuestionIndex];
+            const answer = document.getElementById('answer-input').value.trim();
+
+            if (!answer) {
+                alert('Please enter an answer.');
+                return;
+            }
+
+            // Save answer
+            localStorage.setItem(`block${block.id}_${currentQ.id}`, answer);
+            
+            // Auto-save indicator (already shown as checkbox)
+            
+            // Reload block to show updated Q/A
+            loadBlock(currentBlockIndex);
+            updateProgress();
+        }
+
+        function isBlockComplete(block) {
+            return block.questions.every(q => {
+                const saved = localStorage.getItem(`block${block.id}_${q.id}`) || '';
+                return saved.trim() !== '';
+            });
+        }
+
+        function goToPreviousBlock() {
+            if (currentBlockIndex > 0) {
+                currentBlockIndex--;
+                loadBlock(currentBlockIndex);
+                updateProgress();
+                window.history.pushState({}, '', `?block=${currentBlockIndex + 1}`);
+            }
+        }
+
+        function goToNextBlock() {
+            const block = questionnaireBlocks[currentBlockIndex];
+            
+            if (!isBlockComplete(block)) {
+                // Use error handler if available, otherwise alert
+                if (window.errorHandler) {
+                    window.errorHandler.showErrorModal(
+                        window.errorHandler.ErrorTypes.VALIDATION,
+                        'Please answer all questions in this block before proceeding.'
+                    );
+                } else {
+                    alert('Please answer all questions in this block before proceeding.');
+                }
+                
+                // Announce to screen readers
+                if (window.accessibilityUtils) {
+                    window.accessibilityUtils.announceToScreenReader(
+                        'Please answer all questions in this block before proceeding',
+                        'assertive'
+                    );
+                }
+                return;
+            }
+
+            // Lock Block 1 after completion
+            if (currentBlockIndex === 0 && !block.isLocked) {
+                localStorage.setItem('block1Locked', 'true');
+            }
+
+            if (currentBlockIndex < totalBlocks - 1) {
+                currentBlockIndex++;
+                loadBlock(currentBlockIndex);
+                updateProgress();
+                window.history.pushState({}, '', `?block=${currentBlockIndex + 1}`);
+            } else {
+                // All blocks completed
+                window.location.href = 'filters.html';
+            }
+        }
+
+        function updateProgress() {
+            let completedBlocks = 0;
+            questionnaireBlocks.forEach(block => {
+                if (isBlockComplete(block)) completedBlocks++;
+            });
+            
+            const percentage = Math.round((completedBlocks / totalBlocks) * 100);
+            document.getElementById('progress-percentage').textContent = `${percentage}%`;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+        }
+
+        // Enter key to send
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && document.getElementById('answer-input') === document.activeElement) {
+                sendAnswer();
+            }
+        });
+    </script>
+
+</body>
+
+</html>

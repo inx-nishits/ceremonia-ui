@@ -1,0 +1,196 @@
+/* CeremonIA Premium Styles */
+
+/* 1. Font Definitions */
+@font-face {
+    font-family: 'Goldney';
+    src: url('../fonts/Goldney.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Goldney';
+    src: url('../fonts/Goldney-Slanted.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+/* Luz Sans (Using LuzRo provided) */
+@font-face {
+    font-family: 'LuzSans-Book';
+    src: url('../fonts/luzro.TTF') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 2. Global Base */
+:root {
+    --color-bg: #F9F8F6;
+    /* Extremely light warm ivory */
+    --color-bg-alt: #F0EFEA;
+    /* Darker stone for sections */
+    --color-text: #2A2826;
+    /* Warm Black */
+    --color-text-muted: #6B665F;
+    /* Warm Grey */
+    --color-accent: #823AAF;
+    /* Royal Plum (Brand) */
+    --color-gold: #BD9A47;
+    /* Muted Gold */
+    --color-border: #E5E2DD;
+}
+
+html {
+    overflow-x: hidden;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: 'LuzSans-Book', sans-serif;
+    /* Default body font */
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+/* 3. Typography Utility Classes */
+.font-goldney {
+    font-family: 'Goldney', serif;
+}
+
+.font-luz {
+    font-family: 'LuzSans-Book', sans-serif;
+}
+
+/* 4. Images */
+img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* 5. Buttons & Interactions */
+.btn-luxury {
+    display: inline-block;
+    padding: 1rem 3rem;
+    background: transparent;
+    border: 1px solid var(--color-text);
+    color: var(--color-text);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.75rem;
+    transition: all 0.4s ease;
+    text-align: center;
+    cursor: pointer;
+}
+
+.btn-luxury:hover {
+    background: var(--color-text);
+    color: #FFF;
+    border-color: var(--color-text);
+}
+
+.btn-accent {
+    background-color: var(--color-accent);
+    color: #FFF;
+    border: 1px solid var(--color-accent);
+}
+
+.btn-accent:hover {
+    background-color: #682d8c;
+    border-color: #682d8c;
+}
+
+/* 6. Layout Utilities */
+.container-luxury {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+    .container-luxury {
+        padding: 0 2rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container-luxury {
+        padding: 0 3rem;
+    }
+}
+
+.section-spacing {
+    padding: 8rem 0;
+    /* Generous vertical rhythm */
+}
+
+/* 7. Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slowZoom {
+    from {
+        transform: scale(1.1);
+    }
+
+    to {
+        transform: scale(1.2);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.reveal {
+    animation: fadeInUp 1s cubic-bezier(0.2, 1, 0.3, 1) forwards;
+    opacity: 0;
+}
+
+.delay-100 {
+    animation-delay: 0.1s;
+}
+
+.delay-200 {
+    animation-delay: 0.2s;
+}
+
+.delay-300 {
+    animation-delay: 0.3s;
+}
+
+.animate-slowZoom {
+    animation: slowZoom 20s linear infinite alternate;
+}
+
+.animate-spin-slow {
+    animation: spin 15s linear infinite;
+}

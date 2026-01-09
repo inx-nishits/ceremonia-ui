@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Section - CeremonIA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../assets/js/tailwind.config.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+</head>
+
+<body class="bg-white h-screen flex flex-col">
+
+    <nav class="w-full min-h-20 px-4 md:px-8 py-3 md:py-0 flex justify-between items-center border-b border-[#E5E2DD] gap-2">
+        <a href="preview.html"
+            class="font-luz text-[10px] md:text-xs uppercase tracking-[0.2em] text-[#6B665F] hover:text-[#2A2826] transition-colors whitespace-nowrap">Cancel</a>
+        <span class="font-goldney text-lg md:text-xl text-[#2A2826] text-center flex-1">The Editor</span>
+        <button onclick="window.location.href='preview.html'"
+            class="bg-[#2A2826] text-white font-luz text-[10px] md:text-xs uppercase tracking-[0.2em] px-4 md:px-8 py-2 md:py-3 hover:bg-[#823AAF] transition-colors shadow-lg whitespace-nowrap">Save</button>
+    </nav>
+
+    <main class="flex-grow flex justify-center py-20 px-6 overflow-y-auto">
+        <div class="max-w-3xl w-full">
+
+            <div class="mb-12">
+                <input type="text" value="The Opening"
+                    class="w-full font-goldney text-5xl border-b border-transparent focus:border-[#E5E2DD] transition-colors pb-4 bg-transparent outline-none text-[#2A2826]">
+            </div>
+
+            <textarea
+                class="w-full min-h-[600px] font-goldney text-2xl leading-loose text-[#2A2826] border-none focus:ring-0 resize-none p-0 bg-transparent placeholder:text-[#6B665F]/30 focus:outline-none">Friends and family, we are gathered here today to witness and celebrate the union of Sarah and James. In this quiet moment, amidst the noise of the world, we pause to honor something simple yet profound: two people choosing each other.</textarea>
+
+        </div>
+    </main>
+
+</body>
+
+</html>

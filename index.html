@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" id="html-lang">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CeremonIA - Bespoke Wedding Ceremonies</title>
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="assets/js/tailwind.config.js"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/main.css">
+    <style>
+        .fixed-parallax {
+            will-change: transform;
+            /* Simple parallax effect handled via CSS attachment if needed, or JS. 
+               For now, we use a simple fixed visual or let the image cover. */
+        }
+
+        /* Screen reader only class */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        .sr-only.focus\:not-sr-only:focus {
+            position: static;
+            width: auto;
+            height: auto;
+            padding: inherit;
+            margin: inherit;
+            overflow: visible;
+            clip: auto;
+            white-space: normal;
+        }
+    </style>
+</head>
+
+<body class="bg-[#F9F8F6]">
+    <!-- Skip to main content link (for screen readers) -->
+    <a href="#main-content" id="skip-to-main"
+        class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-[#2A2826] focus:text-white focus:px-4 focus:py-2 focus:font-luz focus:text-xs focus:uppercase focus:tracking-[0.2em]">Skip
+        to main content</a>
+
+    <!-- Navigation -->
+    <nav id="main-nav"
+        class="fixed top-0 w-full z-50 transition-transform duration-300 bg-[#F9F8F6] border-b border-[#E5E2DD] shadow-sm">
+        <div class="container-luxury h-24 flex justify-between items-center relative">
+
+            <!-- Logo - Left aligned on mobile, centered on desktop -->
+            <a href="index.html" class="lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2 z-[60] lg:px-2">
+                <img src="assets/images/logo-a.svg" alt="CeremonIA"
+                    class="h-16 lg:h-20 w-auto max-w-[120px] lg:max-w-none">
+            </a>
+
+            <!-- Left: Desktop Menu (hidden below 1024px) -->
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="#philosophy"
+                    class="font-luz text-xs uppercase tracking-[0.2em] hover:text-[#823AAF] transition-colors">Philosophy</a>
+                <a href="#process"
+                    class="font-luz text-xs uppercase tracking-[0.2em] hover:text-[#823AAF] transition-colors">Process</a>
+            </div>
+
+            <!-- Right: Actions -->
+            <div class="flex items-center space-x-3 lg:space-x-6 ml-auto">
+                <!-- Language Switcher -->
+                <div class="relative group">
+                    <button onclick="toggleLanguageMenu()"
+                        class="font-luz text-xs uppercase tracking-[0.2em] hover:opacity-70 flex items-center gap-1 lg:gap-2">
+                        <span id="current-lang" class="hidden sm:inline">EN</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div id="language-menu"
+                        class="hidden absolute right-0 mt-2 bg-white border border-[#E5E2DD] shadow-lg z-50 min-w-[120px]">
+                        <button onclick="setLanguage('en')"
+                            class="w-full text-left px-4 py-2 font-luz text-xs uppercase tracking-[0.2em] hover:bg-[#F9F8F6] transition-colors">
+                            English
+                        </button>
+                        <button onclick="setLanguage('fr')"
+                            class="w-full text-left px-4 py-2 font-luz text-xs uppercase tracking-[0.2em] hover:bg-[#F9F8F6] transition-colors">
+                            Français
+                        </button>
+                    </div>
+                </div>
+                <button onclick="openLoginModal()" aria-label="Open login modal"
+                    class="font-luz text-xs uppercase tracking-[0.2em] hover:opacity-70 hidden lg:block">Login</button>
+                <button onclick="openLoginModal()" aria-label="Start your ceremony - opens login modal"
+                    class="bg-[#2A2826] text-white font-luz text-xs uppercase tracking-[0.25em] px-4 lg:px-8 py-2 lg:py-3 hover:bg-[#823AAF] transition-colors shadow-lg text-[10px] lg:text-xs whitespace-nowrap hidden lg:block">
+                    <span class="hidden sm:inline">Start Your Ceremony</span>
+                    <span class="sm:hidden">Start</span>
+                </button>
+
+                <!-- Mobile Menu Toggle (visible below 1024px) -->
+                <button onclick="toggleMobileMenu()" aria-label="Toggle mobile menu" aria-expanded="false"
+                    aria-controls="mobile-menu" class="lg:hidden flex flex-col space-y-1.5 w-6 group z-[70]">
+                    <span class="w-full h-px bg-[#2A2826] group-hover:w-1/2 transition-all duration-300"
+                        aria-hidden="true"></span>
+                    <span class="w-2/3 h-px bg-[#2A2826] transition-all duration-300" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-[55] bg-[#F9F8F6] hidden flex-col animate-[fadeIn_0.3s_ease-out]">
+
+        <!-- Mobile Menu Header -->
+        <div class="flex justify-between items-center p-6 border-b border-[#E5E2DD]">
+            <a href="index.html" onclick="toggleMobileMenu()">
+                <img src="assets/images/logo-a.svg" alt="CeremonIA" class="h-16 w-auto">
+            </a>
+            <button onclick="toggleMobileMenu()" aria-label="Close mobile menu"
+                class="w-10 h-10 flex items-center justify-center hover:bg-[#E5E2DD] rounded-full transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Content -->
+        <div class="flex-1 flex flex-col items-center justify-center space-y-8 p-8">
+            <a href="#philosophy" onclick="toggleMobileMenu()"
+                class="font-goldney text-4xl hover:text-[#823AAF] transition-colors">Philosophy</a>
+            <a href="#process" onclick="toggleMobileMenu()"
+                class="font-goldney text-4xl hover:text-[#823AAF] transition-colors">Process</a>
+            <button onclick="toggleMobileMenu(); openLoginModal()"
+                class="font-luz text-sm uppercase tracking-[0.2em] hover:text-[#823AAF] transition-colors">Login</button>
+            <button onclick="toggleMobileMenu(); openLoginModal()"
+                class="bg-[#2A2826] text-white font-luz text-xs uppercase tracking-[0.25em] px-8 py-4 hover:bg-[#823AAF] transition-colors shadow-lg mt-4">
+                Start Your Ceremony
+            </button>
+        </div>
+    </div>
+
+    <!-- Global Noise Texture -->
+    <div class="fixed inset-0 pointer-events-none z-[1] opacity-[0.03] mix-blend-multiply"
+        style="background-image: url('https://www.transparenttextures.com/patterns/stardust.png');"></div>
+
+    <!-- Hero Section: Split Manuscript Style -->
+    <header id="main-content"
+        class="relative min-h-screen flex flex-col lg:flex-row items-stretch pt-24 overflow-hidden" role="main">
+
+        <!-- Left: The Narrative (Text) -->
+        <div
+            class="w-full lg:w-5/12 bg-[#F9F8F6] relative flex flex-col justify-center px-6 sm:px-8 lg:px-12 xl:px-20 py-16 sm:py-20 lg:py-24 z-10 border-r border-[#E5E2DD] min-h-[600px] lg:min-h-screen">
+
+            <div class="animate-[fadeInUp_1s_ease-out] max-w-xl mx-auto lg:mx-0">
+                <span
+                    class="block font-luz text-[10px] sm:text-xs uppercase tracking-[0.3em] text-[#823AAF] mb-4 sm:mb-6 flex items-center gap-3 sm:gap-4">
+                    <span class="w-6 sm:w-8 h-px bg-[#823AAF]"></span>
+                    Ai-Powered Vows
+                </span>
+
+                <h1
+                    class="font-goldney text-[2.25rem] sm:text-[3rem] md:text-[4rem] lg:text-[4.5rem] xl:text-[5.5rem] leading-[1.1] text-[#2A2826] mb-4 sm:mb-6 lg:mb-8">
+                    The Art of <br>
+                    <span class="italic text-[#6B665F]">Speaking Love.</span>
+                </h1>
+
+                <p
+                    class="font-luz text-sm sm:text-base lg:text-base text-[#6B665F] leading-relaxed sm:leading-loose max-w-md mb-8 sm:mb-10 lg:mb-12">
+                    Transform your memories into a bespoke ceremony script.
+                    Intelligent, emotional, and perfectly structured for the altar.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-8">
+                    <button onclick="document.getElementById('login-modal').classList.remove('hidden')"
+                        class="group relative overflow-hidden inline-block bg-[#2A2826] text-white font-luz text-[10px] sm:text-xs uppercase tracking-[0.25em] px-8 sm:px-10 py-4 sm:py-5 hover:bg-[#823AAF] transition-colors duration-500 w-full sm:w-auto text-center">
+                        <span class="relative z-10">Start Your Ceremony</span>
+                    </button>
+                    <a href="#process"
+                        class="font-luz text-xs uppercase tracking-[0.2em] text-[#2A2826] border-b border-[#2A2826] hover:text-[#823AAF] hover:border-[#823AAF] transition-colors pb-1">
+                        View Sample
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!-- Right: The Visual (Image) -->
+        <div
+            class="w-full lg:w-7/12 relative h-[400px] sm:h-[500px] md:h-[600px] lg:h-auto lg:min-h-screen overflow-hidden bg-[#F0EFEA]">
+            <img src="assets/images/banner-b.jpg"
+                class="absolute inset-0 w-full h-full object-cover grayscale-[10%] hover:scale-105 transition-transform duration-[20s]"
+                alt="CeremonIA Banner">
+
+            <!-- Overlay Text -->
+            <div class="absolute bottom-8 sm:bottom-12 right-8 sm:right-12 text-right hidden lg:block">
+                <h2 class="font-goldney text-6xl xl:text-8xl text-white/20 mix-blend-overlay italic">Vows</h2>
+            </div>
+        </div>
+
+    </header>
+
+    <!-- Scroll Indicator -->
+    <div class="fixed bottom-6 sm:bottom-8 lg:bottom-12 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+        <a href="#philosophy"
+            class="bg-white/95 backdrop-blur-md border border-[#E5E2DD] rounded-full px-6 sm:px-8 py-2.5 sm:py-3 shadow-2xl flex items-center gap-2 sm:gap-3 hover:bg-[#F9F8F6] transition-colors">
+            <span class="font-luz text-[10px] sm:text-xs uppercase tracking-widest text-[#2A2826]">Scroll</span>
+            <span class="block w-px h-3 sm:h-4 bg-[#E5E2DD]"></span>
+            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#2A2826]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                </path>
+            </svg>
+        </a>
+    </div>
+
+    <!-- Section: Philosophy -->
+    <section id="philosophy" class="section-spacing bg-white border-t border-[#E5E2DD] relative z-10 overflow-hidden">
+        <div class="container-luxury grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 lg:gap-24 items-center">
+            <div class="md:col-span-5 relative order-2 md:order-1">
+                <div class="aspect-[3/4] bg-[#F0EFEA] relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=1770&auto=format&fit=crop"
+                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-[2s]"
+                        alt="Minimal Wedding Editorial">
+                </div>
+                <div
+                    class="absolute top-4 left-4 md:top-8 md:left-8 w-[calc(100%-2rem)] md:w-full h-full border border-[#2A2826] -z-10 hidden sm:block">
+                </div>
+            </div>
+            <div class="md:col-span-7 order-1 md:order-2">
+                <h2
+                    class="font-goldney text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-6 md:mb-8 leading-[1.1] break-words">
+                    Not just a script. <br><span class="italic text-[#823AAF]">An heirloom.</span></h2>
+                <div class="w-12 h-px bg-[#2A2826] mb-8 md:mb-10"></div>
+                <p class="font-luz text-base md:text-lg leading-loose text-[#6B665F] mb-6 md:mb-8">
+                    We believe the ceremony is the heartbeat of the wedding. Yet, it is often treated as an
+                    afterthought.
+                    CeremonIA changes that by offering a guided, deeply personal writing experience.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 mt-8 md:mt-12">
+                    <div><span
+                            class="block font-goldney text-3xl sm:text-4xl md:text-5xl mb-2 text-[#2A2826] break-words">01.
+                            Intimacy</span>
+                        <p class="text-sm text-[#6B665F]">Questions designed to unearth your deepest memories.</p>
+                    </div>
+                    <div><span
+                            class="block font-goldney text-3xl sm:text-4xl md:text-5xl mb-2 text-[#2A2826] break-words">02.
+                            Structure</span>
+                        <p class="text-sm text-[#6B665F]">Flows that respect rituals while embracing modernity.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: The Artifact (Visual Showcase) -->
+    <section class="relative h-[80vh] flex items-center justify-center overflow-hidden">
+        <!-- Parallax Background visual -->
+        <!-- Parallax Background visual -->
+        <div class="absolute inset-0 z-0">
+            <img src="assets/images/banner-a.jpg" class="w-full h-full object-cover opacity-90" alt="Vow Book Texture">
+            <div class="absolute inset-0 bg-[#2A2826]/70"></div>
+        </div>
+
+        <div class="relative z-10 text-center text-white p-12 max-w-4xl">
+            <span class="block font-luz text-xs uppercase tracking-[0.4em] mb-8 animate-pulse">The Output</span>
+            <h2 class="font-goldney text-6xl md:text-8xl mb-8 leading-none">A Keepsake for<br><span
+                    class="italic">Generations.</span></h2>
+            <p class="font-luz text-base md:text-lg leading-loose opacity-90 mb-12 max-w-2xl mx-auto">
+                Your words deserve more than a screen. Export your vows as a beautifully typeset, print-ready PDF
+                designed to be held at the altar and kept forever.
+            </p>
+            <button onclick="document.getElementById('login-modal').classList.remove('hidden')"
+                class="inline-block border border-white/30 backdrop-blur-sm px-10 py-4 font-luz text-xs uppercase tracking-[0.25em] hover:bg-white hover:text-[#2A2826] transition-all duration-500">
+                Preview Artifact
+            </button>
+        </div>
+    </section>
+
+    <!-- Section: The Process -->
+    <section id="process" class="section-spacing bg-[#F9F8F6]">
+        <div class="container-luxury text-center mb-24">
+            <span class="font-luz text-xs uppercase tracking-[0.3em] text-[#823AAF] mb-6 block">The Process</span>
+            <h2 class="font-goldney text-5xl md:text-6xl">Curated to Perfection</h2>
+        </div>
+        <div class="container-luxury grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div
+                class="bg-white p-12 text-center group hover:bg-[#2A2826] hover:text-white transition-colors duration-500 border border-[#E5E2DD]">
+                <div class="font-goldney text-5xl mb-6 opacity-30 group-hover:opacity-100 group-hover:text-[#823AAF]">I
+                </div>
+                <h3 class="font-luz text-sm uppercase tracking-[0.2em] mb-4">The Interview</h3>
+                <p class="text-[#6B665F] group-hover:text-white/70 leading-relaxed font-luz font-light">Share your story
+                    through our thoughtful, emotionally intelligent questionnaire.</p>
+            </div>
+            <div
+                class="bg-white p-12 text-center group hover:bg-[#2A2826] hover:text-white transition-colors duration-500 border border-[#E5E2DD] relative top-0 md:-top-12 shadow-xl">
+                <div class="font-goldney text-5xl mb-6 opacity-30 group-hover:opacity-100 group-hover:text-[#823AAF]">II
+                </div>
+                <h3 class="font-luz text-sm uppercase tracking-[0.2em] mb-4">The Compose</h3>
+                <p class="text-[#6B665F] group-hover:text-white/70 leading-relaxed font-luz font-light">Our AI weaves
+                    your inputs into a cohesive, beautifully paced narrative.</p>
+            </div>
+            <div
+                class="bg-white p-12 text-center group hover:bg-[#2A2826] hover:text-white transition-colors duration-500 border border-[#E5E2DD]">
+                <div class="font-goldney text-5xl mb-6 opacity-30 group-hover:opacity-100 group-hover:text-[#823AAF]">
+                    III</div>
+                <h3 class="font-luz text-sm uppercase tracking-[0.2em] mb-4">The Polish</h3>
+                <p class="text-[#6B665F] group-hover:text-white/70 leading-relaxed font-luz font-light">Refine every
+                    word. Download a print-ready artifact for the altar.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: Love Letters (Testimonials) -->
+    <section class="py-32 bg-white border-t border-[#E5E2DD]">
+        <div class="container-luxury text-center max-w-4xl mx-auto">
+            <div class="mb-16">
+                <img src="assets/images/logo-a.svg" class="h-12 w-auto mx-auto mb-8 opacity-50 grayscale">
+                <h2 class="font-goldney text-5xl text-[#2A2826]">"It felt like us."</h2>
+            </div>
+
+            <div class="relative">
+                <p class="font-luz text-lg md:text-xl text-[#6B665F] leading-loose italic mb-10">
+                    "I was struggling to put my feelings into words. CeremonIA didn't just write a script; it pulled the
+                    poetry out of my messy thoughts. Standing at the altar, reading those words... it was the most
+                    honest moment of my life."
+                </p>
+                <div>
+                    <span class="block font-luz text-xs uppercase tracking-[0.2em] text-[#2A2826]">Elena & Marc</span>
+                    <span class="block font-luz text-xs text-[#823AAF] mt-2">Married in Provence, 2025</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-[#E5E2DD] pt-24 pb-12">
+        <div class="container-luxury flex flex-col items-center">
+            <a href="#" class="mb-12 hover:opacity-80 transition-opacity">
+                <img src="assets/images/logo-a.svg" alt="CeremonIA" class="h-32 w-auto">
+            </a>
+            <div class="flex space-x-12 mb-16">
+                <a href="#"
+                    class="font-luz text-xs uppercase tracking-[0.2em] text-[#6B665F] hover:text-[#2A2826]">Instagram</a>
+                <a href="#"
+                    class="font-luz text-xs uppercase tracking-[0.2em] text-[#6B665F] hover:text-[#2A2826]">Pinterest</a>
+                <a href="#"
+                    class="font-luz text-xs uppercase tracking-[0.2em] text-[#6B665F] hover:text-[#2A2826]">Email Us</a>
+            </div>
+            <div class="w-full h-px bg-[#E5E2DD] mb-8"></div>
+            <div class="flex justify-between w-full text-xs text-[#6B665F] uppercase font-luz tracking-widest">
+                <span>© 2026 CeremonIA</span> <span>Designed for Love</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 z-[60] hidden overflow-visible" role="dialog"
+        aria-labelledby="login-modal-title" aria-describedby="login-modal-description" aria-modal="true">
+        <div class="absolute inset-0 bg-[#2A2826]/80 backdrop-blur-sm transition-opacity" onclick="closeLoginModal()"
+            aria-label="Close login modal"></div>
+        <div
+            class="absolute right-0 top-0 h-full w-full md:w-[500px] bg-[#F9F8F6] shadow-2xl animate-[slideIn_0.5s_ease-out] overflow-y-auto">
+            <div class="min-h-full flex flex-col justify-center p-8 md:p-16 relative">
+                <button onclick="closeLoginModal()" aria-label="Close login modal"
+                    class="absolute top-8 right-8 text-2xl font-light hover:rotate-90 transition-transform">×</button>
+
+                <div class="flex items-start gap-3 mb-4">
+                    <h2 id="login-modal-title" class="font-goldney text-5xl">Welcome Back</h2>
+                    <!-- Info Icon with Tooltip -->
+                    <div class="relative group mt-2 flex-shrink-0">
+                        <button type="button"
+                            class="text-[#823AAF] hover:text-[#2A2826] transition-colors focus:outline-none"
+                            aria-label="Information about login credentials">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </button>
+                        <!-- Tooltip - Fully Responsive -->
+                        <div
+                            class="absolute left-1/2 -translate-x-1/2 top-10 md:top-8 w-[280px] md:w-72 max-w-[calc(100vw-2rem)] p-3 bg-[#2A2826] text-white text-xs rounded shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[100] pointer-events-none whitespace-normal">
+                            <p class="font-semibold mb-2">Need your login credentials?</p>
+                            <p class="mb-1 leading-relaxed"><strong>End Users:</strong> Sent via email after purchasing
+                                through Systeme.io.</p>
+                            <p class="leading-relaxed"><strong>Officiants:</strong> Sent via email by admin team after
+                                account setup.</p>
+                            <div
+                                class="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#2A2826] transform rotate-45">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p id="login-modal-description" class="font-luz text-[#6B665F] mb-8">Enter your details to access your
+                    drafts.</p>
+
+                <form id="login-form" class="space-y-8" onsubmit="handleLogin(event)" novalidate>
+                    <div>
+                        <label for="login-email" class="sr-only">Email address</label>
+                        <input type="email" id="login-email" name="email" placeholder="Email" required
+                            autocomplete="email" aria-required="true" aria-describedby="login-email-error"
+                            class="w-full bg-transparent border-b border-[#E5E2DD] py-4 focus:border-[#823AAF] outline-none font-luz">
+                        <div id="login-email-error" class="text-xs text-red-600 mt-2 hidden" role="alert"
+                            aria-live="polite"></div>
+                    </div>
+                    <div class="relative">
+                        <label for="login-password" class="sr-only">Password</label>
+                        <input type="password" id="login-password" name="password" placeholder="Password" required
+                            autocomplete="current-password" aria-required="true" aria-describedby="login-password-error"
+                            maxlength="100"
+                            class="w-full bg-transparent border-b border-[#E5E2DD] py-4 focus:border-[#823AAF] outline-none font-luz pr-10">
+                        <button type="button"
+                            onclick="togglePasswordVisibility('login-password', 'login-password-toggle')"
+                            id="login-password-toggle" aria-label="Toggle password visibility" aria-pressed="false"
+                            class="absolute right-0 top-4 text-[#6B665F] hover:text-[#2A2826] transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                id="login-eye-icon" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                </path>
+                            </svg>
+                        </button>
+                        <div id="login-password-error" class="text-xs text-red-600 mt-2 hidden" role="alert"
+                            aria-live="polite"></div>
+                    </div>
+                    <button type="submit" aria-label="Sign in to your account"
+                        class="w-full bg-[#2A2826] text-white py-4 font-luz uppercase tracking-[0.2em] text-xs hover:bg-[#823AAF] transition-colors mt-8">Sign
+                        In</button>
+                </form>
+                <div class="mt-8 text-center">
+                    <button
+                        onclick="document.getElementById('login-modal').classList.add('hidden'); document.getElementById('forgot-password-modal').classList.remove('hidden')"
+                        class="text-xs uppercase tracking-wide-caps text-[#6B665F] border-b border-transparent hover:border-[#6B665F]">Forgot
+                        Password?</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgot-password-modal" class="fixed inset-0 z-[60] hidden">
+        <div class="absolute inset-0 bg-[#2A2826]/80 backdrop-blur-sm transition-opacity"
+            onclick="this.parentElement.classList.add('hidden')"></div>
+        <div
+            class="absolute right-0 top-0 h-full w-full md:w-[500px] bg-[#F9F8F6] shadow-2xl animate-[slideIn_0.5s_ease-out] overflow-y-auto">
+            <div class="min-h-full flex flex-col justify-center p-8 md:p-16 relative">
+                <button onclick="this.parentElement.parentElement.parentElement.classList.add('hidden')"
+                    class="absolute top-8 right-8 text-2xl font-light hover:rotate-90 transition-transform">×</button>
+                <h2 class="font-goldney text-5xl mb-4">Reset Access</h2>
+                <p class="font-luz text-[#6B665F] mb-12">We will send a secure link to your designated email.</p>
+                <form class="space-y-8">
+                    <input type="email" placeholder="Email Address"
+                        class="w-full bg-transparent border-b border-[#E5E2DD] py-4 focus:border-[#823AAF] outline-none font-luz">
+                    <button
+                        class="w-full bg-[#2A2826] text-white py-4 font-luz uppercase tracking-[0.2em] text-xs hover:bg-[#823AAF] transition-colors mt-8">Send
+                        Reset Link</button>
+                </form>
+                <div class="mt-8 text-center">
+                    <button onclick="closeForgotPasswordModal(); openLoginModal();" aria-label="Go back to login"
+                        class="text-xs uppercase tracking-wide-caps text-[#6B665F]">Back to Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load utility scripts first -->
+    <script src="assets/js/mock-data.js"></script>
+    <script src="assets/js/accessibility.js"></script>
+    <script src="assets/js/error-handler.js"></script>
+    <script src="assets/js/validation.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+        // Language Switcher (UI Only - Static Implementation)
+        function toggleLanguageMenu() {
+            const menu = document.getElementById('language-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function setLanguage(lang) {
+            // In real app, this would change language and reload content
+            // For static site, we'll just update the UI indicator
+            document.getElementById('current-lang').textContent = lang.toUpperCase();
+            document.getElementById('language-menu').classList.add('hidden');
+            localStorage.setItem('preferredLanguage', lang);
+
+            // Announce language change to screen readers
+            if (window.accessibilityUtils) {
+                window.accessibilityUtils.announceToScreenReader(`Language changed to ${lang === 'en' ? 'English' : 'French'}`);
+            }
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function closeMenu(e) {
+                if (!e.target.closest('.group')) {
+                    document.getElementById('language-menu').classList.add('hidden');
+                    document.removeEventListener('click', closeMenu);
+                }
+            });
+        }
+
+        // Enhanced modal open/close with focus management
+        function openLoginModal() {
+            const modal = document.getElementById('login-modal');
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+
+                // Trap focus in modal
+                if (window.accessibilityUtils) {
+                    window.accessibilityUtils.trapFocus(modal);
+                }
+
+                // Focus first input
+                setTimeout(() => {
+                    const emailInput = document.getElementById('login-email');
+                    if (emailInput) emailInput.focus();
+                }, 100);
+            }
+        }
+
+        function closeLoginModal() {
+            const modal = document.getElementById('login-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+
+                // Return focus (handled by trapFocus return function)
+            }
+        }
+
+        // Setup real-time email validation
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.validationUtils) {
+                window.validationUtils.setupEmailValidation('login-email', 'login-email-error');
+                window.validationUtils.setupEmailValidation('forgot-email', 'forgot-email-error');
+            }
+        });
+
+        // Forgot password modal handlers
+        function closeForgotPasswordModal() {
+            const modal = document.getElementById('forgot-password-modal');
+            if (modal) {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function handleForgotPassword(event) {
+            event.preventDefault();
+            const email = document.getElementById('forgot-email').value.trim();
+            const errorElement = document.getElementById('forgot-email-error');
+
+            // Validate email
+            if (window.validationUtils) {
+                const validation = window.validationUtils.validateEmail(email);
+                if (!validation.valid) {
+                    if (window.errorHandler) {
+                        window.errorHandler.showInlineError('forgot-email-error', validation.message);
+                    } else if (errorElement) {
+                        errorElement.textContent = validation.message;
+                        errorElement.classList.remove('hidden');
+                    }
+                    return;
+                }
+            }
+
+            // Simulate sending reset link (in production, this would be an API call)
+            if (window.accessibilityUtils) {
+                window.accessibilityUtils.announceToScreenReader('Password reset link sent to your email', 'polite');
+            }
+
+            // Show success message
+            alert('Password reset link has been sent to your email address.');
+            closeForgotPasswordModal();
+        }
+
+        // Load saved language preference
+        document.addEventListener('DOMContentLoaded', function () {
+            const savedLang = localStorage.getItem('preferredLanguage') || 'en';
+            document.getElementById('current-lang').textContent = savedLang.toUpperCase();
+        });
+
+        // Quick fill test credentials
+        function fillTestCredentials(email) {
+            document.getElementById('login-email').value = email;
+            document.getElementById('login-password').value = 'test1234';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Artifact - CeremonIA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../assets/js/tailwind.config.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <style>
+        .paper-shadow {
+            box-shadow: 0 4px 60px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+
+<body class="bg-[#F9F8F6] text-[#2A2826] font-luz flex flex-col h-screen overflow-hidden">
+
+    <!-- Header -->
+    <nav class="shrink-0 min-h-20 border-b border-[#E5E2DD] bg-white flex flex-col md:flex-row justify-between items-start md:items-center px-4 md:px-8 py-3 md:py-0 z-20 gap-3 md:gap-0">
+        <div class="flex items-center justify-between w-full md:w-auto">
+            <a href="../../index.html" class="font-goldney text-lg md:text-xl text-[#2A2826] flex-shrink-0">CeremonIA</a>
+            <a id="dashboard-link" href="../../views/dashboard.html" class="font-luz text-[10px] md:text-xs uppercase tracking-[0.2em] text-[#6B665F] hover:text-[#823AAF] transition-colors hidden md:inline">Go to Dashboard</a>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 md:gap-4 w-full md:w-auto">
+            <button onclick="window.location.href='edit.html'"
+                class="font-luz text-[10px] md:text-xs uppercase tracking-[0.2em] border border-[#E5E2DD] px-3 md:px-6 py-2 md:py-3 hover:border-[#823AAF] hover:text-[#823AAF] transition-colors flex-1 md:flex-none min-w-[80px]">Edit</button>
+            <button onclick="document.getElementById('download-modal').classList.remove('hidden')"
+                class="font-luz text-[10px] md:text-xs uppercase tracking-[0.2em] border border-[#E5E2DD] px-3 md:px-6 py-2 md:py-3 hover:border-[#823AAF] hover:text-[#823AAF] transition-colors flex-1 md:flex-none min-w-[80px]">Download</button>
+            <button onclick="document.getElementById('share-modal').classList.remove('hidden')"
+                class="font-luz text-[10px] md:text-xs uppercase tracking-[0.2em] border border-[#E5E2DD] px-3 md:px-6 py-2 md:py-3 hover:border-[#823AAF] hover:text-[#823AAF] transition-colors flex-1 md:flex-none min-w-[80px]">Share</button>
+            <button onclick="document.getElementById('regenerate-modal').classList.remove('hidden')"
+                class="font-luz text-[10px] md:text-xs uppercase tracking-[0.2em] border border-[#E5E2DD] px-3 md:px-6 py-2 md:py-3 hover:border-[#823AAF] hover:text-[#823AAF] transition-colors flex-1 md:flex-none min-w-[80px]">Regenerate</button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow bg-[#F9F8F6] overflow-y-auto p-4 md:p-8 lg:p-16">
+        <div class="max-w-4xl mx-auto mb-6 md:mb-8">
+            <h1 class="font-goldney text-3xl md:text-4xl text-[#2A2826] mb-3 md:mb-4">Your Ceremony Text</h1>
+            <p class="font-luz text-sm text-[#6B665F] mb-6">Review the generated script below. You can download, share or regenerate it.</p>
+            <div class="flex items-center gap-4 mb-6">
+                <h2 class="font-luz text-sm uppercase tracking-[0.2em] text-[#6B665F]">Story Preview</h2>
+                <button id="toggle-story-btn" onclick="toggleStory()"
+                    class="font-luz text-xs uppercase tracking-[0.2em] border border-[#E5E2DD] px-4 py-2 hover:border-[#823AAF] hover:text-[#823AAF] transition-colors">Show</button>
+            </div>
+        </div>
+        <div class="flex justify-center">
+
+            <article id="story-content" class="w-full max-w-[800px] bg-white min-h-[1200px] p-12 md:p-24 paper-shadow text-[#2A2826] hidden">
+
+                <!-- Branding on Paper -->
+                <div class="text-center mb-24">
+                    <span class="block font-luz text-xs uppercase tracking-[0.3em] text-[#6B665F] mb-4">Celebration
+                        of Union</span>
+                    <h1 class="font-goldney text-6xl md:text-7xl mb-4">Sarah & James</h1>
+                    <span class="block w-8 h-px bg-[#2A2826] mx-auto"></span>
+                </div>
+
+                <!-- Content -->
+                <div class="space-y-16">
+
+                    <!-- Editable Section -->
+                    <div class="group relative pl-8 border-l border-transparent hover:border-[#823AAF]/30 transition-colors cursor-pointer"
+                        onclick="window.location.href='edit.html'">
+                        <div class="absolute -left-16 top-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <span
+                                class="text-xs uppercase tracking-wide-caps bg-[#823AAF] text-white px-2 py-1">Edit</span>
+                        </div>
+                        <h2 class="font-goldney text-3xl italic mb-6 text-[#2A2826]">The Opening</h2>
+                        <p class="font-goldney text-xl leading-loose text-[#6B665F]">
+                            Friends and family, we are gathered here today to witness and celebrate the union of Sarah
+                            and James. In this quiet moment, amidst the noise of the world, we pause to honor something
+                            simple yet profound: two people choosing each other.
+                        </p>
+                    </div>
+
+                    <!-- Editable Section -->
+                    <div class="group relative pl-8 border-l border-transparent hover:border-[#823AAF]/30 transition-colors cursor-pointer"
+                        onclick="window.location.href='edit.html'">
+                        <div class="absolute -left-16 top-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <span
+                                class="text-[10px] uppercase tracking-wide-caps bg-[#823AAF] text-white px-2 py-1">Edit</span>
+                        </div>
+                        <h2 class="font-goldney text-3xl italic mb-6 text-[#2A2826]">The Story</h2>
+                        <p class="font-goldney text-xl leading-loose text-[#6B665F]">
+                            They say timing is everything. For Sarah and James, time stopped on a rainy Tuesday. It
+                            wasn't fireworks or thunder; it was a conversation that felt like coming home. Over the
+                            years, that initial spark has grown into a steady flame—one that warms not just them, but
+                            everyone lucky enough to know them.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="mt-32 text-center">
+                    <span class="font-goldney italic text-[#6B665F]">End of Ceremony</span>
+                </div>
+
+            </article>
+
+            <!-- Story Hidden State -->
+            <div id="story-hidden" class="w-full max-w-[800px] bg-white min-h-[600px] p-12 md:p-24 paper-shadow text-[#2A2826] flex flex-col items-center justify-center">
+                <div class="text-center">
+                    <p class="font-luz text-sm text-[#6B665F]">Ceremony text is hidden.</p>
+                    <p class="font-luz text-sm text-[#6B665F] mt-2">Click the toggle button to reveal.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- SHARE MODAL -->
+    <div id="share-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
+        <div class="absolute inset-0 bg-[#2A2826]/80 backdrop-blur-sm"
+            onclick="this.parentElement.classList.add('hidden')"></div>
+        <div class="bg-white p-12 w-full max-w-md relative z-10 animate-[fadeInUp_0.3s_ease-out] shadow-2xl">
+            <button onclick="this.parentElement.parentElement.classList.add('hidden')"
+                class="absolute top-6 right-6 text-2xl hover:rotate-90 transition-transform">×</button>
+            <h3 class="font-goldney text-4xl mb-2">Send Ceremony via Email</h3>
+            <p class="font-luz text-sm text-[#6B665F] mb-8">Choose file format and enter the recipient's email address</p>
+
+            <form onsubmit="handleShare(event)" class="space-y-6">
+                <div>
+                    <label class="block font-luz text-sm text-[#2A2826] mb-3">Select File Format</label>
+                    <div class="space-y-3">
+                        <label class="flex items-center cursor-pointer p-3 border border-[#E5E2DD] rounded hover:bg-[#F9F8F6] transition-colors">
+                            <input type="radio" name="shareFormat" value="pdf" checked class="mr-3 w-4 h-4 text-[#823AAF] border-[#E5E2DD] focus:ring-[#823AAF]">
+                            <span class="font-luz text-sm text-[#2A2826]">PDF</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer p-3 border border-[#E5E2DD] rounded hover:bg-[#F9F8F6] transition-colors">
+                            <input type="radio" name="shareFormat" value="word" class="mr-3 w-4 h-4 text-[#823AAF] border-[#E5E2DD] focus:ring-[#823AAF]">
+                            <span class="font-luz text-sm text-[#2A2826]">Word (.docx)</span>
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-luz text-sm text-[#2A2826] mb-3">Recipient Email Address</label>
+                    <input type="email" id="share-email" placeholder="Enter Email Address" required
+                        class="w-full bg-transparent border-b border-[#E5E2DD] py-3 focus:border-[#823AAF] outline-none font-luz">
+                </div>
+                <div class="flex justify-end">
+                    <button type="submit"
+                        class="bg-[#2A2826] text-white py-4 px-12 font-luz uppercase tracking-[0.2em] text-xs hover:bg-[#823AAF] transition-colors">Send Email</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- DOWNLOAD MODAL -->
+    <div id="download-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
+        <div class="absolute inset-0 bg-[#2A2826]/80 backdrop-blur-sm"
+            onclick="this.parentElement.classList.add('hidden')"></div>
+        <div
+            class="bg-white p-12 w-full max-w-sm relative z-10 text-center animate-[fadeInUp_0.3s_ease-out] shadow-2xl">
+            <button onclick="this.parentElement.parentElement.classList.add('hidden')"
+                class="absolute top-6 right-6 text-2xl hover:rotate-90 transition-transform">×</button>
+            <h3 class="font-goldney text-3xl mb-4">Download Story</h3>
+            <p class="font-luz text-sm text-[#6B665F] mb-8 text-center leading-relaxed">
+                Your ceremony story will be expected as a PDF/Word file in its current version. Would you like to proceed?
+            </p>
+            <div class="space-y-4 mb-6">
+                <button onclick="handleDownload('pdf')"
+                    class="w-full py-4 border border-[#E5E2DD] hover:bg-[#2A2826] hover:text-white transition-colors uppercase tracking-[0.2em] text-xs font-luz">Download as PDF</button>
+                <button onclick="handleDownload('word')"
+                    class="w-full py-4 border border-[#E5E2DD] hover:bg-[#2A2826] hover:text-white transition-colors uppercase tracking-[0.2em] text-xs font-luz">Download to Word (.docx)</button>
+            </div>
+            <button onclick="document.getElementById('download-modal').classList.add('hidden')"
+                class="w-full py-3 border border-[#E5E2DD] hover:bg-[#F9F8F6] transition-colors uppercase tracking-[0.2em] text-xs font-luz text-[#6B665F]">Cancel</button>
+        </div>
+    </div>
+
+    <!-- REGENERATE MODAL -->
+    <div id="regenerate-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
+        <div class="absolute inset-0 bg-[#2A2826]/80 backdrop-blur-sm"
+            onclick="this.parentElement.classList.add('hidden')"></div>
+        <div class="bg-white p-12 w-full max-w-lg relative z-10 animate-[fadeInUp_0.3s_ease-out] shadow-2xl">
+            <button onclick="this.parentElement.parentElement.classList.add('hidden')"
+                class="absolute top-6 right-6 text-2xl hover:rotate-90 transition-transform">×</button>
+            <h3 class="font-goldney text-3xl mb-2 text-center">Improve Ceremony Text</h3>
+            
+            <p class="font-luz text-sm text-[#6B665F] mb-4 text-center leading-relaxed">
+                Share your feedback to help improve the ceremony text. Your original answers cannot be changed.
+            </p>
+            
+            <!-- Warning Note -->
+            <div class="bg-[#F9F8F6] border-l-4 border-[#823AAF] p-4 mb-8">
+                <p class="font-luz text-xs text-[#2A2826] leading-relaxed">
+                    <strong>Note:</strong> Regenerating the ceremony text will permanently replace the current version.
+                </p>
+            </div>
+            
+            <form onsubmit="handleRegenerate(event)" class="space-y-6">
+                <!-- Star Rating (Required) -->
+                <div>
+                    <label class="block font-luz text-sm text-[#2A2826] mb-3">
+                        Rate this Ceremony Text <span class="text-red-600">*</span>
+                    </label>
+                    <div class="flex gap-2" id="star-rating">
+                        <button type="button" onclick="setRating(1)" class="star-btn text-3xl text-[#E5E2DD] hover:text-[#823AAF] transition-colors">★</button>
+                        <button type="button" onclick="setRating(2)" class="star-btn text-3xl text-[#E5E2DD] hover:text-[#823AAF] transition-colors">★</button>
+                        <button type="button" onclick="setRating(3)" class="star-btn text-3xl text-[#E5E2DD] hover:text-[#823AAF] transition-colors">★</button>
+                        <button type="button" onclick="setRating(4)" class="star-btn text-3xl text-[#E5E2DD] hover:text-[#823AAF] transition-colors">★</button>
+                        <button type="button" onclick="setRating(5)" class="star-btn text-3xl text-[#E5E2DD] hover:text-[#823AAF] transition-colors">★</button>
+                    </div>
+                    <input type="hidden" id="rating-value" required>
+                </div>
+                
+                <!-- Text Feedback (Required) -->
+                <div>
+                    <label class="block font-luz text-sm text-[#2A2826] mb-3">
+                        What would you like to improve? <span class="text-red-600">*</span>
+                    </label>
+                    <textarea id="regenerate-feedback" placeholder="For Example: Make it more emotional, shorten the opening, improve the closing vows..."
+                        required
+                        class="w-full min-h-[150px] p-4 bg-[#F9F8F6] border border-[#E5E2DD] focus:border-[#823AAF] font-luz resize-none rounded"></textarea>
+                </div>
+                
+                <!-- Optional: Download & Regenerate -->
+                <div>
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" id="download-before-regenerate" class="mr-3 w-4 h-4 text-[#823AAF] border-[#E5E2DD] rounded focus:ring-[#823AAF]">
+                        <span class="font-luz text-sm text-[#6B665F]">Download & Regenerate the Text</span>
+                    </label>
+                </div>
+                
+                <div class="flex justify-end">
+                    <button type="submit"
+                        class="bg-[#2A2826] text-white py-4 px-12 font-luz uppercase tracking-[0.2em] text-xs hover:bg-[#823AAF] transition-colors">Regenerate Ceremony Text</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Booking CTA (End Users Only) -->
+    <div id="booking-cta" class="fixed bottom-8 right-8 bg-[#823AAF] text-white p-6 shadow-2xl max-w-sm hidden">
+        <h3 class="font-goldney text-2xl mb-2">Need an Officiant?</h3>
+        <p class="font-luz text-xs mb-4 leading-relaxed">Book a professional officiant to perform your ceremony.</p>
+        <a href="#" target="_blank" class="inline-block bg-white text-[#823AAF] font-luz text-xs uppercase tracking-[0.2em] px-6 py-3 hover:bg-[#F9F8F6] transition-colors">
+            Book Officiant
+        </a>
+    </div>
+
+    <script src="../../assets/js/mock-data.js"></script>
+    <script>
+        // Load and display mock story content
+        function loadStoryContent() {
+            const story = window.mockData ? window.mockData.getMockStory() : null;
+            if (!story) return;
+
+            // Update ceremony title
+            const titleElement = document.querySelector('h1');
+            if (titleElement) {
+                titleElement.textContent = story.title || 'Your Ceremony Text';
+            }
+
+            // Update story sections
+            const storyContent = document.getElementById('story-content');
+            if (storyContent && story.sections) {
+                let sectionsHTML = `
+                    <!-- Branding on Paper -->
+                    <div class="text-center mb-24">
+                        <span class="block font-luz text-xs uppercase tracking-[0.3em] text-[#6B665F] mb-4">Celebration of Union</span>
+                        <h1 class="font-goldney text-6xl md:text-7xl mb-4">${story.coupleNames || 'The Couple'}</h1>
+                        <span class="block font-luz text-sm text-[#6B665F] mb-2">${story.date || ''}</span>
+                        <span class="block w-8 h-px bg-[#2A2826] mx-auto"></span>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="space-y-16">
+                `;
+
+                story.sections.forEach((section, index) => {
+                    sectionsHTML += `
+                        <!-- Editable Section -->
+                        <div class="group relative pl-8 border-l border-transparent hover:border-[#823AAF]/30 transition-colors cursor-pointer"
+                            onclick="window.location.href='edit.html'">
+                            <div class="absolute -left-16 top-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <span class="text-xs uppercase tracking-wide-caps bg-[#823AAF] text-white px-2 py-1">Edit</span>
+                            </div>
+                            <h2 class="font-goldney text-3xl italic mb-6 text-[#2A2826]">${section.title}</h2>
+                            <p class="font-goldney text-xl leading-loose text-[#6B665F]">
+                                ${section.content}
+                            </p>
+                        </div>
+                    `;
+                });
+
+                sectionsHTML += `
+                    </div>
+
+                    <div class="mt-32 text-center">
+                        <span class="font-goldney italic text-[#6B665F]">End of Ceremony</span>
+                    </div>
+                `;
+
+                storyContent.innerHTML = sectionsHTML;
+            }
+        }
+
+        // Story Toggle
+        function toggleStory() {
+            const storyContent = document.getElementById('story-content');
+            const storyHidden = document.getElementById('story-hidden');
+            const toggleBtn = document.getElementById('toggle-story-btn');
+            
+            if (storyContent.classList.contains('hidden')) {
+                storyContent.classList.remove('hidden');
+                storyHidden.classList.add('hidden');
+                toggleBtn.textContent = 'Hide';
+            } else {
+                storyContent.classList.add('hidden');
+                storyHidden.classList.remove('hidden');
+                toggleBtn.textContent = 'Show';
+            }
+        }
+
+        // Load story content on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStoryContent();
+        });
+
+        // Star Rating
+        let currentRating = 0;
+        function setRating(rating) {
+            currentRating = rating;
+            document.getElementById('rating-value').value = rating;
+            const stars = document.querySelectorAll('.star-btn');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.textContent = '★';
+                    star.classList.remove('text-[#E5E2DD]');
+                    star.classList.add('text-[#823AAF]');
+                } else {
+                    star.textContent = '★';
+                    star.classList.remove('text-[#823AAF]');
+                    star.classList.add('text-[#E5E2DD]');
+                }
+            });
+        }
+
+        // Regenerate Handler
+        function handleRegenerate(event) {
+            event.preventDefault();
+            const rating = document.getElementById('rating-value').value;
+            const feedback = document.getElementById('regenerate-feedback').value;
+            const downloadBefore = document.getElementById('download-before-regenerate').checked;
+            
+            if (!rating || !feedback.trim()) {
+                alert('Please provide both a rating and feedback.');
+                return;
+            }
+            
+            // Save feedback
+            localStorage.setItem('regenerateRating', rating);
+            localStorage.setItem('regenerateFeedback', feedback);
+            
+            // If download before regenerate is checked, trigger download
+            if (downloadBefore) {
+                // In real app, this would trigger download
+                console.log('Downloading current version...');
+            }
+            
+            // Close modal and redirect to generating
+            document.getElementById('regenerate-modal').classList.add('hidden');
+            window.location.href = 'generating.html';
+        }
+
+        // Download Handler
+        function handleDownload(format) {
+            // In real app, this would trigger download
+            console.log('Downloading as', format);
+            alert(`Downloading ceremony as ${format.toUpperCase()}...`);
+            document.getElementById('download-modal').classList.add('hidden');
+        }
+
+        // Share Handler
+        function handleShare(event) {
+            event.preventDefault();
+            const format = document.querySelector('input[name="shareFormat"]:checked').value;
+            const email = document.getElementById('share-email').value;
+            
+            // In real app, this would send email with attachment
+            console.log('Sharing', format, 'to', email);
+            
+            alert('Email sent successfully!');
+            document.getElementById('share-modal').classList.add('hidden');
+        }
+
+        // Show/hide elements based on role
+        document.addEventListener('DOMContentLoaded', function() {
+            const userRole = localStorage.getItem('userRole');
+            
+            // Show Dashboard link only for Officiants
+            const dashboardLink = document.getElementById('dashboard-link');
+            if (dashboardLink) {
+                if (userRole === 'officiant') {
+                    dashboardLink.classList.remove('hidden');
+                } else {
+                    dashboardLink.classList.add('hidden');
+                }
+            }
+            
+            // Show booking CTA only for End Users
+            if (userRole === 'endUser' || !userRole) {
+                const bookingCta = document.getElementById('booking-cta');
+                if (bookingCta) bookingCta.classList.remove('hidden');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
