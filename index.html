@@ -10,6 +10,7 @@
     <script src="assets/js/tailwind.config.js"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/protection.css">
     <style>
         .fixed-parallax {
             will-change: transform;
@@ -41,6 +42,15 @@
             white-space: normal;
         }
     </style>
+
+    <!-- Security Meta Tags -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- UI Demo Protection Script (Load Early) -->
+    <script src="assets/js/protection.js"></script>
 </head>
 
 <body class="bg-[#F9F8F6]">
@@ -112,7 +122,8 @@
     </nav>
 
     <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 z-[55] bg-[#F9F8F6] hidden flex-col animate-[fadeIn_0.3s_ease-out]">
+    <div id="mobile-menu"
+        class="fixed inset-0 z-[55] bg-[#F9F8F6] hidden flex-col animate-[fadeIn_0.3s_ease-out] overflow-y-auto">
 
         <!-- Mobile Menu Header -->
         <div class="flex justify-between items-center p-6 border-b border-[#E5E2DD]">
@@ -420,6 +431,27 @@
                         class="w-full bg-[#2A2826] text-white py-4 font-luz uppercase tracking-[0.2em] text-xs hover:bg-[#823AAF] transition-colors mt-8">Sign
                         In</button>
                 </form>
+
+                <!-- Test Credentials Quick Fill (For Demo/Testing) -->
+                <!-- HIDDEN FOR DEMO - Uncomment to re-enable for testing -->
+                <!--
+                <div class="mt-6 p-4 bg-[#F9F8F6] border border-[#E5E2DD] rounded">
+                    <p class="text-xs font-luz text-[#6B665F] mb-3 uppercase tracking-wide">Test Accounts:</p>
+                    <div class="flex gap-2">
+                        <button type="button"
+                            onclick="document.getElementById('login-email').value='user@ceremonia.com'; document.getElementById('login-password').value='test1234';"
+                            class="flex-1 text-xs py-2 px-3 border border-[#E5E2DD] hover:bg-white transition-colors font-luz">
+                            End User
+                        </button>
+                        <button type="button"
+                            onclick="document.getElementById('login-email').value='officiant@ceremonia.com'; document.getElementById('login-password').value='test1234';"
+                            class="flex-1 text-xs py-2 px-3 border border-[#E5E2DD] hover:bg-white transition-colors font-luz">
+                            Officiant
+                        </button>
+                    </div>
+                </div>
+                -->
+
                 <div class="mt-8 text-center">
                     <button
                         onclick="document.getElementById('login-modal').classList.add('hidden'); document.getElementById('forgot-password-modal').classList.remove('hidden')"
@@ -495,7 +527,7 @@
             const modal = document.getElementById('login-modal');
             if (modal) {
                 modal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
+                document.body.classList.add('modal-open');
 
                 // Trap focus in modal
                 if (window.accessibilityUtils) {
@@ -514,7 +546,7 @@
             const modal = document.getElementById('login-modal');
             if (modal) {
                 modal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
+                document.body.classList.remove('modal-open');
 
                 // Return focus (handled by trapFocus return function)
             }
@@ -533,7 +565,7 @@
             const modal = document.getElementById('forgot-password-modal');
             if (modal) {
                 modal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
+                document.body.classList.remove('modal-open');
             }
         }
 

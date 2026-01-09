@@ -53,6 +53,25 @@ body {
     overflow-x: hidden;
 }
 
+/* Modal and Menu Open States - Prevent background scroll without breaking modal/menu scroll */
+body.modal-open,
+body.menu-open {
+    /* Use position fixed to prevent background scroll while allowing modal/menu to scroll */
+    position: fixed;
+    width: 100%;
+    overflow-y: scroll;
+    /* Keep scrollbar space to prevent layout shift */
+}
+
+/* Ensure modals and menus can scroll independently */
+#mobile-menu,
+[id$="-modal"] {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    /* Smooth scrolling on iOS */
+}
+
+
 /* 3. Typography Utility Classes */
 .font-goldney {
     font-family: 'Goldney', serif;

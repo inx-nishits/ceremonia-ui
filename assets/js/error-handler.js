@@ -49,40 +49,40 @@ const ErrorMessages = {
 function showErrorModal(errorType, customMessage = null, onRetry = null) {
     const error = ErrorMessages[errorType] || ErrorMessages.unknown;
     const message = customMessage || error.message;
-    
+
     // Create or get error modal
     let errorModal = document.getElementById('error-modal');
     if (!errorModal) {
         errorModal = createErrorModal();
         document.body.appendChild(errorModal);
     }
-    
+
     // Update content
     document.getElementById('error-title').textContent = error.title;
     document.getElementById('error-message').textContent = message;
-    
+
     // Show/hide retry button
     const retryButton = document.getElementById('error-retry');
     if (error.retry && onRetry) {
         retryButton.classList.remove('hidden');
-        retryButton.onclick = function() {
+        retryButton.onclick = function () {
             closeErrorModal();
             onRetry();
         };
     } else {
         retryButton.classList.add('hidden');
     }
-    
+
     // Show modal
     errorModal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-    
+    document.body.classList.add('modal-open');
+
     // Focus on close button for accessibility
     const closeButton = errorModal.querySelector('[aria-label="Close error modal"]');
     if (closeButton) {
         closeButton.focus();
     }
-    
+
     // Announce to screen readers
     if (window.accessibilityUtils) {
         window.accessibilityUtils.announceToScreenReader(`${error.title}: ${message}`, 'assertive');
@@ -100,7 +100,7 @@ function createErrorModal() {
     modal.setAttribute('aria-labelledby', 'error-title');
     modal.setAttribute('aria-describedby', 'error-message');
     modal.setAttribute('aria-modal', 'true');
-    
+
     modal.innerHTML = `
         <div class="absolute inset-0 bg-[#2A2826]/90 backdrop-blur-sm" onclick="closeErrorModal()" aria-label="Close error modal"></div>
         <div class="bg-white p-12 w-full max-w-md relative z-10 animate-[fadeInUp_0.3s_ease-out] shadow-2xl">
@@ -126,7 +126,7 @@ function createErrorModal() {
             </div>
         </div>
     `;
-    
+
     return modal;
 }
 
@@ -137,7 +137,7 @@ function closeErrorModal() {
     const errorModal = document.getElementById('error-modal');
     if (errorModal) {
         errorModal.classList.add('hidden');
-        document.body.style.overflow = 'auto';
+        document.body.classList.remove('modal-open');
     }
 }
 
@@ -192,7 +192,7 @@ window.errorHandler = {
 };
 
 // Close error modal on Escape key
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
         closeErrorModal();
     }
