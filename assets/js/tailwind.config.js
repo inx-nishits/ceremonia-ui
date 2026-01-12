@@ -6,28 +6,20 @@ tailwind.config = {
         extend: {
             fontFamily: {
                 'goldney': ['Goldney', 'serif'],
-                'luz': ['LuzSans-Book', 'sans-serif']
+                'luz': ['LuzSans-Book', 'sans-serif'],
+                'sans': ['LuzSans-Book', 'sans-serif']
             },
             colors: {
-                // The reference uses very specific warm greys and off-whites
-                bg: {
-                    DEFAULT: '#F5F5F0', // The main background color (Stone/Ivory)
-                    paper: '#FFFFFF',   // Pure white for cards
-                    dark: '#1C1C1C'     // Dark sections
-                },
-                text: {
-                    main: '#1C1C1C',    // Soft Black
-                    muted: '#666666',   // Grey text
-                    light: '#8C8C8C'    // Lighter captions
-                },
-                accent: {
-                    DEFAULT: '#BD9A47', // Muted Gold (from original prompt, but used sparingly)
-                    plum: '#823AAF'     // Keeping your brand accent but minimizing use
-                },
-                border: {
-                    DEFAULT: '#E5E5E5', // Very light borders
-                    strong: '#D4D4D4'
-                }
+                cream: '#F9F8F6',      // Warm White Background
+                paper: '#FFFFFF',      // Pure White
+                charcoal: '#2A2826',   // Dark Text/Background
+                taupe: '#6B665F',      // Muted/Grey Text
+                gold: '#BD9A47',       // Muted Gold
+                plum: '#823AAF',       // Primary Purple
+                'plum-light': '#9B4FC4', // Lighter Purple for Hoverum
+                lavender: '#E6D9F2',   // Light Purple (Filters)
+                beige: '#E5E2DD',      // Warm Beige Borders
+                silver: '#D4D4D4'      // Stronger Borders
             },
             fontSize: {
                 'xs': ['0.875rem', { lineHeight: '1.25rem', letterSpacing: '0.1em' }], // Minimum 14px
