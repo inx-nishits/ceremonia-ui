@@ -8,7 +8,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="../../assets/images/favicon/favicon.png">
     <link rel="apple-touch-icon" href="../../assets/images/favicon/favicon.png">
-        
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../../assets/js/tailwind.config.js"></script>
     <link
@@ -17,14 +17,14 @@
     <link rel="stylesheet" href="../../assets/css/main.css">
 </head>
 
-<body class="bg-cream min-h-screen  text-charcoal">
+<body class="bg-cream h-screen overflow-hidden text-charcoal">
 
-    <div class="flex flex-col md:flex-row min-h-screen">
+    <div class="flex flex-col md:flex-row h-screen">
 
         <!-- LEFT SIDEBAR: Summary Panel -->
         <aside
-            class="w-full md:w-80 bg-white border-r border-beige flex flex-col z-30 shadow-lg md:shadow-none order-2 md:order-1">
-            <div class="p-8 border-b border-beige hidden md:block">
+            class="w-full md:w-80 bg-white border-r border-beige flex flex-col z-30 shadow-lg md:shadow-none order-2 md:order-1 md:h-screen">
+            <div class="p-8 border-b border-beige hidden md:block shrink-0">
                 <a href="../../index.html" class="block">
                     <img src="../../assets/images/approved-logo.svg" alt="CeremonIA" class="h-12 w-auto">
                 </a>
@@ -54,9 +54,9 @@
             </div>
 
             <!-- Footer in Sidebar -->
-            <div class="p-8 border-t border-beige hidden md:block">
+            <div class="px-4 py-3 border-t border-beige hidden md:block shrink-0">
                 <a href="../../index.html"
-                    class="flex items-center gap-2 text-taupe hover:text-plum transition-colors text-xs uppercase tracking-widest">
+                    class="flex items-center justify-center gap-2 text-taupe hover:text-plum transition-colors text-xs uppercase tracking-widest px-8 py-4 border border-beige hover:border-plum rounded">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
@@ -67,10 +67,10 @@
         </aside>
 
         <!-- MAIN CONTENT -->
-        <main class="flex-1 flex flex-col relative order-1 md:order-2 h-screen overflow-y-auto bg-cream">
+        <main class="flex-1 flex flex-col relative order-1 md:order-2 md:h-screen overflow-y-auto bg-cream">
             <!-- Mobile Header (Logo) -->
             <div
-                class="md:hidden p-4 flex justify-between items-center bg-white border-b border-beige sticky top-0 z-20">
+                class="md:hidden p-4 flex justify-between items-center bg-white border-b border-beige sticky top-0 z-20 shrink-0">
                 <img src="../../assets/images/approved-logo.svg" alt="CeremonIA" class="h-8 w-auto">
                 <span id="mobile-progress" class="text-xs text-plum font-bold">0%</span>
             </div>
@@ -89,13 +89,13 @@
 
             <!-- Navigation Footer -->
             <div
-                class="bg-white/90 backdrop-blur border-t border-beige p-6 md:px-20 sticky bottom-0 z-20 flex justify-between items-center">
+                class="bg-white/90 backdrop-blur py-2 px-4 sticky bottom-0 z-20 flex justify-between items-center shrink-0">
                 <button id="back-button" onclick="goToPreviousBlock()"
-                    class=" text-xs uppercase tracking-[0.2em] text-taupe hover:text-charcoal transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-2">
+                    class=" text-xs uppercase tracking-[0.2em] text-taupe hover:text-charcoal transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-2 px-8 py-4 border border-transparent hover:border-beige rounded">
                     <span class="text-lg">←</span> Previous
                 </button>
                 <button id="next-button" onclick="goToNextBlock()"
-                    class="bg-plum text-white  text-xs uppercase tracking-[0.2em] px-8 py-4 hover:bg-plum-light transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+                    class="bg-plum text-white  text-xs uppercase tracking-[0.2em] px-8 py-4 hover:bg-plum-light transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed rounded">
                     Next Block
                 </button>
             </div>
@@ -474,7 +474,3 @@
 </body>
 
 </html>
-
-
-
-

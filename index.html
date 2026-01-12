@@ -8,7 +8,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/images/favicon/favicon.png">
     <link rel="apple-touch-icon" href="assets/images/favicon/favicon.png">
-        
+
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="assets/js/tailwind.config.js"></script>
@@ -123,7 +123,7 @@
 
     <!-- Mobile Menu Overlay -->
     <div id="mobile-menu"
-        class="fixed inset-0 z-[55] bg-cream hidden flex-col animate-[fadeIn_0.3s_ease-out] overflow-y-auto">
+        class="fixed inset-0 z-[150] bg-cream hidden flex-col animate-[fadeIn_0.3s_ease-out] overflow-y-auto">
 
         <!-- Mobile Menu Header -->
         <div class="flex justify-end items-center p-6 border-b border-beige">
@@ -693,8 +693,7 @@
         </div>
     </footer>
 
-    <!-- Login Modal -->
-    <div id="login-modal" class="fixed inset-0 z-[60] hidden overflow-visible" role="dialog"
+    <div id="login-modal" class="fixed inset-0 z-[150] hidden overflow-visible" role="dialog"
         aria-labelledby="login-modal-title" aria-describedby="login-modal-description" aria-modal="true">
         <div class="absolute inset-0 bg-charcoal/80 backdrop-blur-sm transition-opacity" onclick="closeLoginModal()"
             aria-label="Close login modal"></div>
@@ -795,8 +794,7 @@
         </div>
     </div>
 
-    <!-- Forgot Password Modal -->
-    <div id="forgot-password-modal" class="fixed inset-0 z-[60] hidden">
+    <div id="forgot-password-modal" class="fixed inset-0 z-[150] hidden">
         <div class="absolute inset-0 bg-charcoal/80 backdrop-blur-sm transition-opacity"
             onclick="this.parentElement.classList.add('hidden')"></div>
         <div
@@ -1080,5 +1078,3 @@
 </body>
 
 </html>
-
-
