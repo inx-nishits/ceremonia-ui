@@ -59,9 +59,9 @@ function announceToScreenReader(message, priority = 'polite') {
     announcement.setAttribute('aria-atomic', 'true');
     announcement.className = 'sr-only';
     announcement.textContent = message;
-    
+
     document.body.appendChild(announcement);
-    
+
     // Remove after announcement
     setTimeout(() => {
         document.body.removeChild(announcement);
@@ -77,7 +77,7 @@ function initSkipLinks() {
         const skipLink = document.createElement('a');
         skipLink.id = 'skip-to-main';
         skipLink.href = '#main-content';
-        skipLink.className = 'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-[#2A2826] focus:text-white focus:px-4 focus:py-2 focus:font-luz focus:text-xs focus:uppercase focus:tracking-[0.2em]';
+        skipLink.className = 'sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-charcoal focus:text-white focus:px-4 focus:py-2  focus:text-xs focus:uppercase focus:tracking-[0.2em]';
         skipLink.textContent = 'Skip to main content';
         document.body.insertBefore(skipLink, document.body.firstChild);
     }
@@ -86,9 +86,9 @@ function initSkipLinks() {
 /**
  * Initialize accessibility features
  */
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     initSkipLinks();
-    
+
     // Add main content landmark if missing
     const mainContent = document.querySelector('main, [role="main"]');
     if (mainContent && !mainContent.id) {
@@ -102,4 +102,5 @@ window.accessibilityUtils = {
     announceToScreenReader,
     initSkipLinks
 };
+
 

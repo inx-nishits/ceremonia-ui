@@ -77,26 +77,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Smart Navbar (Hide on Down, Show on Up)
-let lastScrollY = window.scrollY;
-const nav = document.getElementById('main-nav');
-
-window.addEventListener('scroll', () => {
-    if (!nav) return;
-
-    const currentScrollY = window.scrollY;
-
-    // If scrolling DOWN and past the header height (e.g. 100px), hide it
-    if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        nav.classList.add('-translate-y-full');
-    }
-    // If scrolling UP, show it
-    else if (currentScrollY < lastScrollY) {
-        nav.classList.remove('-translate-y-full');
-    }
-
-    lastScrollY = currentScrollY;
-});
+// Smart Navbar logic removed to keep header fixed at all times
 
 // Password Visibility Toggle - Enhanced with ARIA
 function togglePasswordVisibility(passwordId, toggleId) {

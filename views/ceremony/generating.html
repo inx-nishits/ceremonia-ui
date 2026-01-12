@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Composing - CeremonIA</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../assets/images/favicon/favicon.png">
+    <link rel="apple-touch-icon" href="../../assets/images/favicon/favicon.png">
+        
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../../assets/js/tailwind.config.js"></script>
     <link
@@ -30,17 +34,23 @@
     </style>
 </head>
 
-<body class="bg-[#F9F8F6] h-screen flex flex-col justify-center items-center overflow-hidden">
+<body class="bg-cream h-screen flex flex-col justify-center items-center overflow-hidden">
+
+    <!-- Logo -->
+    <div class="absolute top-8 left-1/2 transform -translate-x-1/2">
+        <img src="../../assets/images/approved-logo.svg" alt="CeremonIA" class="h-16 w-auto">
+    </div>
 
     <div class="text-center max-w-xl px-6">
         <h1 id="status-text"
-            class="font-goldney text-5xl md:text-6xl text-[#2A2826] mb-4 breathe transition-all duration-1000">
+            class="font-goldney text-5xl md:text-6xl text-charcoal mb-4 breathe transition-all duration-1000">
             Generating your ceremony text...
         </h1>
-        <p class="font-luz text-sm text-[#6B665F] leading-relaxed mb-8">
-            We're preparing your personalized ceremony using your answers and selected style. This may take a few moments. Please do not close this window.
+        <p class=" text-sm text-taupe leading-relaxed mb-8">
+            We're preparing your personalized ceremony using your answers and selected style. This may take a few
+            moments. Please do not close this window.
         </p>
-        <div class="h-px w-24 bg-[#2A2826]/20 mx-auto"></div>
+        <div class="h-px w-24 bg-charcoal/20 mx-auto"></div>
     </div>
 
     <script src="../../assets/js/error-handler.js"></script>
@@ -62,11 +72,11 @@
         function startGeneration() {
             attempts++;
             i = 0;
-            
+
             // Clear any existing intervals/timeouts
             if (generationInterval) clearInterval(generationInterval);
             if (timeoutId) clearTimeout(timeoutId);
-            
+
             // Set timeout for error handling (simulate potential failure)
             timeoutId = setTimeout(() => {
                 if (attempts < maxAttempts) {
@@ -77,7 +87,7 @@
                     }
                 }
             }, 10000); // 10 second timeout
-            
+
             generationInterval = setInterval(() => {
                 if (i < phases.length - 1) {
                     i++;
@@ -90,17 +100,17 @@
                     // Clear intervals
                     clearInterval(generationInterval);
                     clearTimeout(timeoutId);
-                    
+
                     // Mark ceremony as generated
                     localStorage.setItem('ceremonyGenerated', 'true');
-                    
+
                     // Generate mock story if not exists
                     if (window.mockData) {
                         const userEmail = localStorage.getItem('userEmail');
                         const mockStory = window.mockData.getMockStory();
                         localStorage.setItem('ceremonyStory', JSON.stringify(mockStory));
                     }
-                    
+
                     // For Officiants: Add ceremony to list
                     const userRole = localStorage.getItem('userRole');
                     if (userRole === 'officiant') {
@@ -120,7 +130,7 @@
                         ceremonies.unshift(newCeremony); // Add to beginning
                         localStorage.setItem('officiantCeremonies', JSON.stringify(ceremonies));
                         localStorage.setItem('hasCeremonies', 'true');
-                        
+
                         // Officiants go to Dashboard after generation
                         window.location.href = '../dashboard.html';
                     } else {
@@ -134,11 +144,11 @@
         function handleGenerationError() {
             clearInterval(generationInterval);
             clearTimeout(timeoutId);
-            
+
             // Show error state
             el.textContent = 'Generation failed';
             el.style.opacity = '1';
-            
+
             // Show error modal with retry
             if (window.errorHandler) {
                 window.errorHandler.handleGenerationError(
@@ -166,3 +176,7 @@
 </body>
 
 </html>
+
+
+
+

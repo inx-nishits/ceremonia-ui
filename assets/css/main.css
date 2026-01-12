@@ -104,9 +104,9 @@ img {
 }
 
 .btn-luxury:hover {
-    background: var(--color-text);
+    background: var(--color-accent);
     color: #FFF;
-    border-color: var(--color-text);
+    border-color: var(--color-accent);
 }
 
 .btn-accent {
@@ -116,8 +116,8 @@ img {
 }
 
 .btn-accent:hover {
-    background-color: #682d8c;
-    border-color: #682d8c;
+    background-color: #9B4FC4;
+    border-color: #9B4FC4;
 }
 
 /* 6. Layout Utilities */

@@ -24,7 +24,7 @@ function checkPasswordStrength(password) {
     if (!password) {
         return { strength: 'none', score: 0, message: '' };
     }
-    
+
     let score = 0;
     const checks = {
         length: password.length >= 8,
@@ -33,16 +33,16 @@ function checkPasswordStrength(password) {
         number: /[0-9]/.test(password),
         special: /[^A-Za-z0-9]/.test(password)
     };
-    
+
     if (checks.length) score++;
     if (checks.uppercase) score++;
     if (checks.lowercase) score++;
     if (checks.number) score++;
     if (checks.special) score++;
-    
+
     let strength = 'weak';
     let message = '';
-    
+
     if (score <= 2) {
         strength = 'weak';
         message = 'Password is too weak';
@@ -53,7 +53,7 @@ function checkPasswordStrength(password) {
         strength = 'strong';
         message = 'Password is strong';
     }
-    
+
     return { strength, score, message, checks };
 }
 
@@ -76,18 +76,18 @@ function validateCharacterLimit(text, maxLength, fieldName = 'Field') {
 function setupEmailValidation(inputId, errorId) {
     const input = document.getElementById(inputId);
     const errorElement = document.getElementById(errorId);
-    
+
     if (!input || !errorElement) return;
-    
+
     let validationTimeout;
-    
-    input.addEventListener('input', function() {
+
+    input.addEventListener('input', function () {
         clearTimeout(validationTimeout);
-        
+
         // Debounce validation
         validationTimeout = setTimeout(() => {
             const validation = validateEmail(this.value);
-            
+
             if (this.value && !validation.valid) {
                 showFieldError(input, errorElement, validation.message);
             } else {
@@ -95,8 +95,8 @@ function setupEmailValidation(inputId, errorId) {
             }
         }, 300);
     });
-    
-    input.addEventListener('blur', function() {
+
+    input.addEventListener('blur', function () {
         const validation = validateEmail(this.value);
         if (!validation.valid) {
             showFieldError(input, errorElement, validation.message);
@@ -110,38 +110,36 @@ function setupEmailValidation(inputId, errorId) {
 function setupPasswordStrengthIndicator(inputId, indicatorId) {
     const input = document.getElementById(inputId);
     const indicator = document.getElementById(indicatorId);
-    
+
     if (!input || !indicator) return;
-    
-    input.addEventListener('input', function() {
+
+    input.addEventListener('input', function () {
         const strength = checkPasswordStrength(this.value);
-        
+
         if (!this.value) {
             indicator.classList.add('hidden');
             return;
         }
-        
+
         indicator.classList.remove('hidden');
-        
+
         // Update strength bar
         const strengthBar = indicator.querySelector('.strength-bar');
         const strengthText = indicator.querySelector('.strength-text');
-        
+
         if (strengthBar) {
-            strengthBar.className = `strength-bar h-1 transition-all duration-300 ${
-                strength.strength === 'weak' ? 'bg-red-600 w-1/3' :
-                strength.strength === 'medium' ? 'bg-yellow-600 w-2/3' :
-                'bg-green-600 w-full'
-            }`;
+            strengthBar.className = `strength-bar h-1 transition-all duration-300 ${strength.strength === 'weak' ? 'bg-red-600 w-1/3' :
+                    strength.strength === 'medium' ? 'bg-yellow-600 w-2/3' :
+                        'bg-green-600 w-full'
+                }`;
         }
-        
+
         if (strengthText) {
             strengthText.textContent = strength.message;
-            strengthText.className = `strength-text text-xs font-luz ${
-                strength.strength === 'weak' ? 'text-red-600' :
-                strength.strength === 'medium' ? 'text-yellow-600' :
-                'text-green-600'
-            }`;
+            strengthText.className = `strength-text text-xs  ${strength.strength === 'weak' ? 'text-red-600' :
+                    strength.strength === 'medium' ? 'text-yellow-600' :
+                        'text-green-600'
+                }`;
         }
     });
 }
@@ -152,25 +150,25 @@ function setupPasswordStrengthIndicator(inputId, indicatorId) {
 function setupCharacterLimit(inputId, maxLength, counterId) {
     const input = document.getElementById(inputId);
     const counter = document.getElementById(counterId);
-    
+
     if (!input || !counter) return;
-    
+
     // Set maxlength attribute
     input.setAttribute('maxlength', maxLength);
-    
-    input.addEventListener('input', function() {
+
+    input.addEventListener('input', function () {
         const remaining = maxLength - this.value.length;
         counter.textContent = `${this.value.length}/${maxLength}`;
-        
+
         if (remaining < 20) {
             counter.classList.add('text-red-600');
-            counter.classList.remove('text-[#6B665F]');
+            counter.classList.remove('text-taupe');
         } else {
             counter.classList.remove('text-red-600');
-            counter.classList.add('text-[#6B665F]');
+            counter.classList.add('text-taupe');
         }
     });
-    
+
     // Initial count
     counter.textContent = `${input.value.length}/${maxLength}`;
 }
@@ -202,10 +200,10 @@ function clearFieldError(input, errorElement) {
 function validateForm(formId) {
     const form = document.getElementById(formId);
     if (!form) return { valid: false, errors: [] };
-    
+
     const errors = [];
     const requiredFields = form.querySelectorAll('[required]');
-    
+
     requiredFields.forEach(field => {
         if (!field.value.trim()) {
             const fieldName = field.getAttribute('aria-label') || field.placeholder || 'This field';
@@ -215,7 +213,7 @@ function validateForm(formId) {
             field.removeAttribute('aria-invalid');
         }
     });
-    
+
     // Validate email fields
     const emailFields = form.querySelectorAll('input[type="email"]');
     emailFields.forEach(field => {
@@ -227,7 +225,7 @@ function validateForm(formId) {
             }
         }
     });
-    
+
     return {
         valid: errors.length === 0,
         errors
@@ -246,4 +244,5 @@ window.validationUtils = {
     clearFieldError,
     validateForm
 };
+
 

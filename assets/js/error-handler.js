@@ -102,7 +102,7 @@ function createErrorModal() {
     modal.setAttribute('aria-modal', 'true');
 
     modal.innerHTML = `
-        <div class="absolute inset-0 bg-[#2A2826]/90 backdrop-blur-sm" onclick="closeErrorModal()" aria-label="Close error modal"></div>
+        <div class="absolute inset-0 bg-charcoal/90 backdrop-blur-sm" onclick="closeErrorModal()" aria-label="Close error modal"></div>
         <div class="bg-white p-12 w-full max-w-md relative z-10 animate-[fadeInUp_0.3s_ease-out] shadow-2xl">
             <button onclick="closeErrorModal()" 
                 aria-label="Close error modal"
@@ -112,15 +112,15 @@ function createErrorModal() {
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
                 <h2 id="error-title" class="font-goldney text-3xl text-center mb-4"></h2>
-                <p id="error-message" class="font-luz text-sm text-[#6B665F] text-center leading-relaxed"></p>
+                <p id="error-message" class=" text-sm text-taupe text-center leading-relaxed"></p>
             </div>
             <div class="flex gap-4">
                 <button onclick="closeErrorModal()" 
-                    class="flex-1 py-3 border border-[#E5E2DD] hover:bg-[#F9F8F6] transition-colors uppercase tracking-[0.2em] text-xs font-luz text-[#6B665F]">
+                    class="flex-1 py-3 border border-beige hover:bg-cream transition-colors uppercase tracking-[0.2em] text-xs  text-taupe">
                     Close
                 </button>
                 <button id="error-retry" 
-                    class="hidden flex-1 bg-[#2A2826] text-white py-3 font-luz uppercase tracking-[0.2em] text-xs hover:bg-[#823AAF] transition-colors">
+                    class="hidden flex-1 bg-charcoal text-white py-3  uppercase tracking-[0.2em] text-xs hover:bg-plum transition-colors">
                     Try Again
                 </button>
             </div>
@@ -197,4 +197,5 @@ document.addEventListener('keydown', function (e) {
         closeErrorModal();
     }
 });
+
 
