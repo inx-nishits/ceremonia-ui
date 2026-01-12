@@ -148,19 +148,15 @@ const TEST_CREDENTIALS = {
         password: 'test1234',
         role: 'endUser',
         hasCeremony: false  // Will be set to true after generation
-    }
+    },
 
-    // OFFICIANT LOGIN DISABLED FOR DEMO
-    // To re-enable: Uncomment the block below
-    /*
     // Professional Officiant - Can test both "empty" and "with ceremonies" states
     // Starts with ceremonies (can delete to see empty state)
-    ,'officiant@ceremonia.com': {
+    'officiant@ceremonia.com': {
         password: 'test1234',
         role: 'officiant',
         hasCeremonies: true  // Has mock ceremonies, can delete to test empty state
     }
-    */
 };
 
 // Login Handler (Static Simulation) - Enhanced with validation
