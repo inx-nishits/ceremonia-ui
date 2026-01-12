@@ -1,0 +1,96 @@
+/* Protection Styles */
+
+/* Prevent text selection */
+.select-none,
+body {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Allow selection in inputs and textareas */
+input,
+textarea {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+/* Watermark Style */
+#demo-watermark {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(130, 58, 175, 0.9);
+    /* Purple #823AAF */
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    z-index: 9999;
+    pointer-events: none;
+    /* Crucial: Allows clicking through the watermark */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    animation: pulse-subtle 3s infinite;
+}
+
+@keyframes pulse-subtle {
+    0% {
+        opacity: 0.9;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+
+    100% {
+        opacity: 0.9;
+    }
+}
+
+/* Print Protection */
+@media print {
+    body::before {
+        content: "UI DEMO - NOT FOR PRODUCTION USE";
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate(-45deg);
+        font-size: 4vw;
+        color: rgba(130, 58, 175, 0.1);
+        z-index: 10000;
+        pointer-events: none;
+        white-space: nowrap;
+        width: 100vw;
+        text-align: center;
+    }
+}
+
+/* Notification Toast */
+#protection-toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: #2A2826;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    z-index: 10000;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#protection-toast.show {
+    transform: translateX(-50%) translateY(0);
+}
