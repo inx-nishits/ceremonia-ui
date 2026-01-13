@@ -62,22 +62,18 @@ function initializeMockData(email) {
 
     // Clear all questionnaire data for fresh start (if no questionnaire data defined)
     if (!userData.questionnaire) {
-        // Clear all block-related localStorage items for fresh testing
-        // Block 1
-        localStorage.removeItem('block1_coupleName');
-        localStorage.removeItem('block1_ceremonyName');
-        localStorage.removeItem('block1_ceremonyDate');
-        // Block 2
-        localStorage.removeItem('block2_ceremonyLocation');
-        localStorage.removeItem('block2_meetStory');
-        localStorage.removeItem('block2_sharedHobby');
-        // Block 3
-        localStorage.removeItem('block3_connection');
-        // Block 4
-        localStorage.removeItem('block4_values');
-        // Block 5
-        localStorage.removeItem('block5_future');
-        
+        // Clear all block-related localStorage items for fresh testing (all 15 blocks)
+        for (let blockNum = 1; blockNum <= 15; blockNum++) {
+            // Get all localStorage keys
+            const keys = Object.keys(localStorage);
+            // Remove all keys that start with "block{blockNum}_"
+            keys.forEach(key => {
+                if (key.startsWith(`block${blockNum}_`)) {
+                    localStorage.removeItem(key);
+                }
+            });
+        }
+
         // Also clear block1Locked to allow fresh start
         localStorage.removeItem('block1Locked');
         // Clear intro seen flag for fresh intro screen
@@ -124,7 +120,7 @@ function getMockStory() {
     if (storyJson) {
         return JSON.parse(storyJson);
     }
-    
+
     // Default mock story
     return {
         title: 'Sarah & James Union',
@@ -167,7 +163,7 @@ function getMockCeremonies() {
     if (ceremoniesJson) {
         return JSON.parse(ceremoniesJson);
     }
-    
+
     // Default mock ceremonies
     return [
         {

@@ -24,7 +24,7 @@
         <!-- LEFT SIDEBAR: Summary Panel -->
         <aside
             class="w-full md:w-80 bg-white border-r border-beige flex flex-col z-30 shadow-lg md:shadow-none order-2 md:order-1 md:h-screen">
-            <div class="p-8 border-b border-beige hidden md:block shrink-0">
+            <div class="px-8 py-2 border-b border-beige hidden md:block shrink-0">
                 <a href="../../index.html" class="block">
                     <img src="../../assets/images/approved-logo.svg" alt="CeremonIA" class="h-12 w-auto">
                 </a>
@@ -109,51 +109,259 @@
         const questionnaireBlocks = [
             {
                 id: 1,
-                title: "General Information",
-                instruction: "Let's start with the basics. These details help us structure the ceremony.",
+                title: "Information About Your Ceremony",
+                instruction: "Let's start with the essential details. These will help us personalize your ceremony. Note: This block cannot be edited after submission.",
                 isLocked: false,
                 questions: [
-                    { id: 'coupleName', text: 'What are your names?', type: 'text', required: true, placeholder: 'e.g., Sarah & James' },
-                    { id: 'ceremonyName', text: 'How should we title the ceremony?', type: 'text', required: true, placeholder: 'e.g., The Union of Sarah & James' },
-                    { id: 'ceremonyDate', text: 'When is the ceremony taking place?', type: 'text', required: true, placeholder: 'e.g., June 15, 2025' }
+                    { id: 'partner1FirstName', text: 'What is the first name of Partner 1?', type: 'text', required: true, placeholder: 'e.g., Sarah' },
+                    { id: 'partner1LastName', text: 'What is the last name of Partner 1?', type: 'text', required: true, placeholder: 'e.g., Johnson' },
+                    { id: 'partner1Phone', text: 'What is the phone number of Partner 1?', type: 'tel', required: true, placeholder: 'e.g., +33 6 12 34 56 78' },
+                    { id: 'partner2FirstName', text: 'What is the first name of Partner 2?', type: 'text', required: true, placeholder: 'e.g., James' },
+                    { id: 'partner2LastName', text: 'What is the last name of Partner 2?', type: 'text', required: true, placeholder: 'e.g., Smith' },
+                    { id: 'partner2Phone', text: 'What is the phone number of Partner 2?', type: 'tel', required: true, placeholder: 'e.g., +33 6 98 76 54 32' },
+                    { id: 'ceremonyDate', text: 'What is the date of your ceremony?', type: 'date', required: true, placeholder: 'Select date' },
+                    { id: 'ceremonyVenuePlanA', text: 'What is the address of your ceremony venue (Plan A)?', type: 'textarea', required: true, placeholder: 'Full address including city and postal code' },
+                    { id: 'ceremonyVenuePlanB', text: 'What is the address of your backup ceremony venue (Plan B)?', type: 'textarea', required: false, placeholder: 'Full address (optional)' },
+                    { id: 'civilCeremonyDone', text: 'Have you already had your civil ceremony?', type: 'select', required: true, options: ['Yes', 'No'] },
+                    { id: 'civilCeremonyDate', text: 'If yes, what was the date of your civil ceremony?', type: 'date', required: false, placeholder: 'Select date', conditional: { field: 'civilCeremonyDone', value: 'Yes' } },
+                    { id: 'guestCount', text: 'How many guests are expected at your ceremony?', type: 'number', required: true, placeholder: 'e.g., 100' },
+                    { id: 'ceremonyLanguage', text: 'In which language would you like your ceremony to be conducted?', type: 'select', required: true, options: ['English', 'French', 'Spanish', 'Italian', 'German', 'Other'], default: 'English' }
                 ]
             },
             {
                 id: 2,
-                title: "Personal Details",
-                instruction: "Tell us a bit about your journey.",
+                title: "Day-of Schedule",
+                instruction: "Help us plan the perfect timeline for your ceremony day.",
                 isLocked: false,
                 questions: [
-                    { id: 'ceremonyLocation', text: 'Where will the ceremony take place?', type: 'text', required: true, placeholder: 'e.g., A vineyard in Tuscany' },
-                    { id: 'meetStory', text: 'How did you meet? Tell us the story.', type: 'textarea', required: true, placeholder: 'It all started when...' },
-                    { id: 'sharedHobby', text: 'What is a passion you both share?', type: 'text', required: true, placeholder: 'e.g., Hiking, Cooking, Travel' }
+                    { id: 'officiantArrivalTime', text: 'At what time should the officiant arrive?', type: 'time', required: true, placeholder: '14:00' },
+                    { id: 'guestsArrivalTime', text: 'At what time will the guests arrive?', type: 'time', required: true, placeholder: '14:30' },
+                    { id: 'ceremonyStartTime', text: 'At what time will the ceremony begin?', type: 'time', required: true, placeholder: '15:00' }
                 ]
             },
             {
                 id: 3,
-                title: "Connection",
-                instruction: "Dive deeper into your bond.",
+                title: "Contacts",
+                instruction: "Share the contact information for your key vendors so we can coordinate seamlessly.",
                 isLocked: false,
                 questions: [
-                    { id: 'connection', text: 'What specific moment made you realize this was "it"?', type: 'textarea', required: true, placeholder: 'There was this moment when...' }
+                    { id: 'venueContact', text: 'What is the name and phone number of the venue contact?', type: 'text', required: false, placeholder: 'Name: John Doe, Phone: +33 6 12 34 56 78' },
+                    { id: 'weddingPlannerContact', text: 'What is the name and phone number of your wedding planner?', type: 'text', required: false, placeholder: 'Name: Jane Smith, Phone: +33 6 98 76 54 32' },
+                    { id: 'decoratorContact', text: 'What is the name and phone number of your decorator?', type: 'text', required: false, placeholder: 'Name: Marie Dupont, Phone: +33 6 11 22 33 44' },
+                    { id: 'djContact', text: 'What is the name and phone number of your DJ?', type: 'text', required: false, placeholder: 'Name: DJ Mike, Phone: +33 6 55 66 77 88' },
+                    { id: 'photographerContact', text: 'What is the name and phone number of your photographer?', type: 'text', required: false, placeholder: 'Name: Photo Pro, Phone: +33 6 99 88 77 66' }
                 ]
             },
             {
                 id: 4,
-                title: "Values",
-                instruction: "What grounds your relationship?",
+                title: "Wedding Theme",
+                instruction: "Tell us about the aesthetic and atmosphere you're creating for your special day.",
                 isLocked: false,
                 questions: [
-                    { id: 'values', text: 'What core values guide your relationship?', type: 'textarea', required: true, placeholder: 'Trust, Adventure, Kindness...' }
+                    { id: 'weddingTheme', text: 'What is the general theme of your wedding?', type: 'text', required: false, placeholder: 'e.g., Rustic Garden, Modern Elegance, Bohemian Chic' },
+                    { id: 'dressCode', text: 'What is the dress code for your wedding?', type: 'text', required: false, placeholder: 'e.g., Black Tie, Cocktail Attire, Smart Casual' },
+                    { id: 'groomsSuitColor', text: 'What color suit will the grooms be wearing?', type: 'text', required: false, placeholder: 'e.g., Navy Blue, Charcoal Gray, Beige' },
+                    { id: 'officiantAttire', text: 'What would you like the officiant to wear?', type: 'text', required: false, placeholder: 'e.g., Formal suit, Smart casual, Match the wedding colors' }
                 ]
             },
             {
                 id: 5,
-                title: "Future",
-                instruction: "Look ahead to your life together.",
+                title: "The Procession",
+                instruction: "Tell us about your bridal party and how they'll make their entrance.",
                 isLocked: false,
                 questions: [
-                    { id: 'future', text: 'What are your dreams for the future?', type: 'textarea', required: true, placeholder: 'We hope to build...' }
+                    {
+                        id: 'bridalPartyMembers', text: 'Who will be part of the bridal party? (Add each person with their role and entrance details)', type: 'dynamic-list', required: false, placeholder: 'Click "Add Person" below to add bridal party members',
+                        fields: [
+                            { id: 'firstName', label: 'First Name', type: 'text', placeholder: 'e.g., Emma' },
+                            { id: 'lastName', label: 'Last Name', type: 'text', placeholder: 'e.g., Wilson' },
+                            { id: 'role', label: 'Role', type: 'text', placeholder: 'e.g., Bridesmaid, Groomsman, Flower Girl' },
+                            { id: 'entranceType', label: 'How will they enter?', type: 'select', options: ['In a pair', 'Individually'] },
+                            { id: 'pairWith', label: 'If in a pair, who enters with them?', type: 'text', placeholder: 'Name of their pair', conditional: { field: 'entranceType', value: 'In a pair' } }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 6,
+                title: "Wedding Context",
+                instruction: "Share the deeper meaning behind your choices and any special tributes you'd like to include.",
+                isLocked: false,
+                questions: [
+                    { id: 'whyMarriage', text: 'Why did you choose to get married?', type: 'textarea', required: false, placeholder: 'Share what marriage means to you...' },
+                    { id: 'whySecularCeremony', text: 'Why did you choose to have a secular ceremony?', type: 'textarea', required: false, placeholder: 'Tell us about your decision...' },
+                    { id: 'whyThisLocation', text: 'Why did you choose this location for your ceremony?', type: 'textarea', required: false, placeholder: 'What makes this place special to you...' },
+                    { id: 'representReligion', text: 'Do you wish to represent a religion during the ceremony?', type: 'select', required: false, options: ['Yes', 'No'] },
+                    { id: 'whichReligionHow', text: 'If yes, which religion and how would you like it to be represented?', type: 'textarea', required: false, placeholder: 'Describe the religious elements you\'d like to include...', conditional: { field: 'representReligion', value: 'Yes' } },
+                    { id: 'tributeToDeceased', text: 'Would you like to pay tribute to a deceased loved one during the ceremony?', type: 'select', required: false, options: ['Yes', 'No'] },
+                    { id: 'tributeDetails', text: 'If yes, who and how would you like to honor them?', type: 'textarea', required: false, placeholder: 'Share how you\'d like to remember them...', conditional: { field: 'tributeToDeceased', value: 'Yes' } }
+                ]
+            },
+            {
+                id: 7,
+                title: "Witnesses and Speakers",
+                instruction: "Identify the special people who will stand with you and speak at your ceremony.",
+                isLocked: false,
+                questions: [
+                    {
+                        id: 'partner1Witnesses', text: 'Personal witnesses for Partner 1:', type: 'dynamic-list', required: false, placeholder: 'Click "Add Witness" below',
+                        fields: [
+                            { id: 'firstName', label: 'First Name', type: 'text', placeholder: 'e.g., Michael' },
+                            { id: 'lastName', label: 'Last Name', type: 'text', placeholder: 'e.g., Brown' },
+                            { id: 'relationship', label: 'Relationship to Partner 1', type: 'text', placeholder: 'e.g., Best Friend, Brother, Colleague' }
+                        ]
+                    },
+                    {
+                        id: 'partner2Witnesses', text: 'Personal witnesses for Partner 2:', type: 'dynamic-list', required: false, placeholder: 'Click "Add Witness" below',
+                        fields: [
+                            { id: 'firstName', label: 'First Name', type: 'text', placeholder: 'e.g., Emily' },
+                            { id: 'lastName', label: 'Last Name', type: 'text', placeholder: 'e.g., Davis' },
+                            { id: 'relationship', label: 'Relationship to Partner 2', type: 'text', placeholder: 'e.g., Sister, Best Friend, Cousin' }
+                        ]
+                    },
+                    {
+                        id: 'otherSpeakers', text: 'Other invited speakers:', type: 'dynamic-list', required: false, placeholder: 'Click "Add Speaker" below',
+                        fields: [
+                            { id: 'firstName', label: 'First Name', type: 'text', placeholder: 'e.g., Robert' },
+                            { id: 'lastName', label: 'Last Name', type: 'text', placeholder: 'e.g., Taylor' },
+                            { id: 'relationship', label: 'Relationship to the couple', type: 'text', placeholder: 'e.g., Father, Close Friend, Mentor' },
+                            { id: 'speakingTime', label: 'When will they speak?', type: 'select', options: ['Before vows', 'After vows', 'During symbolic ritual'] }
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 8,
+                title: "The Couple's Story",
+                instruction: "Share your individual journeys and the beautiful story of how you came together.",
+                isLocked: false,
+                questions: [
+                    { id: 'partner1Birthplace', text: 'Partner 1: Where were you born and raised?', type: 'text', required: false, placeholder: 'e.g., Paris, France' },
+                    { id: 'partner1Education', text: 'Partner 1: What did you study?', type: 'text', required: false, placeholder: 'e.g., Business Administration' },
+                    { id: 'partner1Profession', text: 'Partner 1: What is your profession?', type: 'text', required: false, placeholder: 'e.g., Marketing Manager' },
+                    { id: 'partner1Hobbies', text: 'Partner 1: What are your passions and hobbies?', type: 'textarea', required: false, placeholder: 'e.g., Photography, hiking, cooking...' },
+                    { id: 'partner1Personality', text: 'Partner 1: Describe your personality in a few words.', type: 'textarea', required: false, placeholder: 'e.g., Adventurous, thoughtful, creative...' },
+                    { id: 'partner2Birthplace', text: 'Partner 2: Where were you born and raised?', type: 'text', required: false, placeholder: 'e.g., London, UK' },
+                    { id: 'partner2Education', text: 'Partner 2: What did you study?', type: 'text', required: false, placeholder: 'e.g., Computer Science' },
+                    { id: 'partner2Profession', text: 'Partner 2: What is your profession?', type: 'text', required: false, placeholder: 'e.g., Software Engineer' },
+                    { id: 'partner2Hobbies', text: 'Partner 2: What are your passions and hobbies?', type: 'textarea', required: false, placeholder: 'e.g., Reading, traveling, music...' },
+                    { id: 'partner2Personality', text: 'Partner 2: Describe your personality in a few words.', type: 'textarea', required: false, placeholder: 'e.g., Analytical, caring, humorous...' },
+                    { id: 'howYouMet', text: 'How did you meet?', type: 'textarea', required: true, placeholder: 'Tell us the story of your first encounter...' },
+                    { id: 'firstImpressions', text: 'What were your first impressions of each other?', type: 'textarea', required: false, placeholder: 'Share what you thought when you first met...' },
+                    { id: 'firstDate', text: 'Tell us about your first date.', type: 'textarea', required: false, placeholder: 'Where did you go? What did you do?...' },
+                    { id: 'memorableAnecdote', text: 'What is a memorable anecdote from the beginning of your relationship?', type: 'textarea', required: false, placeholder: 'Share a special early memory...' },
+                    { id: 'challengesOvercome', text: 'What challenges have you overcome together?', type: 'textarea', required: false, placeholder: 'How have you grown stronger as a couple?...' },
+                    { id: 'definingMoment', text: 'What is a funny or touching moment that defines your relationship?', type: 'textarea', required: false, placeholder: 'Share a moment that captures your bond...' },
+                    { id: 'hasSymbol', text: 'Do you have a song, place, or object that symbolizes your love?', type: 'select', required: false, options: ['Yes', 'No'] },
+                    { id: 'symbolDetails', text: 'If yes, what is it and why is it meaningful?', type: 'textarea', required: false, placeholder: 'Describe your special symbol and its significance...', conditional: { field: 'hasSymbol', value: 'Yes' } },
+                    { id: 'proposalStory', text: 'How did the marriage proposal happen?', type: 'textarea', required: false, placeholder: 'Share the story of your proposal...' },
+                    { id: 'coreValues', text: 'What are the core values that guide your relationship?', type: 'textarea', required: true, placeholder: 'e.g., Trust, honesty, adventure, family...' },
+                    { id: 'futureProjects', text: 'What projects do you have for your future together?', type: 'textarea', required: true, placeholder: 'Share your dreams and plans...' }
+                ]
+            },
+            {
+                id: 9,
+                title: "Rituals",
+                instruction: "Choose meaningful symbolic rituals to include in your ceremony.",
+                isLocked: false,
+                questions: [
+                    { id: 'includeRitual', text: 'Would you like to include a symbolic ritual in your ceremony?', type: 'select', required: false, options: ['Yes', 'No'] },
+                    {
+                        id: 'ritualType', text: 'If yes, which ritual would you like?', type: 'select', required: false,
+                        options: ['Sand ceremony', 'Unity candle', 'Handfasting (ribbon tying)', 'Wine ceremony', 'Tree planting', 'Love letter box', 'Other'],
+                        conditional: { field: 'includeRitual', value: 'Yes' }
+                    },
+                    { id: 'customRitualDescription', text: 'If you chose "Other," please describe your custom ritual.', type: 'textarea', required: false, placeholder: 'Describe your unique ritual...', conditional: { field: 'ritualType', value: 'Other' } },
+                    {
+                        id: 'ritualParticipants', text: 'Who will participate in this ritual?', type: 'select', required: false,
+                        options: ['Just the couple', 'Include family members', 'Include friends', 'Include all guests'],
+                        conditional: { field: 'includeRitual', value: 'Yes' }
+                    }
+                ]
+            },
+            {
+                id: 10,
+                title: "Vows and Rings",
+                instruction: "Share your personal vows and tell us about your ring exchange.",
+                isLocked: false,
+                questions: [
+                    { id: 'hasPersonalVows', text: 'Have you written your own personalized vows?', type: 'select', required: false, options: ['Yes', 'No'] },
+                    { id: 'partner1Vows', text: 'If yes, please share the vows for Partner 1.', type: 'textarea', required: false, placeholder: 'Enter Partner 1\'s vows...', conditional: { field: 'hasPersonalVows', value: 'Yes' } },
+                    { id: 'partner2Vows', text: 'If yes, please share the vows for Partner 2.', type: 'textarea', required: false, placeholder: 'Enter Partner 2\'s vows...', conditional: { field: 'hasPersonalVows', value: 'Yes' } },
+                    { id: 'ringBearerFirstName', text: 'Who will bring the rings? (First Name)', type: 'text', required: false, placeholder: 'e.g., Sophie' },
+                    { id: 'ringBearerLastName', text: 'Who will bring the rings? (Last Name)', type: 'text', required: false, placeholder: 'e.g., Martin' },
+                    { id: 'ringBearerRelationship', text: 'Relationship to the couple', type: 'text', required: false, placeholder: 'e.g., Niece, Best Friend, Ring Bearer' }
+                ]
+            },
+            {
+                id: 11,
+                title: "Certificate and Exit",
+                instruction: "Plan the final moments of your ceremony with a certificate signing and memorable exit.",
+                isLocked: false,
+                questions: [
+                    { id: 'signCertificate', text: 'Will you sign a symbolic certificate during the ceremony?', type: 'select', required: false, options: ['Yes', 'No'] },
+                    {
+                        id: 'certificateSigners', text: 'If yes, who will sign it with you?', type: 'select', required: false,
+                        options: ['Just the couple', 'Witnesses', 'All guests'],
+                        conditional: { field: 'signCertificate', value: 'Yes' }
+                    },
+                    {
+                        id: 'exitType', text: 'What have you planned for your exit?', type: 'select', required: false,
+                        options: ['Flower petals', 'Soap bubbles', 'Confetti', 'Sparklers', 'Other']
+                    },
+                    { id: 'customExitDescription', text: 'If you chose "Other," please describe what you have planned.', type: 'text', required: false, placeholder: 'Describe your exit plan...', conditional: { field: 'exitType', value: 'Other' } }
+                ]
+            },
+            {
+                id: 12,
+                title: "Musical Choices",
+                instruction: "Select the perfect soundtrack for each moment of your ceremony.",
+                isLocked: false,
+                questions: [
+                    { id: 'guestArrivalSong', text: 'What music will play during guest arrival? (Song Title)', type: 'text', required: false, placeholder: 'e.g., A Thousand Years' },
+                    { id: 'guestArrivalArtist', text: 'Guest arrival music - Artist', type: 'text', required: false, placeholder: 'e.g., Christina Perri' },
+                    { id: 'processionSong', text: 'What music will play during the procession? (Song Title)', type: 'text', required: false, placeholder: 'e.g., Canon in D' },
+                    { id: 'processionArtist', text: 'Procession music - Artist', type: 'text', required: false, placeholder: 'e.g., Pachelbel' },
+                    { id: 'ringExchangeSong', text: 'What music will play during the ring exchange? (Song Title)', type: 'text', required: false, placeholder: 'e.g., All of Me' },
+                    { id: 'ringExchangeArtist', text: 'Ring exchange music - Artist', type: 'text', required: false, placeholder: 'e.g., John Legend' },
+                    { id: 'exitSong', text: 'What music will play during the ceremony exit? (Song Title)', type: 'text', required: false, placeholder: 'e.g., Marry You' },
+                    { id: 'exitArtist', text: 'Exit music - Artist', type: 'text', required: false, placeholder: 'e.g., Bruno Mars' }
+                ]
+            },
+            {
+                id: 13,
+                title: "Texts and Speeches",
+                instruction: "For each speaker you identified earlier, help us craft their perfect speech. (AI will generate content based on your guidance)",
+                isLocked: false,
+                questions: [
+                    { id: 'speechesNote', text: 'Note: This section will be populated based on the speakers you added in Block 7. For each speaker, you can provide guidance on what they should say.', type: 'info', required: false },
+                    { id: 'speechGuidance', text: 'General guidance for all speeches (optional):', type: 'textarea', required: false, placeholder: 'Any overall themes or topics you\'d like speakers to address...' }
+                ]
+            },
+            {
+                id: 14,
+                title: "Other Information",
+                instruction: "Share any additional details or preferences we should know about.",
+                isLocked: false,
+                questions: [
+                    { id: 'additionalInfo', text: 'Is there anything else you would like to mention or include in your ceremony?', type: 'textarea', required: false, placeholder: 'Any special requests, traditions, or details we should know...' },
+                    { id: 'doNotMention', text: 'Is there anything you specifically do NOT want mentioned during the ceremony?', type: 'textarea', required: false, placeholder: 'Topics or subjects to avoid...' }
+                ]
+            },
+            {
+                id: 15,
+                title: "Ceremony Style",
+                instruction: "Finally, help us understand the tone and style you envision for your ceremony.",
+                isLocked: false,
+                questions: [
+                    {
+                        id: 'ceremonyTone', text: 'Desired tone (select all that apply):', type: 'checkbox', required: true,
+                        options: ['Formal and Traditional', 'Romantic and Emotional', 'Humorous and Light-hearted', 'Intimate and Personal', 'Spiritual', 'Modern and Contemporary']
+                    },
+                    {
+                        id: 'narrativeStyle', text: 'Narrative style (choose one):', type: 'radio', required: true,
+                        options: ['Poetic and Lyrical', 'Simple and Direct', 'Storytelling and Narrative', 'Philosophical and Reflective', 'Conversational and Warm']
+                    }
                 ]
             }
         ];
@@ -260,22 +468,28 @@
             let firstUnansweredFound = false;
 
             block.questions.forEach((q, idx) => {
+                // Check conditional logic
+                if (q.conditional) {
+                    const condField = block.questions.find(quest => quest.id === q.conditional.field);
+                    if (condField) {
+                        const condValue = localStorage.getItem(`block${block.id}_${condField.id}`) || '';
+                        if (condValue !== q.conditional.value) {
+                            return; // Skip this question if condition not met
+                        }
+                    }
+                }
+
                 const savedAnswer = localStorage.getItem(`block${block.id}_${q.id}`) || '';
                 const isAnswered = savedAnswer.trim() !== '';
                 const isLocked = block.isLocked && block.id === 1;
 
                 // Determine State
-                // 1. Editing: Manually triggered
-                // 2. Answered: Show display
-                // 3. Active: First unanswered
-                // 4. Pending: Subsequent unanswered
-
                 let mode = 'pending';
                 if (editingQuestionId === q.id) {
                     mode = 'editing';
                 } else if (isAnswered) {
                     mode = 'answered';
-                } else if (!firstUnansweredFound) {
+                } else if (!firstUnansweredFound && q.type !== 'info') {
                     mode = 'active';
                     firstUnansweredFound = true;
                     activeQuestionId = q.id;
@@ -285,14 +499,31 @@
                 el.className = `transition-all duration-500 ${mode === 'pending' ? 'opacity-40 grayscale' : 'opacity-100'}`;
 
                 // Question Text
-                const qText = `<h3 class="font-goldney text-2xl text-charcoal mb-4"><span class="text-plum text-lg mr-2">${idx + 1}.</span> ${q.text}</h3>`;
+                const qText = q.type === 'info'
+                    ? `<div class="bg-lavender border-l-4 border-plum p-4 mb-4"><p class="text-sm text-charcoal italic">${q.text}</p></div>`
+                    : `<h3 class="text-lg md:text-xl text-charcoal mb-4 font-medium"><span class="text-plum text-base mr-2 font-semibold">${idx + 1}.</span> ${q.text}</h3>`;
 
-                if (mode === 'answered') {
+                if (q.type === 'info') {
+                    // INFO TYPE - Just display message
+                    el.innerHTML = qText;
+                } else if (mode === 'answered') {
                     // DISPLAY MODE
+                    let displayValue = savedAnswer;
+
+                    // Format display for special types
+                    if (q.type === 'checkbox') {
+                        try {
+                            const selected = JSON.parse(savedAnswer);
+                            displayValue = Array.isArray(selected) ? selected.join(', ') : savedAnswer;
+                        } catch (e) {
+                            displayValue = savedAnswer;
+                        }
+                    }
+
                     el.innerHTML = `
                         ${qText}
                         <div class="bg-white p-6 border-l-4 border-plum shadow-sm relative group">
-                            <p class=" text-taupe leading-relaxed whitespace-pre-wrap">${savedAnswer}</p>
+                            <p class=" text-taupe leading-relaxed whitespace-pre-wrap">${displayValue}</p>
                             ${!isLocked ? `
                                 <button onclick="startEditing('${q.id}')" class="absolute top-4 right-4 text-xs  uppercase tracking-widest text-taupe hover:text-plum opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
@@ -306,20 +537,101 @@
                     const inputId = `input-${q.id}`;
                     const val = mode === 'editing' ? savedAnswer : '';
 
-                    const inputHtml = q.type === 'textarea'
-                        ? `<textarea id="${inputId}" rows="4" maxlength="1500" placeholder="${q.placeholder}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none  text-charcoal resize-none rounded">${val}</textarea>`
-                        : `<input type="text" id="${inputId}" maxlength="1500" placeholder="${q.placeholder}" value="${val}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none  text-charcoal rounded">`;
+                    let inputHtml = '';
+                    let showCharCount = false;
+                    let showVoiceButton = false;
+
+                    switch (q.type) {
+                        case 'textarea':
+                            inputHtml = `<textarea id="${inputId}" rows="4" maxlength="1500" placeholder="${q.placeholder || ''}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none  text-charcoal resize-none rounded">${val}</textarea>`;
+                            showCharCount = true;
+                            showVoiceButton = true;
+                            break;
+
+                        case 'select':
+                            const options = q.options || [];
+                            const defaultVal = q.default || '';
+                            inputHtml = `<select id="${inputId}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none  text-charcoal rounded">
+                                <option value="">-- Select --</option>
+                                ${options.map(opt => `<option value="${opt}" ${val === opt || (!val && defaultVal === opt) ? 'selected' : ''}>${opt}</option>`).join('')}
+                            </select>`;
+                            break;
+
+                        case 'checkbox':
+                            let selectedOptions = [];
+                            try {
+                                selectedOptions = val ? JSON.parse(val) : [];
+                            } catch (e) {
+                                selectedOptions = [];
+                            }
+                            const checkboxOptions = q.options || [];
+                            inputHtml = `<div id="${inputId}" class="space-y-3">
+                                ${checkboxOptions.map((opt, i) => `
+                                    <label class="flex items-center gap-3 cursor-pointer group">
+                                        <input type="checkbox" value="${opt}" ${selectedOptions.includes(opt) ? 'checked' : ''} 
+                                            class="w-5 h-5 text-plum border-beige rounded focus:ring-plum focus:ring-2" 
+                                            onchange="updateCheckboxValue('${inputId}')">
+                                        <span class="text-charcoal group-hover:text-plum transition-colors">${opt}</span>
+                                    </label>
+                                `).join('')}
+                            </div>`;
+                            break;
+
+                        case 'radio':
+                            const radioOptions = q.options || [];
+                            inputHtml = `<div id="${inputId}" class="space-y-3">
+                                ${radioOptions.map((opt, i) => `
+                                    <label class="flex items-center gap-3 cursor-pointer group">
+                                        <input type="radio" name="${inputId}" value="${opt}" ${val === opt ? 'checked' : ''} 
+                                            class="w-5 h-5 text-plum border-beige focus:ring-plum focus:ring-2">
+                                        <span class="text-charcoal group-hover:text-plum transition-colors">${opt}</span>
+                                    </label>
+                                `).join('')}
+                            </div>`;
+                            break;
+
+                        case 'date':
+                            inputHtml = `<input type="date" id="${inputId}" value="${val}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none  text-charcoal rounded">`;
+                            break;
+
+                        case 'time':
+                            inputHtml = `<input type="time" id="${inputId}" value="${val}" placeholder="${q.placeholder || ''}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none  text-charcoal rounded">`;
+                            break;
+
+                        case 'number':
+                            inputHtml = `<input type="number" id="${inputId}" value="${val}" placeholder="${q.placeholder || ''}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none  text-charcoal rounded">`;
+                            break;
+
+                        case 'tel':
+                            inputHtml = `<input type="tel" id="${inputId}" value="${val}" placeholder="${q.placeholder || ''}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none  text-charcoal rounded">`;
+                            break;
+
+                        case 'dynamic-list':
+                            // Placeholder for dynamic list - will be enhanced later
+                            inputHtml = `<div id="${inputId}" class="bg-lavender p-6 rounded border border-beige">
+                                <p class="text-sm text-taupe mb-4">${q.placeholder || 'Dynamic list feature coming soon'}</p>
+                                <textarea rows="4" maxlength="1500" placeholder="For now, please list entries separated by commas..." class="w-full bg-white border border-beige p-4 focus:border-plum outline-none  text-charcoal resize-none rounded">${val}</textarea>
+                            </div>`;
+                            showCharCount = false;
+                            showVoiceButton = false;
+                            break;
+
+                        default: // text
+                            inputHtml = `<input type="text" id="${inputId}" maxlength="1500" placeholder="${q.placeholder || ''}" value="${val}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none  text-charcoal rounded">`;
+                            showVoiceButton = true;
+                            break;
+                    }
 
                     el.innerHTML = `
                         ${qText}
                         <div class="relative animate-[fadeIn_0.3s]">
                             ${inputHtml}
                             <div class="flex justify-between items-center mt-2 px-1">
-                                <span class="text-[10px] text-taupe uppercase tracking-widest char-count" data-for="${inputId}">0/1500</span>
+                                ${showCharCount ? `<span class="text-[10px] text-taupe uppercase tracking-widest char-count" data-for="${inputId}">0/1500</span>` : '<span></span>'}
                                 <div class="flex gap-4">
-                                     <button type="button" class="voice-btn text-taupe hover:text-plum transition-colors" data-target="${inputId}" onclick="toggleVoiceInput('${inputId}')">
+                                    ${showVoiceButton ? `<button type="button" class="voice-btn text-taupe hover:text-plum transition-colors" data-target="${inputId}" onclick="toggleVoiceInput('${inputId}')">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
-                                    </button>
+                                    </button>` : ''}
                                     <button onclick="saveAnswer('${q.id}')" class="bg-plum text-white  text-[10px] uppercase tracking-[0.2em] px-6 py-2 hover:bg-plum-light transition-colors rounded">
                                         ${mode === 'editing' ? 'Update' : 'Confirm'}
                                     </button>
@@ -328,13 +640,14 @@
                         </div>
                     `;
 
-                    // Attach event listener deferred
+                    // Attach event listeners deferred
                     setTimeout(() => {
                         const inp = document.getElementById(inputId);
-                        if (inp) {
+                        if (inp && (q.type === 'textarea' || q.type === 'text')) {
                             inp.addEventListener('input', updateCharCount);
-                            // Initial count
                             inp.dispatchEvent(new Event('input'));
+                            inp.focus();
+                        } else if (inp && q.type !== 'checkbox' && q.type !== 'radio' && q.type !== 'dynamic-list') {
                             inp.focus();
                         }
                     }, 0);
@@ -353,6 +666,21 @@
             });
         }
 
+        // Helper function for checkbox value updates
+        function updateCheckboxValue(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+            const selected = [];
+            checkboxes.forEach(cb => {
+                if (cb.checked) selected.push(cb.value);
+            });
+
+            // Store as JSON array
+            container.dataset.value = JSON.stringify(selected);
+        }
+
         // --- ACTIONS ---
 
         function startEditing(qId) {
@@ -365,16 +693,69 @@
             const input = document.getElementById(inputId);
             if (!input) return;
 
-            const val = input.value.trim();
-            if (!val) { alert("Please provide an answer."); return; }
-
             const block = questionnaireBlocks[currentBlockIndex];
+            const question = block.questions.find(q => q.id === qId);
+            if (!question) return;
+
+            let val = '';
+
+            // Extract value based on field type
+            switch (question.type) {
+                case 'checkbox':
+                    // Get value from dataset (set by updateCheckboxValue)
+                    val = input.dataset.value || '[]';
+                    // Validate at least one selected if required
+                    if (question.required) {
+                        try {
+                            const selected = JSON.parse(val);
+                            if (!Array.isArray(selected) || selected.length === 0) {
+                                alert("Please select at least one option.");
+                                return;
+                            }
+                        } catch (e) {
+                            alert("Please select at least one option.");
+                            return;
+                        }
+                    }
+                    break;
+
+                case 'radio':
+                    // Get selected radio button value
+                    const selectedRadio = input.querySelector('input[type="radio"]:checked');
+                    val = selectedRadio ? selectedRadio.value : '';
+                    break;
+
+                case 'dynamic-list':
+                    // Get value from textarea inside the dynamic-list container
+                    const textarea = input.querySelector('textarea');
+                    val = textarea ? textarea.value.trim() : '';
+                    break;
+
+                case 'select':
+                case 'date':
+                case 'time':
+                case 'number':
+                case 'tel':
+                case 'text':
+                case 'textarea':
+                default:
+                    val = input.value.trim();
+                    break;
+            }
+
+            // Validate required fields
+            if (question.required && !val) {
+                alert("Please provide an answer.");
+                return;
+            }
+
+            // Save to localStorage
             localStorage.setItem(`block${block.id}_${qId}`, val);
 
             // Reset editing state
             editingQuestionId = null;
 
-            // Re-render
+            // Re-render to show updated state and handle conditional fields
             loadBlock(currentBlockIndex);
         }
 
