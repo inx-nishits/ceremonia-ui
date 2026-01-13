@@ -60,24 +60,20 @@
         <div
             class="w-full px-6 lg:px-12 h-16 lg:h-24 flex items-center justify-between relative bg-cream transition-all duration-500 ease-in-out">
 
-            <!-- Left: Logo & Menu Container -->
-            <div class="flex items-center gap-8 lg:gap-12">
-                <!-- Logo & Slogan - Always Left -->
-                <a href="index.html" class="z-[60] flex flex-col items-start shrink-0 group">
+            <!-- Left: Desktop Menu (hidden below 1024px) -->
+            <div class="hidden lg:flex items-center space-x-8">
+                <a href="#philosophy"
+                    class=" text-xs uppercase tracking-[0.2em] hover:text-plum transition-colors">Philosophy</a>
+                <a href="#process"
+                    class=" text-xs uppercase tracking-[0.2em] hover:text-plum transition-colors">Process</a>
+            </div>
+
+            <!-- Center: Logo (Centered) -->
+            <div class="absolute left-1/2 transform -translate-x-1/2">
+                <a href="index.html" class="z-[60] flex items-center shrink-0">
                     <img src="assets/images/approved-logo.svg" alt="CeremonIA"
                         class="h-8 lg:h-16 w-auto max-w-[100px] lg:max-w-none transition-all duration-500 ease-in-out">
-                    <span
-                        class=" text-[8px] lg:text-[10px] text-taupe tracking-widest uppercase mt-1 opacity-0 group-hover:opacity-100 lg:opacity-100 transition-opacity">Your
-                        Love, Spoken.</span>
                 </a>
-
-                <!-- Desktop Menu (hidden below 1024px) -->
-                <div class="hidden lg:flex items-center space-x-8">
-                    <a href="#philosophy"
-                        class=" text-xs uppercase tracking-[0.2em] hover:text-plum transition-colors">Philosophy</a>
-                    <a href="#process"
-                        class=" text-xs uppercase tracking-[0.2em] hover:text-plum transition-colors">Process</a>
-                </div>
             </div>
 
             <!-- Right: Actions -->
