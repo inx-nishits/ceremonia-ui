@@ -786,13 +786,16 @@
 
         function isBlockComplete(block) {
             return block.questions.every(q => {
-                // If conditional and not met, we skip strict checks
+                // Info blocks are always complete (they are just text)
+                if (q.type === 'info') return true;
+
+                // Check if conditional and if condition is NOT met, then we ignore this question (it's complete validly)
                 if (q.conditional) {
                     const condField = block.questions.find(quest => quest.id === q.conditional.field);
                     if (condField) {
-                        const condValue = localStorage.getItem(`block${block.id}_${condField.id}`);
-                        if ((condValue || '') !== q.conditional.value) {
-                            return true; // considered complete/skipped
+                        const condValue = localStorage.getItem(`block${block.id}_${condField.id}`) || '';
+                        if (condValue !== q.conditional.value) {
+                            return true; // Condition not met, so this question is effectively skipped/complete
                         }
                     }
                 }
