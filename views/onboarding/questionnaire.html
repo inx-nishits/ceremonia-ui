@@ -119,65 +119,79 @@
                     { id: 'partner2FirstName', text: 'What is the first name of Partner 2?', type: 'text', required: true, placeholder: 'e.g., James' },
                     { id: 'partner2LastName', text: 'What is the last name of Partner 2?', type: 'text', required: true, placeholder: 'e.g., Smith' },
                     { id: 'partner2Phone', text: 'What is the phone number of Partner 2?', type: 'tel', required: true, placeholder: 'e.g., +33 6 98 76 54 32' },
-                    { id: 'ceremonyDate', text: 'What is the date of your ceremony?', type: 'date', required: true, placeholder: 'Select date' },
-                    { id: 'ceremonyVenuePlanA', text: 'What is the address of your ceremony venue (Plan A)?', type: 'textarea', required: true, placeholder: 'Full address including city and postal code' },
-                    { id: 'ceremonyVenuePlanB', text: 'What is the address of your backup ceremony venue (Plan B)?', type: 'textarea', required: false, placeholder: 'Full address (optional)' },
-                    { id: 'civilCeremonyDone', text: 'Have you already had your civil ceremony?', type: 'select', required: true, options: ['Yes', 'No'] },
-                    { id: 'civilCeremonyDate', text: 'If yes, what was the date of your civil ceremony?', type: 'date', required: false, placeholder: 'Select date', conditional: { field: 'civilCeremonyDone', value: 'Yes' } },
-                    { id: 'guestCount', text: 'How many guests are expected at your ceremony?', type: 'number', required: true, placeholder: 'e.g., 100' },
-                    { id: 'ceremonyLanguage', text: 'In which language would you like your ceremony to be conducted?', type: 'select', required: true, options: ['English', 'French', 'Spanish', 'Italian', 'German', 'Other'], default: 'English' }
+                    { id: 'ceremonyDate', text: 'What is the date of the secular ceremony?', type: 'date', required: true, placeholder: 'Select date' },
+                    { id: 'ceremonyVenuePlanA', text: 'What is the location of the secular ceremony (domain name)?', type: 'textarea', required: true, placeholder: 'e.g., Château de la Loire' },
+                    { id: 'ceremonyLocationPlanA', text: 'What is the primary location for the ceremony? (Plan A)', type: 'textarea', required: true, placeholder: 'e.g., In the garden behind the castle...' },
+                    { id: 'ceremonyLocationPlanB', text: 'What is the secondary location for the ceremony? (Plan B in case of rain)', type: 'textarea', required: true, placeholder: 'e.g., Under the covered terrace...' },
+                    { id: 'civilCeremonyDate', text: 'What is the date of the Civil Ceremony (at the city hall)?', type: 'date', required: false },
+                    { id: 'civilCeremonyCity', text: 'What is the city of the Civil Ceremony?', type: 'text', required: false, placeholder: 'e.g., Lyon' },
+                    { id: 'guestCount', text: 'How many guests are expected? (Numbers only)', type: 'number', required: true, placeholder: 'e.g., 100' },
+                    { id: 'ceremonyLanguage', text: 'In which language should the ceremony be conducted?', type: 'select', required: true, options: ['French', 'English', 'Spanish', 'Italian', 'German', 'Other'], default: 'French' },
+                    { id: 'percentNonFrenchGuests', text: 'What percentage of guests do not understand French?', type: 'number', required: false, placeholder: 'e.g., 20' }
                 ]
             },
             {
                 id: 2,
                 title: "Day-of Schedule",
-                instruction: "Help us plan the perfect timeline for your ceremony day.",
+                instruction: "Help us plan the perfect timeline for your ceremony day. (Responses editable)",
                 isLocked: false,
                 questions: [
                     { id: 'officiantArrivalTime', text: 'At what time should the officiant arrive?', type: 'time', required: true, placeholder: '14:00' },
-                    { id: 'guestsArrivalTime', text: 'At what time will the guests arrive?', type: 'time', required: true, placeholder: '14:30' },
-                    { id: 'ceremonyStartTime', text: 'At what time will the ceremony begin?', type: 'time', required: true, placeholder: '15:00' }
+                    { id: 'guestsArrivalTime', text: 'At what time will the guests arrive on site?', type: 'time', required: true, placeholder: '14:30' },
+                    { id: 'ceremonyStartTime', text: 'At what time will the secular ceremony begin?', type: 'time', required: true, placeholder: '15:00' }
                 ]
             },
             {
                 id: 3,
                 title: "Contacts",
-                instruction: "Share the contact information for your key vendors so we can coordinate seamlessly.",
+                instruction: "Share the contact information for your key vendors. (Responses editable)",
                 isLocked: false,
                 questions: [
-                    { id: 'venueContact', text: 'What is the name and phone number of the venue contact?', type: 'text', required: false, placeholder: 'Name: John Doe, Phone: +33 6 12 34 56 78' },
-                    { id: 'weddingPlannerContact', text: 'What is the name and phone number of your wedding planner?', type: 'text', required: false, placeholder: 'Name: Jane Smith, Phone: +33 6 98 76 54 32' },
-                    { id: 'decoratorContact', text: 'What is the name and phone number of your decorator?', type: 'text', required: false, placeholder: 'Name: Marie Dupont, Phone: +33 6 11 22 33 44' },
-                    { id: 'djContact', text: 'What is the name and phone number of your DJ?', type: 'text', required: false, placeholder: 'Name: DJ Mike, Phone: +33 6 55 66 77 88' },
-                    { id: 'photographerContact', text: 'What is the name and phone number of your photographer?', type: 'text', required: false, placeholder: 'Name: Photo Pro, Phone: +33 6 99 88 77 66' }
+                    { id: 'venueContact', text: 'What is the name (and role) of the venue contact (owner, manager...)?', type: 'text', required: false, placeholder: 'e.g., John Doe - Owner' },
+                    { id: 'venueContactPhone', text: 'What is their phone number?', type: 'tel', required: false, placeholder: 'e.g., +33 6 12 34 56 78' },
+
+                    { id: 'weddingPlannerContact', text: 'What is the name of the coordinator or wedding planner?', type: 'text', required: false, placeholder: 'e.g., Jane Smith' },
+                    { id: 'weddingPlannerPhone', text: 'What is their phone number?', type: 'tel', required: false, placeholder: 'e.g., +33 6 98 76 54 32' },
+
+                    { id: 'decoratorContact', text: 'What is the name of the person managing materials (chairs, decoration, flowers...)?', type: 'text', required: false, placeholder: 'e.g., Marie Dupont' },
+                    { id: 'decoratorPhone', text: 'What is their phone number?', type: 'tel', required: false, placeholder: 'e.g., +33 6 11 22 33 44' },
+
+                    { id: 'djContact', text: 'What is the name of the person managing sound (DJ)?', type: 'text', required: false, placeholder: 'e.g., DJ Mike' },
+                    { id: 'djPhone', text: 'What is their phone number?', type: 'tel', required: false, placeholder: 'e.g., +33 6 55 66 77 88' },
+
+                    { id: 'photographerContact', text: 'What is the name of the photographer?', type: 'text', required: false, placeholder: 'e.g., Photo Pro' },
+                    { id: 'photographerPhone', text: 'What is their phone number?', type: 'tel', required: false, placeholder: 'e.g., +33 6 99 88 77 66' },
+
+                    { id: 'otherVendorName', text: 'What is the name of another vendor we should know?', type: 'text', required: false, placeholder: 'e.g., Videographer Name' },
+                    { id: 'otherVendorPhone', text: 'What is their phone number?', type: 'tel', required: false, placeholder: 'e.g., +33 6...' },
+                    { id: 'otherVendorRole', text: 'What is their role or profession?', type: 'text', required: false, placeholder: 'e.g., Videographer' }
                 ]
             },
             {
                 id: 4,
                 title: "Wedding Theme",
-                instruction: "Tell us about the aesthetic and atmosphere you're creating for your special day.",
+                instruction: "Tell us about the aesthetic and atmosphere. (Responses editable)",
                 isLocked: false,
                 questions: [
-                    { id: 'weddingTheme', text: 'What is the general theme of your wedding?', type: 'text', required: false, placeholder: 'e.g., Rustic Garden, Modern Elegance, Bohemian Chic' },
-                    { id: 'dressCode', text: 'What is the dress code for your wedding?', type: 'text', required: false, placeholder: 'e.g., Black Tie, Cocktail Attire, Smart Casual' },
-                    { id: 'groomsSuitColor', text: 'What color suit will the grooms be wearing?', type: 'text', required: false, placeholder: 'e.g., Navy Blue, Charcoal Gray, Beige' },
-                    { id: 'officiantAttire', text: 'What would you like the officiant to wear?', type: 'text', required: false, placeholder: 'e.g., Formal suit, Smart casual, Match the wedding colors' }
+                    { id: 'weddingTheme', text: 'What is the general theme of the wedding?', type: 'text', required: false, placeholder: 'e.g., Rustic, Bohemian, Travel...' },
+                    { id: 'dressCode', text: 'What is the Dress Code (color code or specific attire for guests)?', type: 'text', required: false, placeholder: 'e.g., Pastel colors, Black Tie' },
+                    { id: 'groomsSuitColor', text: 'What is the color of the groom\'s suit?', type: 'text', required: false, placeholder: 'e.g., Navy Blue' },
+                    { id: 'officiantAttire', text: 'What attire do you wish for the officiant?', type: 'text', required: false, placeholder: 'e.g., Neutral suit, nothing too flashy' }
                 ]
             },
             {
                 id: 5,
                 title: "The Procession",
-                instruction: "Tell us about your bridal party and how they'll make their entrance.",
+                instruction: "Indicate the first names and roles of the procession members. (Responses editable)",
                 isLocked: false,
                 questions: [
                     {
-                        id: 'bridalPartyMembers', text: 'Who will be part of the bridal party? (Add each person with their role and entrance details)', type: 'dynamic-list', required: false, placeholder: 'Click "Add Person" below to add bridal party members',
+                        id: 'processionPairs', text: 'Procession Members (Pairs)', type: 'dynamic-list', required: false, placeholder: 'Add a duo',
                         fields: [
-                            { id: 'firstName', label: 'First Name', type: 'text', placeholder: 'e.g., Emma' },
-                            { id: 'lastName', label: 'Last Name', type: 'text', placeholder: 'e.g., Wilson' },
-                            { id: 'role', label: 'Role', type: 'text', placeholder: 'e.g., Bridesmaid, Groomsman, Flower Girl' },
-                            { id: 'entranceType', label: 'How will they enter?', type: 'select', options: ['In a pair', 'Individually'] },
-                            { id: 'pairWith', label: 'If in a pair, who enters with them?', type: 'text', placeholder: 'Name of their pair', conditional: { field: 'entranceType', value: 'In a pair' } }
+                            { id: 'person1Name', label: 'Person 1 Name', type: 'text', placeholder: 'e.g., Emma' },
+                            { id: 'person1Role', label: 'Person 1 Role', type: 'text', placeholder: 'e.g., Bridesmaid' },
+                            { id: 'person2Name', label: 'Person 2 Name (enters with)', type: 'text', placeholder: 'e.g., Lucas' },
+                            { id: 'person2Role', label: 'Person 2 Role', type: 'text', placeholder: 'e.g., Groomsman' }
                         ]
                     }
                 ]
@@ -185,47 +199,42 @@
             {
                 id: 6,
                 title: "Wedding Context",
-                instruction: "Share the deeper meaning behind your choices and any special tributes you'd like to include.",
+                instruction: "Share the deeper meaning behind your choices. (Responses editable)",
                 isLocked: false,
                 questions: [
-                    { id: 'whyMarriage', text: 'Why did you choose to get married?', type: 'textarea', required: false, placeholder: 'Share what marriage means to you...' },
-                    { id: 'whySecularCeremony', text: 'Why did you choose to have a secular ceremony?', type: 'textarea', required: false, placeholder: 'Tell us about your decision...' },
-                    { id: 'whyThisLocation', text: 'Why did you choose this location for your ceremony?', type: 'textarea', required: false, placeholder: 'What makes this place special to you...' },
-                    { id: 'representReligion', text: 'Do you wish to represent a religion during the ceremony?', type: 'select', required: false, options: ['Yes', 'No'] },
-                    { id: 'whichReligionHow', text: 'If yes, which religion and how would you like it to be represented?', type: 'textarea', required: false, placeholder: 'Describe the religious elements you\'d like to include...', conditional: { field: 'representReligion', value: 'Yes' } },
-                    { id: 'tributeToDeceased', text: 'Would you like to pay tribute to a deceased loved one during the ceremony?', type: 'select', required: false, options: ['Yes', 'No'] },
-                    { id: 'tributeDetails', text: 'If yes, who and how would you like to honor them?', type: 'textarea', required: false, placeholder: 'Share how you\'d like to remember them...', conditional: { field: 'tributeToDeceased', value: 'Yes' } }
+                    { id: 'whyMarriage', text: 'Why do you wish to get married? (Meaning of marriage)', type: 'textarea', required: false },
+                    { id: 'whySecularCeremony', text: 'Why did you choose to have a secular ceremony?', type: 'textarea', required: false },
+                    { id: 'whyThisLocation', text: 'Why did you choose this ceremony location?', type: 'textarea', required: false },
+                    { id: 'guestReligions', text: 'What religions are represented among the guests?', type: 'textarea', required: false },
+                    { id: 'mentionAbsent', text: 'Do you wish to mention absent or deceased persons during the ceremony?', type: 'select', required: false, options: ['Yes', 'No'] },
+                    { id: 'howMentionAbsent', text: 'If yes, in what way? (Just a thought, naming them specifically, moment of silence/music...)?', type: 'textarea', required: false, conditional: { field: 'mentionAbsent', value: 'Yes' } }
                 ]
             },
             {
                 id: 7,
                 title: "Witnesses and Speakers",
-                instruction: "Identify the special people who will stand with you and speak at your ceremony.",
+                instruction: "Identify the special people who will intervene. (Responses editable)",
                 isLocked: false,
                 questions: [
                     {
-                        id: 'partner1Witnesses', text: 'Personal witnesses for Partner 1:', type: 'dynamic-list', required: false, placeholder: 'Click "Add Witness" below',
+                        id: 'partner1Witnesses', text: 'Who are the witnesses for Partner 1, and why?', type: 'dynamic-list', required: false, placeholder: 'Add a witness',
                         fields: [
-                            { id: 'firstName', label: 'First Name', type: 'text', placeholder: 'e.g., Michael' },
-                            { id: 'lastName', label: 'Last Name', type: 'text', placeholder: 'e.g., Brown' },
-                            { id: 'relationship', label: 'Relationship to Partner 1', type: 'text', placeholder: 'e.g., Best Friend, Brother, Colleague' }
+                            { id: 'name', label: 'Name', type: 'text', placeholder: 'e.g., Michael' },
+                            { id: 'reason', label: 'Reason/Why', type: 'text', placeholder: 'e.g., Best friend for 20 years' }
                         ]
                     },
                     {
-                        id: 'partner2Witnesses', text: 'Personal witnesses for Partner 2:', type: 'dynamic-list', required: false, placeholder: 'Click "Add Witness" below',
+                        id: 'partner2Witnesses', text: 'Who are the witnesses for Partner 2, and why?', type: 'dynamic-list', required: false, placeholder: 'Add a witness',
                         fields: [
-                            { id: 'firstName', label: 'First Name', type: 'text', placeholder: 'e.g., Emily' },
-                            { id: 'lastName', label: 'Last Name', type: 'text', placeholder: 'e.g., Davis' },
-                            { id: 'relationship', label: 'Relationship to Partner 2', type: 'text', placeholder: 'e.g., Sister, Best Friend, Cousin' }
+                            { id: 'name', label: 'Name', type: 'text', placeholder: 'e.g., Sarah' },
+                            { id: 'reason', label: 'Reason/Why', type: 'text', placeholder: 'e.g., Sister' }
                         ]
                     },
                     {
-                        id: 'otherSpeakers', text: 'Other invited speakers:', type: 'dynamic-list', required: false, placeholder: 'Click "Add Speaker" below',
+                        id: 'otherSpeakers', text: 'Who (other than witnesses) do you wish to have intervene? (for a text or personalized speech)', type: 'dynamic-list', required: false, placeholder: 'Add a speaker',
                         fields: [
-                            { id: 'firstName', label: 'First Name', type: 'text', placeholder: 'e.g., Robert' },
-                            { id: 'lastName', label: 'Last Name', type: 'text', placeholder: 'e.g., Taylor' },
-                            { id: 'relationship', label: 'Relationship to the couple', type: 'text', placeholder: 'e.g., Father, Close Friend, Mentor' },
-                            { id: 'speakingTime', label: 'When will they speak?', type: 'select', options: ['Before vows', 'After vows', 'During symbolic ritual'] }
+                            { id: 'name', label: 'First Name', type: 'text', placeholder: 'e.g., Robert' },
+                            { id: 'relationship', label: 'Who is it relative to the couple?', type: 'text', placeholder: 'e.g., Uncle of the bride' }
                         ]
                     }
                 ]
@@ -233,135 +242,148 @@
             {
                 id: 8,
                 title: "The Couple's Story",
-                instruction: "Share your individual journeys and the beautiful story of how you came together.",
+                instruction: "Share your history. (Generated by AI based on these answers - Responses editable)",
                 isLocked: false,
                 questions: [
-                    { id: 'partner1Birthplace', text: 'Partner 1: Where were you born and raised?', type: 'text', required: false, placeholder: 'e.g., Paris, France' },
-                    { id: 'partner1Education', text: 'Partner 1: What did you study?', type: 'text', required: false, placeholder: 'e.g., Business Administration' },
-                    { id: 'partner1Profession', text: 'Partner 1: What is your profession?', type: 'text', required: false, placeholder: 'e.g., Marketing Manager' },
-                    { id: 'partner1Hobbies', text: 'Partner 1: What are your passions and hobbies?', type: 'textarea', required: false, placeholder: 'e.g., Photography, hiking, cooking...' },
-                    { id: 'partner1Personality', text: 'Partner 1: Describe your personality in a few words.', type: 'textarea', required: false, placeholder: 'e.g., Adventurous, thoughtful, creative...' },
-                    { id: 'partner2Birthplace', text: 'Partner 2: Where were you born and raised?', type: 'text', required: false, placeholder: 'e.g., London, UK' },
-                    { id: 'partner2Education', text: 'Partner 2: What did you study?', type: 'text', required: false, placeholder: 'e.g., Computer Science' },
-                    { id: 'partner2Profession', text: 'Partner 2: What is your profession?', type: 'text', required: false, placeholder: 'e.g., Software Engineer' },
-                    { id: 'partner2Hobbies', text: 'Partner 2: What are your passions and hobbies?', type: 'textarea', required: false, placeholder: 'e.g., Reading, traveling, music...' },
-                    { id: 'partner2Personality', text: 'Partner 2: Describe your personality in a few words.', type: 'textarea', required: false, placeholder: 'e.g., Analytical, caring, humorous...' },
-                    { id: 'howYouMet', text: 'How did you meet?', type: 'textarea', required: true, placeholder: 'Tell us the story of your first encounter...' },
-                    { id: 'firstImpressions', text: 'What were your first impressions of each other?', type: 'textarea', required: false, placeholder: 'Share what you thought when you first met...' },
-                    { id: 'firstDate', text: 'Tell us about your first date.', type: 'textarea', required: false, placeholder: 'Where did you go? What did you do?...' },
-                    { id: 'memorableAnecdote', text: 'What is a memorable anecdote from the beginning of your relationship?', type: 'textarea', required: false, placeholder: 'Share a special early memory...' },
-                    { id: 'challengesOvercome', text: 'What challenges have you overcome together?', type: 'textarea', required: false, placeholder: 'How have you grown stronger as a couple?...' },
-                    { id: 'definingMoment', text: 'What is a funny or touching moment that defines your relationship?', type: 'textarea', required: false, placeholder: 'Share a moment that captures your bond...' },
-                    { id: 'hasSymbol', text: 'Do you have a song, place, or object that symbolizes your love?', type: 'select', required: false, options: ['Yes', 'No'] },
-                    { id: 'symbolDetails', text: 'If yes, what is it and why is it meaningful?', type: 'textarea', required: false, placeholder: 'Describe your special symbol and its significance...', conditional: { field: 'hasSymbol', value: 'Yes' } },
-                    { id: 'proposalStory', text: 'How did the marriage proposal happen?', type: 'textarea', required: false, placeholder: 'Share the story of your proposal...' },
-                    { id: 'coreValues', text: 'What are the core values that guide your relationship?', type: 'textarea', required: true, placeholder: 'e.g., Trust, honesty, adventure, family...' },
-                    { id: 'futureProjects', text: 'What projects do you have for your future together?', type: 'textarea', required: true, placeholder: 'Share your dreams and plans...' }
+                    // Partner 1 Context
+                    { id: 'partner1FamilyContext', text: 'For Partner 1: In what family context (region, entourage...) did you grow up before meeting Partner 2?', type: 'textarea', required: false },
+                    { id: 'partner1Siblings', text: 'For Partner 1: If you have brothers and sisters, please name them:', type: 'text', required: false },
+                    { id: 'partner1Studies', text: 'For Partner 1: What studies have you done?', type: 'text', required: false },
+
+                    // Partner 2 Context
+                    { id: 'partner2FamilyContext', text: 'For Partner 2: In what family context (region, entourage...) did you grow up before meeting Partner 1?', type: 'textarea', required: false },
+                    { id: 'partner2Siblings', text: 'For Partner 2: If you have brothers and sisters, please name them:', type: 'text', required: false },
+                    { id: 'partner2Studies', text: 'For Partner 2: What studies have you done?', type: 'text', required: false },
+
+                    // Meeting & History
+                    { id: 'meetingStory', text: 'When and where did you meet for the first time? (Give as many details as possible)', type: 'textarea', required: true },
+                    { id: 'partner1FirstImpression', text: 'Partner 1: What did you feel at the first meeting?', type: 'textarea', required: false },
+                    { id: 'partner2FirstImpression', text: 'Partner 2: What did you feel at the first meeting?', type: 'textarea', required: false },
+                    { id: 'significantEvents', text: 'What are the significant events of your life? (stories, travels, first meetings with family, anecdotes, moving in together, birth of children...)', type: 'textarea', required: false },
+                    { id: 'symbolCharacteristic', text: 'Do you have a symbol that characterizes you? (ex: date, animal, tattoo, nickname...)', type: 'text', required: false },
+
+                    // Proposal
+                    { id: 'proposalHappened', text: 'Was there a marriage proposal?', type: 'select', required: false, options: ['Yes', 'No'] },
+                    { id: 'proposalDate', text: 'If yes, on what date did it take place?', type: 'date', required: false, conditional: { field: 'proposalHappened', value: 'Yes' } },
+                    { id: 'proposalDetails', text: 'Describe how it happened (details, location, organization, reactions...):', type: 'textarea', required: false, conditional: { field: 'proposalHappened', value: 'Yes' } },
+
+                    // Values & Appreciation
+                    { id: 'coupleValues', text: 'What are the important values for you and your couple?', type: 'textarea', required: true },
+                    { id: 'partner1Appreciates', text: 'Partner 1: What qualities do you particularly appreciate in Partner 2?', type: 'textarea', required: false },
+                    { id: 'partner2Appreciates', text: 'Partner 2: What qualities do you particularly appreciate in Partner 1?', type: 'textarea', required: false },
+
+                    // Passions/Favorites
+                    { id: 'commonPassions', text: 'Do you have common passions, common hobbies?', type: 'select', required: false, options: ['Yes', 'No'] },
+                    { id: 'commonPassionsDetails', text: 'If yes, which ones?', type: 'textarea', required: false, conditional: { field: 'commonPassions', value: 'Yes' } },
+                    { id: 'favoriteMovies', text: 'What are your favorite movies?', type: 'textarea', required: false },
+                    { id: 'favoriteBooks', text: 'What are your favorite books/authors?', type: 'textarea', required: false },
+                    { id: 'favoriteMusic', text: 'What are your favorite music, bands, or singers?', type: 'textarea', required: false },
+                    { id: 'futureProjects', text: 'What are your future projects? (that one could wish you to realize)', type: 'textarea', required: true },
+                    { id: 'otherStoryPoints', text: 'What other points would you like to mention concerning your couple\'s history?', type: 'textarea', required: false }
                 ]
             },
             {
                 id: 9,
                 title: "Rituals",
-                instruction: "Choose meaningful symbolic rituals to include in your ceremony.",
+                instruction: "Choose meaningful symbolic rituals. (Responses editable)",
                 isLocked: false,
                 questions: [
-                    { id: 'includeRitual', text: 'Would you like to include a symbolic ritual in your ceremony?', type: 'select', required: false, options: ['Yes', 'No'] },
+                    { id: 'includeRitual', text: 'Would you like to do a ritual during your ceremony?', type: 'select', required: false, options: ['Yes', 'No'] },
                     {
-                        id: 'ritualType', text: 'If yes, which ritual would you like?', type: 'select', required: false,
-                        options: ['Sand ceremony', 'Unity candle', 'Handfasting (ribbon tying)', 'Wine ceremony', 'Tree planting', 'Love letter box', 'Other'],
+                        id: 'ritualType', text: 'If yes, which one?', type: 'select', required: false,
+                        options: ['Sand Ritual', 'Love Letter Ritual', 'Sealed Wine Ritual', 'Burning Fears Ritual', 'Tree Ritual', 'Candle Ritual', 'Lovers Library Ritual', 'Ribbon Ritual', 'Stone Ritual', 'Fingerprint Tree Ritual', 'Other'],
                         conditional: { field: 'includeRitual', value: 'Yes' }
                     },
-                    { id: 'customRitualDescription', text: 'If you chose "Other," please describe your custom ritual.', type: 'textarea', required: false, placeholder: 'Describe your unique ritual...', conditional: { field: 'ritualType', value: 'Other' } },
-                    {
-                        id: 'ritualParticipants', text: 'Who will participate in this ritual?', type: 'select', required: false,
-                        options: ['Just the couple', 'Include family members', 'Include friends', 'Include all guests'],
-                        conditional: { field: 'includeRitual', value: 'Yes' }
-                    }
+                    { id: 'customRitualDescription', text: 'Other ritual (please describe):', type: 'textarea', required: false, conditional: { field: 'ritualType', value: 'Other' } },
+                    { id: 'createOwnRitual', text: 'Do you wish to create your own ritual?', type: 'select', required: false, options: ['Yes', 'No'] },
+                    { id: 'ownRitualDescription', text: 'If yes, which one?', type: 'textarea', required: false, conditional: { field: 'createOwnRitual', value: 'Yes' } }
                 ]
             },
             {
                 id: 10,
-                title: "Vows and Rings",
-                instruction: "Share your personal vows and tell us about your ring exchange.",
+                title: "Vows, Consent and Rings",
+                instruction: "Plan your exchange. (Responses editable)",
                 isLocked: false,
                 questions: [
-                    { id: 'hasPersonalVows', text: 'Have you written your own personalized vows?', type: 'select', required: false, options: ['Yes', 'No'] },
-                    { id: 'partner1Vows', text: 'If yes, please share the vows for Partner 1.', type: 'textarea', required: false, placeholder: 'Enter Partner 1\'s vows...', conditional: { field: 'hasPersonalVows', value: 'Yes' } },
-                    { id: 'partner2Vows', text: 'If yes, please share the vows for Partner 2.', type: 'textarea', required: false, placeholder: 'Enter Partner 2\'s vows...', conditional: { field: 'hasPersonalVows', value: 'Yes' } },
-                    { id: 'ringBearerFirstName', text: 'Who will bring the rings? (First Name)', type: 'text', required: false, placeholder: 'e.g., Sophie' },
-                    { id: 'ringBearerLastName', text: 'Who will bring the rings? (Last Name)', type: 'text', required: false, placeholder: 'e.g., Martin' },
-                    { id: 'ringBearerRelationship', text: 'Relationship to the couple', type: 'text', required: false, placeholder: 'e.g., Niece, Best Friend, Ring Bearer' }
+                    { id: 'personalVows', text: 'Do you wish to make an exchange of personalized vows?', type: 'select', required: false, options: ['Yes', 'No'] },
+                    { id: 'partner1Vows', text: 'Vows of Partner 1:', type: 'textarea', required: false, conditional: { field: 'personalVows', value: 'Yes' } },
+                    { id: 'partner2Vows', text: 'Vows of Partner 2:', type: 'textarea', required: false, conditional: { field: 'personalVows', value: 'Yes' } },
+                    { id: 'noPersonalVowsInfo', text: 'Note: If no, the officiant will do a classic "exchange of consents".', type: 'info', required: false, conditional: { field: 'personalVows', value: 'No' } },
+                    { id: 'ringBearer', text: 'Who will bring the rings?', type: 'text', required: false, placeholder: 'Name of the person' }
                 ]
             },
             {
                 id: 11,
                 title: "Certificate and Exit",
-                instruction: "Plan the final moments of your ceremony with a certificate signing and memorable exit.",
+                instruction: "Final details. (Responses editable)",
                 isLocked: false,
                 questions: [
-                    { id: 'signCertificate', text: 'Will you sign a symbolic certificate during the ceremony?', type: 'select', required: false, options: ['Yes', 'No'] },
-                    {
-                        id: 'certificateSigners', text: 'If yes, who will sign it with you?', type: 'select', required: false,
-                        options: ['Just the couple', 'Witnesses', 'All guests'],
-                        conditional: { field: 'signCertificate', value: 'Yes' }
-                    },
-                    {
-                        id: 'exitType', text: 'What have you planned for your exit?', type: 'select', required: false,
-                        options: ['Flower petals', 'Soap bubbles', 'Confetti', 'Sparklers', 'Other']
-                    },
-                    { id: 'customExitDescription', text: 'If you chose "Other," please describe what you have planned.', type: 'text', required: false, placeholder: 'Describe your exit plan...', conditional: { field: 'exitType', value: 'Other' } }
+                    { id: 'signCertificate', text: 'Do you wish to sign a symbolic marriage certificate?', type: 'select', required: false, options: ['Yes', 'No'] },
+                    { id: 'ceremonyExit', text: 'What is planned for the ceremony exit (petals, soap bubbles, ribbon wands...)?', type: 'text', required: false }
                 ]
             },
             {
                 id: 12,
                 title: "Musical Choices",
-                instruction: "Select the perfect soundtrack for each moment of your ceremony.",
+                instruction: "Select music for each moment. (Responses editable)",
                 isLocked: false,
                 questions: [
-                    { id: 'guestArrivalSong', text: 'What music will play during guest arrival? (Song Title)', type: 'text', required: false, placeholder: 'e.g., A Thousand Years' },
-                    { id: 'guestArrivalArtist', text: 'Guest arrival music - Artist', type: 'text', required: false, placeholder: 'e.g., Christina Perri' },
-                    { id: 'processionSong', text: 'What music will play during the procession? (Song Title)', type: 'text', required: false, placeholder: 'e.g., Canon in D' },
-                    { id: 'processionArtist', text: 'Procession music - Artist', type: 'text', required: false, placeholder: 'e.g., Pachelbel' },
-                    { id: 'ringExchangeSong', text: 'What music will play during the ring exchange? (Song Title)', type: 'text', required: false, placeholder: 'e.g., All of Me' },
-                    { id: 'ringExchangeArtist', text: 'Ring exchange music - Artist', type: 'text', required: false, placeholder: 'e.g., John Legend' },
-                    { id: 'exitSong', text: 'What music will play during the ceremony exit? (Song Title)', type: 'text', required: false, placeholder: 'e.g., Marry You' },
-                    { id: 'exitArtist', text: 'Exit music - Artist', type: 'text', required: false, placeholder: 'e.g., Bruno Mars' }
+                    { id: 'guestArrivalMusic1', text: 'Music during guest arrival - Title 1 and artist:', type: 'text', required: false },
+                    { id: 'guestArrivalMusic2', text: 'Music during guest arrival - Title 2 and artist:', type: 'text', required: false },
+                    { id: 'guestArrivalMusic3', text: 'Music during guest arrival - Title 3 and artist:', type: 'text', required: false },
+                    { id: 'guestArrivalMusic4', text: 'Music during guest arrival - Title 4 and artist:', type: 'text', required: false },
+
+                    { id: 'processionMusic', text: 'Music during the arrival of the procession (Title and artist):', type: 'text', required: false },
+                    { id: 'brideArrivalMusic', text: 'Music during the arrival of the bride (if different from procession) - Title and artist:', type: 'text', required: false },
+
+                    { id: 'speakersSeatingMusic', text: 'Music while speakers go to sit back down - Title and artist:', type: 'text', required: false },
+                    { id: 'witnessesSeatingMusic', text: 'Music while witnesses go to sit back down - Title and artist:', type: 'text', required: false },
+
+                    { id: 'ringsMusic', text: 'Music while rings are brought - Title and artist:', type: 'text', required: false },
+                    { id: 'certificateMusic', text: 'Music during signing of symbolic certificate (and exit/placement of guests) - Title and artist:', type: 'text', required: false },
+                    { id: 'exitMusic', text: 'Music during the exit of the couple - Title and artist:', type: 'text', required: false }
                 ]
             },
             {
                 id: 13,
-                title: "Texts and Speeches",
-                instruction: "For each speaker you identified earlier, help us craft their perfect speech. (AI will generate content based on your guidance)",
+                title: "Texts and Speeches of Speakers",
+                instruction: "Enter the text of the speeches here. (Responses editable)",
                 isLocked: false,
                 questions: [
-                    { id: 'speechesNote', text: 'Note: This section will be populated based on the speakers you added in Block 7. For each speaker, you can provide guidance on what they should say.', type: 'info', required: false },
-                    { id: 'speechGuidance', text: 'General guidance for all speeches (optional):', type: 'textarea', required: false, placeholder: 'Any overall themes or topics you\'d like speakers to address...' }
+                    { id: 'speechNote', text: 'Note: There should be as many entries as there are speakers entered in Block 7.', type: 'info', required: false },
+                    { id: 'speaker1Text', text: 'Enter here the text of the speech of Speaker 1:', type: 'textarea', required: false },
+                    { id: 'speaker2Text', text: 'Enter here the text of the speech of Speaker 2:', type: 'textarea', required: false },
+                    { id: 'speaker3Text', text: 'Enter here the text of the speech of Speaker 3:', type: 'textarea', required: false },
+                    { id: 'speaker4Text', text: 'Enter here the text of the speech of Speaker 4:', type: 'textarea', required: false }
                 ]
             },
             {
                 id: 14,
-                title: "Other Information",
-                instruction: "Share any additional details or preferences we should know about.",
+                title: "Other Elements to Know",
+                instruction: "Any final details. (Responses editable)",
                 isLocked: false,
                 questions: [
-                    { id: 'additionalInfo', text: 'Is there anything else you would like to mention or include in your ceremony?', type: 'textarea', required: false, placeholder: 'Any special requests, traditions, or details we should know...' },
-                    { id: 'doNotMention', text: 'Is there anything you specifically do NOT want mentioned during the ceremony?', type: 'textarea', required: false, placeholder: 'Topics or subjects to avoid...' }
+                    { id: 'otherElementsToKnow', text: 'Are there other elements to know and to mention?', type: 'textarea', required: false },
+                    { id: 'otherElementsNotToKnow', text: 'Are there other elements to know and NOT to mention?', type: 'textarea', required: false }
                 ]
             },
             {
                 id: 15,
                 title: "Ceremony Style",
-                instruction: "Finally, help us understand the tone and style you envision for your ceremony.",
+                instruction: "Define the tone. (Responses editable)",
                 isLocked: false,
                 questions: [
                     {
-                        id: 'ceremonyTone', text: 'Desired tone (select all that apply):', type: 'checkbox', required: true,
-                        options: ['Formal and Traditional', 'Romantic and Emotional', 'Humorous and Light-hearted', 'Intimate and Personal', 'Spiritual', 'Modern and Contemporary']
+                        id: 'ceremonyTone', text: 'What is the desired tone for the ceremony? (ambiance and emotions...)', type: 'checkbox', required: true,
+                        options: ['Solemn/Formal', 'Relaxed/Light/Humorous', 'Romantic', 'Other']
                     },
+                    { id: 'ceremonyToneOther', text: 'If Other, please specify:', type: 'text', required: false, conditional: { field: 'ceremonyTone', value: 'Other' } },
+
                     {
-                        id: 'narrativeStyle', text: 'Narrative style (choose one):', type: 'radio', required: true,
-                        options: ['Poetic and Lyrical', 'Simple and Direct', 'Storytelling and Narrative', 'Philosophical and Reflective', 'Conversational and Warm']
-                    }
+                        id: 'narrativeStyle', text: 'What is the desired narrative style for the ceremony?', type: 'radio', required: true,
+                        options: ['Poetic', 'Simple and direct', 'Light and funny', 'Other']
+                    },
+                    { id: 'narrativeStyleOther', text: 'If Other, please specify:', type: 'text', required: false, conditional: { field: 'narrativeStyle', value: 'Other' } }
                 ]
             }
         ];

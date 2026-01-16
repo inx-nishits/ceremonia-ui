@@ -8,7 +8,7 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="../../assets/images/favicon/favicon.png">
     <link rel="apple-touch-icon" href="../../assets/images/favicon/favicon.png">
-        
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../../assets/js/tailwind.config.js"></script>
     <link
@@ -55,7 +55,7 @@
         <p class=" text-xs text-taupe mb-8 text-center">Select the primary emotional feel of the ceremony.
         </p>
         <div
-            class="grid grid-cols-1 md:grid-cols-4 w-full border-t border-l border-beige animate-[fadeInUp_0.8s_ease-out]">
+            class="grid grid-cols-1 md:grid-cols-3 w-full border-t border-l border-beige animate-[fadeInUp_0.8s_ease-out]">
 
             <!-- Option 1: Romantic -->
             <label
@@ -101,49 +101,28 @@
                 </div>
             </label>
 
-            <!-- Option 3: Casual & Fun -->
+            <!-- Option 3: Custom -->
             <label
                 class="group relative aspect-[3/4] border-r border-b border-beige cursor-pointer transition-all duration-500 hover:bg-white">
-                <input type="radio" name="tone" value="casual-fun" class="peer sr-only"
-                    onchange="checkFiltersComplete()">
+                <input type="radio" name="tone" value="custom" class="peer sr-only"
+                    onchange="handleCustomSelection('tone'); checkFiltersComplete()">
 
                 <!-- Default State -->
                 <div
-                    class="absolute inset-0 flex flex-col justify-between p-12 transition-opacity duration-300 group-hover:opacity-0">
+                    class="absolute inset-0 flex flex-col justify-between p-12 transition-opacity duration-300 group-hover:opacity-0 peer-checked:opacity-0">
                     <span class=" text-xs uppercase tracking-widest text-taupe">No. 3</span>
-                    <span class="font-goldney text-4xl text-charcoal">Casual & Fun</span>
+                    <span class="font-goldney text-4xl text-charcoal">Custom</span>
                 </div>
 
-                <!-- Hover/Selected State (Light Purple) -->
+                <!-- Hover/Selected State -->
                 <div
-                    class="absolute inset-0 bg-lavender flex flex-col justify-center items-center p-12 text-center opacity-0 group-hover:opacity-100 peer-checked:opacity-100 transition-all duration-500">
-                    <h3 class="font-goldney text-4xl text-charcoal italic mb-6">Casual & Fun</h3>
-                    <p class=" text-xs text-charcoal/70 leading-loose max-w-xs">Light-hearted, playful, and
-                        joyful.
-                        Celebrates with warmth and laughter.</p>
-                </div>
-            </label>
-
-            <!-- Option 4: Spiritual -->
-            <label
-                class="group relative aspect-[3/4] border-r border-b border-beige cursor-pointer transition-all duration-500 hover:bg-white">
-                <input type="radio" name="tone" value="spiritual" class="peer sr-only"
-                    onchange="checkFiltersComplete()">
-
-                <!-- Default State -->
-                <div
-                    class="absolute inset-0 flex flex-col justify-between p-12 transition-opacity duration-300 group-hover:opacity-0">
-                    <span class=" text-xs uppercase tracking-widest text-taupe">No. 4</span>
-                    <span class="font-goldney text-4xl text-charcoal">Spiritual</span>
-                </div>
-
-                <!-- Hover/Selected State (Light Purple) -->
-                <div
-                    class="absolute inset-0 bg-lavender flex flex-col justify-center items-center p-12 text-center opacity-0 group-hover:opacity-100 peer-checked:opacity-100 transition-all duration-500">
-                    <h3 class="font-goldney text-4xl text-charcoal italic mb-6">Spiritual</h3>
-                    <p class=" text-xs text-charcoal/70 leading-loose max-w-xs">Honors the sacred bond and
-                        universal
-                        energy of the union.</p>
+                    class="absolute inset-0 bg-lavender flex flex-col justify-center items-center p-8 text-center opacity-0 group-hover:opacity-100 peer-checked:opacity-100 transition-all duration-500 z-10">
+                    <h3 class="font-goldney text-3xl text-charcoal italic mb-4">Custom Tone</h3>
+                    <p class=" text-xs text-charcoal/70 mb-4">Define your own unique atmosphere.</p>
+                    <textarea id="custom-tone-text" placeholder="Describe your desired tone..."
+                        class="w-full bg-white border border-beige p-3 text-sm focus:border-plum outline-none resize-none rounded h-24"
+                        oninput="checkFiltersComplete()"
+                        onclick="event.stopPropagation(); document.querySelector('input[name=\'tone\'][value=\'custom\']').checked = true; checkFiltersComplete();"></textarea>
                 </div>
             </label>
         </div>
@@ -154,7 +133,7 @@
         <h2 class=" text-sm uppercase tracking-[0.2em] text-taupe mb-4 text-center">Writing Style</h2>
         <p class=" text-xs text-taupe mb-8 text-center">Choose the literary approach for the script.</p>
         <div
-            class="grid grid-cols-1 md:grid-cols-4 w-full border-t border-l border-beige animate-[fadeInUp_0.8s_ease-out]">
+            class="grid grid-cols-1 md:grid-cols-3 w-full border-t border-l border-beige animate-[fadeInUp_0.8s_ease-out]">
 
             <!-- Option 1: Poetic & Lyrical -->
             <label
@@ -201,47 +180,28 @@
                 </div>
             </label>
 
-            <!-- Option 3: Simple & Direct -->
+            <!-- Option 3: Custom -->
             <label
                 class="group relative aspect-[3/4] border-r border-b border-beige cursor-pointer transition-all duration-500 hover:bg-white">
-                <input type="radio" name="writingStyle" value="simple" class="peer sr-only"
-                    onchange="checkFiltersComplete()">
+                <input type="radio" name="writingStyle" value="custom" class="peer sr-only"
+                    onchange="handleCustomSelection('style'); checkFiltersComplete()">
 
                 <!-- Default State -->
                 <div
-                    class="absolute inset-0 flex flex-col justify-between p-12 transition-opacity duration-300 group-hover:opacity-0">
+                    class="absolute inset-0 flex flex-col justify-between p-12 transition-opacity duration-300 group-hover:opacity-0 peer-checked:opacity-0">
                     <span class=" text-xs uppercase tracking-widest text-taupe">No. 3</span>
-                    <span class="font-goldney text-4xl text-charcoal">Simple & Direct</span>
+                    <span class="font-goldney text-4xl text-charcoal">Custom</span>
                 </div>
 
                 <!-- Hover/Selected State (Light Purple) -->
                 <div
-                    class="absolute inset-0 bg-lavender flex flex-col justify-center items-center p-12 text-center opacity-0 group-hover:opacity-100 peer-checked:opacity-100 transition-all duration-500">
-                    <h3 class="font-goldney text-4xl text-charcoal italic mb-6">Simple & Direct</h3>
-                    <p class=" text-xs text-charcoal/70 leading-loose max-w-xs">Clear, direct, and heartfelt.
-                        Speaks from the heart without complexity.</p>
-                </div>
-            </label>
-
-            <!-- Option 4: Light & Humorous -->
-            <label
-                class="group relative aspect-[3/4] border-r border-b border-beige cursor-pointer transition-all duration-500 hover:bg-white">
-                <input type="radio" name="writingStyle" value="humorous" class="peer sr-only"
-                    onchange="checkFiltersComplete()">
-
-                <!-- Default State -->
-                <div
-                    class="absolute inset-0 flex flex-col justify-between p-12 transition-opacity duration-300 group-hover:opacity-0">
-                    <span class=" text-xs uppercase tracking-widest text-taupe">No. 4</span>
-                    <span class="font-goldney text-4xl text-charcoal">Light & Humorous</span>
-                </div>
-
-                <!-- Hover/Selected State (Light Purple) -->
-                <div
-                    class="absolute inset-0 bg-lavender flex flex-col justify-center items-center p-12 text-center opacity-0 group-hover:opacity-100 peer-checked:opacity-100 transition-all duration-500">
-                    <h3 class="font-goldney text-4xl text-charcoal italic mb-6">Light & Humorous</h3>
-                    <p class=" text-xs text-charcoal/70 leading-loose max-w-xs">Light-hearted and playful.
-                        Celebrates your relationship with warmth and joy.</p>
+                    class="absolute inset-0 bg-lavender flex flex-col justify-center items-center p-8 text-center opacity-0 group-hover:opacity-100 peer-checked:opacity-100 transition-all duration-500 z-10">
+                    <h3 class="font-goldney text-3xl text-charcoal italic mb-4">Custom Style</h3>
+                    <p class=" text-xs text-charcoal/70 mb-4">Define your own unique writing style.</p>
+                    <textarea id="custom-style-text" placeholder="Describe your desired style..."
+                        class="w-full bg-white border border-beige p-3 text-sm focus:border-plum outline-none resize-none rounded h-24"
+                        oninput="checkFiltersComplete()"
+                        onclick="event.stopPropagation(); document.querySelector('input[name=\'writingStyle\'][value=\'custom\']').checked = true; checkFiltersComplete();"></textarea>
                 </div>
             </label>
         </div>
@@ -268,23 +228,33 @@
             const savedWritingStyle = localStorage.getItem('selectedWritingStyle');
 
             if (savedTone) {
-                // Match tone value (case-insensitive)
-                const toneRadios = document.querySelectorAll('input[name="tone"]');
-                toneRadios.forEach(radio => {
-                    if (radio.value.toLowerCase() === savedTone.toLowerCase()) {
-                        radio.checked = true;
+                // Check if it matches a preset
+                const toneRadio = document.querySelector(`input[name="tone"][value="${savedTone}"]`);
+                if (toneRadio) {
+                    toneRadio.checked = true;
+                } else {
+                    // Custom
+                    const customRadio = document.querySelector('input[name="tone"][value="custom"]');
+                    if (customRadio) {
+                        customRadio.checked = true;
+                        document.getElementById('custom-tone-text').value = savedTone;
                     }
-                });
+                }
             }
 
             if (savedWritingStyle) {
-                // Match writing style value (case-insensitive)
-                const styleRadios = document.querySelectorAll('input[name="writingStyle"]');
-                styleRadios.forEach(radio => {
-                    if (radio.value.toLowerCase() === savedWritingStyle.toLowerCase()) {
-                        radio.checked = true;
+                // Check if it matches a preset
+                const styleRadio = document.querySelector(`input[name="writingStyle"][value="${savedWritingStyle}"]`);
+                if (styleRadio) {
+                    styleRadio.checked = true;
+                } else {
+                    // Custom
+                    const customRadio = document.querySelector('input[name="writingStyle"][value="custom"]');
+                    if (customRadio) {
+                        customRadio.checked = true;
+                        document.getElementById('custom-style-text').value = savedWritingStyle;
                     }
-                });
+                }
             }
 
             checkFiltersComplete();
@@ -293,34 +263,85 @@
         function checkFiltersComplete() {
             const tone = document.querySelector('input[name="tone"]:checked');
             const writingStyle = document.querySelector('input[name="writingStyle"]:checked');
+
+            let toneValid = false;
+            let styleValid = false;
+
+            if (tone) {
+                if (tone.value === 'custom') {
+                    const customToneText = document.getElementById('custom-tone-text').value.trim();
+                    toneValid = customToneText.length > 0;
+                } else {
+                    toneValid = true;
+                }
+            }
+
+            if (writingStyle) {
+                if (writingStyle.value === 'custom') {
+                    const customStyleText = document.getElementById('custom-style-text').value.trim();
+                    styleValid = customStyleText.length > 0;
+                } else {
+                    styleValid = true;
+                }
+            }
+
             const generateButton = document.getElementById('generate-button');
             const errorMessage = document.getElementById('filter-error');
 
-            if (tone && writingStyle) {
+            if (toneValid && styleValid) {
                 generateButton.disabled = false;
                 errorMessage.classList.add('hidden');
             } else {
                 generateButton.disabled = true;
-                errorMessage.classList.remove('hidden');
+                if ((tone || writingStyle) && (!toneValid || !styleValid)) {
+                    // Optional: show specific message
+                }
             }
         }
 
         function generateStory() {
-            const tone = document.querySelector('input[name="tone"]:checked');
-            const writingStyle = document.querySelector('input[name="writingStyle"]:checked');
+            const toneRadio = document.querySelector('input[name="tone"]:checked');
+            const styleRadio = document.querySelector('input[name="writingStyle"]:checked');
 
-            if (!tone || !writingStyle) {
+            if (!toneRadio || !styleRadio) {
                 document.getElementById('filter-error').classList.remove('hidden');
                 return;
             }
 
+            let toneValue = toneRadio.value;
+            if (toneValue === 'custom') {
+                toneValue = document.getElementById('custom-tone-text').value.trim();
+                if (!toneValue) {
+                    alert("Please describe your custom tone.");
+                    return;
+                }
+            }
+
+            let styleValue = styleRadio.value;
+            if (styleValue === 'custom') {
+                styleValue = document.getElementById('custom-style-text').value.trim();
+                if (!styleValue) {
+                    alert("Please describe your custom writing style.");
+                    return;
+                }
+            }
+
             // Save filter selections
-            localStorage.setItem('selectedTone', tone.value);
-            localStorage.setItem('selectedWritingStyle', writingStyle.value);
+            localStorage.setItem('selectedTone', toneValue);
+            localStorage.setItem('selectedWritingStyle', styleValue);
             localStorage.setItem('ceremonyGenerated', 'false');
 
             // Redirect to generating page
             window.location.href = '../ceremony/generating.html';
+        }
+
+        function handleCustomSelection(type) {
+            // Helper to focus input when radio is clicked
+            if (type === 'tone') {
+                setTimeout(() => document.getElementById('custom-tone-text').focus(), 100);
+            } else {
+                setTimeout(() => document.getElementById('custom-style-text').focus(), 100);
+            }
         }
 
         // Load saved filters on page load
@@ -332,7 +353,3 @@
 </body>
 
 </html>
-
-
-
-

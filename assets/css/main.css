@@ -213,3 +213,29 @@ img {
 .animate-spin-slow {
     animation: spin 15s linear infinite;
 }
+
+/* 8. Footer Customizations */
+.footer-title-underline {
+    display: inline-block;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.footer-title-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 2rem;
+    height: 3px;
+    background-color: var(--color-text);
+    border-radius: 4px;
+}
+
+/* 9. Font Overrides - System fonts for inputs/email for better readability */
+input,
+textarea,
+select,
+.font-system {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+}
