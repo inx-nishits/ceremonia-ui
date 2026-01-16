@@ -487,8 +487,6 @@
             const container = document.getElementById('inputs-container');
             container.innerHTML = '';
 
-            let firstUnansweredFound = false;
-
             block.questions.forEach((q, idx) => {
                 // Check conditional logic
                 if (q.conditional) {
@@ -502,190 +500,135 @@
                 }
 
                 const savedAnswer = localStorage.getItem(`block${block.id}_${q.id}`) || '';
-                const isAnswered = savedAnswer.trim() !== '';
-                const isLocked = block.isLocked && block.id === 1;
-
-                // Determine State
-                let mode = 'pending';
-                if (editingQuestionId === q.id) {
-                    mode = 'editing';
-                } else if (isAnswered) {
-                    mode = 'answered';
-                } else if (!firstUnansweredFound && q.type !== 'info') {
-                    mode = 'active';
-                    firstUnansweredFound = true;
-                    activeQuestionId = q.id;
-                }
+                const val = savedAnswer;
+                const inputId = `input-${q.id}`;
 
                 const el = document.createElement('div');
-                el.className = `transition-all duration-500 ${mode === 'pending' ? 'opacity-40 grayscale' : 'opacity-100'}`;
+                el.className = 'mb-12 transition-all duration-300 animate-[fadeIn_0.5s]';
 
                 // Question Text
-                const qText = q.type === 'info'
-                    ? `<div class="bg-lavender border-l-4 border-plum p-4 mb-4"><p class="text-sm text-charcoal italic">${q.text}</p></div>`
-                    : `<h3 class="text-lg md:text-xl text-charcoal mb-4 font-medium"><span class="text-plum text-base mr-2 font-semibold">${idx + 1}.</span> ${q.text}</h3>`;
-
+                let qText = '';
                 if (q.type === 'info') {
-                    // INFO TYPE - Just display message
+                    qText = `<div class="bg-lavender border-l-4 border-plum p-4 mb-4"><p class="text-sm text-charcoal italic">${q.text}</p></div>`;
                     el.innerHTML = qText;
-                } else if (mode === 'answered') {
-                    // DISPLAY MODE
-                    let displayValue = savedAnswer;
-
-                    // Format display for special types
-                    if (q.type === 'checkbox') {
-                        try {
-                            const selected = JSON.parse(savedAnswer);
-                            displayValue = Array.isArray(selected) ? selected.join(', ') : savedAnswer;
-                        } catch (e) {
-                            displayValue = savedAnswer;
-                        }
-                    }
-
-                    el.innerHTML = `
-                        ${qText}
-                        <div class="bg-white p-6 border-l-4 border-plum shadow-sm relative group">
-                            <p class=" text-taupe leading-relaxed whitespace-pre-wrap">${displayValue}</p>
-                            ${!isLocked ? `
-                                <button onclick="startEditing('${q.id}')" class="absolute top-4 right-4 text-xs  uppercase tracking-widest text-taupe hover:text-plum opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                    Edit
-                                </button>
-                            ` : ''}
-                        </div>
-                    `;
-                } else if (mode === 'active' || mode === 'editing') {
-                    // INPUT MODE
-                    const inputId = `input-${q.id}`;
-                    const val = mode === 'editing' ? savedAnswer : '';
-
-                    let inputHtml = '';
-                    let showCharCount = false;
-                    let showVoiceButton = false;
-
-                    switch (q.type) {
-                        case 'textarea':
-                            inputHtml = `<textarea id="${inputId}" rows="4" maxlength="1500" placeholder="${q.placeholder || ''}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none  text-charcoal resize-none rounded">${val}</textarea>`;
-                            showCharCount = true;
-                            showVoiceButton = true;
-                            break;
-
-                        case 'select':
-                            const options = q.options || [];
-                            const defaultVal = q.default || '';
-                            inputHtml = `<select id="${inputId}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none  text-charcoal rounded">
-                                <option value="">-- Select --</option>
-                                ${options.map(opt => `<option value="${opt}" ${val === opt || (!val && defaultVal === opt) ? 'selected' : ''}>${opt}</option>`).join('')}
-                            </select>`;
-                            break;
-
-                        case 'checkbox':
-                            let selectedOptions = [];
-                            try {
-                                selectedOptions = val ? JSON.parse(val) : [];
-                            } catch (e) {
-                                selectedOptions = [];
-                            }
-                            const checkboxOptions = q.options || [];
-                            inputHtml = `<div id="${inputId}" class="space-y-3">
-                                ${checkboxOptions.map((opt, i) => `
-                                    <label class="flex items-center gap-3 cursor-pointer group">
-                                        <input type="checkbox" value="${opt}" ${selectedOptions.includes(opt) ? 'checked' : ''} 
-                                            class="w-5 h-5 text-plum border-beige rounded focus:ring-plum focus:ring-2" 
-                                            onchange="updateCheckboxValue('${inputId}')">
-                                        <span class="text-charcoal group-hover:text-plum transition-colors">${opt}</span>
-                                    </label>
-                                `).join('')}
-                            </div>`;
-                            break;
-
-                        case 'radio':
-                            const radioOptions = q.options || [];
-                            inputHtml = `<div id="${inputId}" class="space-y-3">
-                                ${radioOptions.map((opt, i) => `
-                                    <label class="flex items-center gap-3 cursor-pointer group">
-                                        <input type="radio" name="${inputId}" value="${opt}" ${val === opt ? 'checked' : ''} 
-                                            class="w-5 h-5 text-plum border-beige focus:ring-plum focus:ring-2">
-                                        <span class="text-charcoal group-hover:text-plum transition-colors">${opt}</span>
-                                    </label>
-                                `).join('')}
-                            </div>`;
-                            break;
-
-                        case 'date':
-                            inputHtml = `<input type="date" id="${inputId}" value="${val}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none  text-charcoal rounded">`;
-                            break;
-
-                        case 'time':
-                            inputHtml = `<input type="time" id="${inputId}" value="${val}" placeholder="${q.placeholder || ''}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none  text-charcoal rounded">`;
-                            break;
-
-                        case 'number':
-                            inputHtml = `<input type="number" id="${inputId}" value="${val}" placeholder="${q.placeholder || ''}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none  text-charcoal rounded">`;
-                            break;
-
-                        case 'tel':
-                            inputHtml = `<input type="tel" id="${inputId}" value="${val}" placeholder="${q.placeholder || ''}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none  text-charcoal rounded">`;
-                            break;
-
-                        case 'dynamic-list':
-                            // Placeholder for dynamic list - will be enhanced later
-                            inputHtml = `<div id="${inputId}" class="bg-lavender p-6 rounded border border-beige">
-                                <p class="text-sm text-taupe mb-4">${q.placeholder || 'Dynamic list feature coming soon'}</p>
-                                <textarea rows="4" maxlength="1500" placeholder="For now, please list entries separated by commas..." class="w-full bg-white border border-beige p-4 focus:border-plum outline-none  text-charcoal resize-none rounded">${val}</textarea>
-                            </div>`;
-                            showCharCount = false;
-                            showVoiceButton = false;
-                            break;
-
-                        default: // text
-                            inputHtml = `<input type="text" id="${inputId}" maxlength="1500" placeholder="${q.placeholder || ''}" value="${val}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none  text-charcoal rounded">`;
-                            showVoiceButton = true;
-                            break;
-                    }
-
-                    el.innerHTML = `
-                        ${qText}
-                        <div class="relative animate-[fadeIn_0.3s]">
-                            ${inputHtml}
-                            <div class="flex justify-between items-center mt-2 px-1">
-                                ${showCharCount ? `<span class="text-[10px] text-taupe uppercase tracking-widest char-count" data-for="${inputId}">0/1500</span>` : '<span></span>'}
-                                <div class="flex gap-4">
-                                    ${showVoiceButton ? `<button type="button" class="voice-btn text-taupe hover:text-plum transition-colors" data-target="${inputId}" onclick="toggleVoiceInput('${inputId}')">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
-                                    </button>` : ''}
-                                    <button onclick="saveAnswer('${q.id}')" class="bg-plum text-white  text-[10px] uppercase tracking-[0.2em] px-6 py-2 hover:bg-plum-light transition-colors rounded">
-                                        ${mode === 'editing' ? 'Update' : 'Confirm'}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-
-                    // Attach event listeners deferred
-                    setTimeout(() => {
-                        const inp = document.getElementById(inputId);
-                        if (inp && (q.type === 'textarea' || q.type === 'text')) {
-                            inp.addEventListener('input', updateCharCount);
-                            inp.dispatchEvent(new Event('input'));
-                            inp.focus();
-                        } else if (inp && q.type !== 'checkbox' && q.type !== 'radio' && q.type !== 'dynamic-list') {
-                            inp.focus();
-                        }
-                    }, 0);
-
+                    container.appendChild(el);
+                    return;
                 } else {
-                    // PENDING MODE
-                    el.innerHTML = `
-                        ${qText}
-                        <div class="border-b border-beige pb-2">
-                             <span class=" text-sm text-taupe italic">Upcoming...</span>
-                        </div>
-                    `;
+                    qText = `<h3 class="text-lg md:text-xl text-charcoal mb-4 font-medium"><span class="text-plum text-base mr-2 font-semibold">${idx + 1}.</span> ${q.text} ${q.required ? '<span class="text-plum text-sm">*</span>' : ''}</h3>`;
                 }
 
+                // Input HTML
+                let inputHtml = '';
+                let showCharCount = false;
+                let showVoiceButton = true;
+
+                switch (q.type) {
+                    case 'textarea':
+                        inputHtml = `<textarea id="${inputId}" rows="4" maxlength="1500" placeholder="${q.placeholder || ''}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none font-system text-charcoal resize-none rounded shadow-sm">${val}</textarea>`;
+                        showCharCount = true;
+                        break;
+
+                    case 'select':
+                        const options = q.options || [];
+                        const defaultVal = q.default || '';
+                        inputHtml = `<select id="${inputId}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none font-system text-charcoal rounded shadow-sm" onchange="saveAnswer('${q.id}')">
+                            <option value="">-- Select --</option>
+                            ${options.map(opt => `<option value="${opt}" ${val === opt || (!val && defaultVal === opt) ? 'selected' : ''}>${opt}</option>`).join('')}
+                        </select>`;
+                        showVoiceButton = false;
+                        break;
+
+                    case 'checkbox':
+                        let selectedOptions = [];
+                        try { selectedOptions = val ? JSON.parse(val) : []; } catch (e) { }
+                        inputHtml = `<div id="${inputId}" class="space-y-3" data-value='${val || '[]'}'>
+                            ${(q.options || []).map(opt => `
+                                <label class="flex items-center gap-3 cursor-pointer group">
+                                    <input type="checkbox" value="${opt}" ${selectedOptions.includes(opt) ? 'checked' : ''} 
+                                        class="w-5 h-5 text-plum border-beige rounded focus:ring-plum focus:ring-2" 
+                                        onchange="updateCheckboxValue('${inputId}'); saveAnswer('${q.id}')">
+                                    <span class="text-charcoal group-hover:text-plum transition-colors">${opt}</span>
+                                </label>
+                            `).join('')}
+                        </div>`;
+                        showVoiceButton = false;
+                        break;
+
+                    case 'radio':
+                        inputHtml = `<div id="${inputId}" class="space-y-3">
+                            ${(q.options || []).map(opt => `
+                                <label class="flex items-center gap-3 cursor-pointer group">
+                                    <input type="radio" name="${inputId}" value="${opt}" ${val === opt ? 'checked' : ''} 
+                                        class="w-5 h-5 text-plum border-beige focus:ring-plum focus:ring-2"
+                                        onchange="saveAnswer('${q.id}')">
+                                    <span class="text-charcoal group-hover:text-plum transition-colors">${opt}</span>
+                                </label>
+                            `).join('')}
+                        </div>`;
+                        showVoiceButton = false;
+                        break;
+
+                    case 'date':
+                        inputHtml = `<input type="date" id="${inputId}" value="${val}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none font-system text-charcoal rounded shadow-sm" onchange="saveAnswer('${q.id}')">`;
+                        showVoiceButton = false;
+                        break;
+
+                    case 'time':
+                        inputHtml = `<input type="time" id="${inputId}" value="${val}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none font-system text-charcoal rounded shadow-sm" onchange="saveAnswer('${q.id}')">`;
+                        showVoiceButton = false;
+                        break;
+
+                    case 'dynamic-list':
+                        inputHtml = `<div id="${inputId}" class="bg-lavender p-6 rounded border border-beige">
+                            <p class="text-sm text-taupe mb-4">${q.placeholder || 'List entries...'}</p>
+                            <textarea rows="4" maxlength="1500" placeholder="Entries separated by commas..." class="w-full bg-white border border-beige p-4 focus:border-plum outline-none font-system text-charcoal resize-none rounded">${val}</textarea>
+                        </div>`;
+                        showVoiceButton = false;
+                        break;
+
+                    default: // text, number, tel
+                        const type = q.type === 'text' || q.type === 'number' || q.type === 'tel' ? q.type : 'text';
+                        inputHtml = `<input type="${type}" id="${inputId}" maxlength="1500" placeholder="${q.placeholder || ''}" value="${val}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none font-system text-charcoal rounded shadow-sm" oninput="saveAnswer('${q.id}')">`;
+                        break;
+                }
+
+                el.innerHTML = `
+                    ${qText}
+                    <div class="relative">
+                        ${inputHtml}
+                        <div class="flex justify-between items-center mt-2 px-1">
+                            ${showCharCount ? `<span class="text-[10px] text-taupe uppercase tracking-widest char-count" data-for="${inputId}">0/1500</span>` : '<span></span>'}
+                            ${showVoiceButton ? `<button type="button" class="voice-btn text-taupe hover:text-plum transition-colors" data-target="${inputId}" onclick="toggleVoiceInput('${inputId}')">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                            </button>` : ''}
+                        </div>
+                    </div>
+                `;
+
                 container.appendChild(el);
+
+                // Add listeners for updates (delayed to ensure DOM presence)
+                setTimeout(() => {
+                    const inp = document.getElementById(inputId);
+                    if (!inp) return;
+                    if (q.type === 'textarea' || q.type === 'text' || q.type === 'dynamic-list') {
+                        const target = q.type === 'dynamic-list' ? inp.querySelector('textarea') : inp;
+                        if (target) {
+                            if (q.type === 'textarea' || q.type === 'text') {
+                                target.addEventListener('input', (e) => {
+                                    updateCharCount(e);
+                                    saveAnswer(q.id);
+                                });
+                                target.dispatchEvent(new Event('input'));
+                            } else {
+                                target.addEventListener('input', () => saveAnswer(q.id));
+                            }
+                        }
+                    }
+                }, 0);
             });
+
+            updateNavButtons(block);
         }
 
         // Helper function for checkbox value updates
@@ -705,11 +648,6 @@
 
         // --- ACTIONS ---
 
-        function startEditing(qId) {
-            editingQuestionId = qId;
-            renderQuestions(questionnaireBlocks[currentBlockIndex]);
-        }
-
         function saveAnswer(qId) {
             const inputId = `input-${qId}`;
             const input = document.getElementById(inputId);
@@ -724,61 +662,31 @@
             // Extract value based on field type
             switch (question.type) {
                 case 'checkbox':
-                    // Get value from dataset (set by updateCheckboxValue)
                     val = input.dataset.value || '[]';
-                    // Validate at least one selected if required
-                    if (question.required) {
-                        try {
-                            const selected = JSON.parse(val);
-                            if (!Array.isArray(selected) || selected.length === 0) {
-                                alert("Please select at least one option.");
-                                return;
-                            }
-                        } catch (e) {
-                            alert("Please select at least one option.");
-                            return;
-                        }
-                    }
                     break;
-
                 case 'radio':
-                    // Get selected radio button value
                     const selectedRadio = input.querySelector('input[type="radio"]:checked');
                     val = selectedRadio ? selectedRadio.value : '';
                     break;
-
                 case 'dynamic-list':
-                    // Get value from textarea inside the dynamic-list container
                     const textarea = input.querySelector('textarea');
                     val = textarea ? textarea.value.trim() : '';
                     break;
-
-                case 'select':
-                case 'date':
-                case 'time':
-                case 'number':
-                case 'tel':
-                case 'text':
-                case 'textarea':
                 default:
-                    val = input.value.trim();
+                    val = input.value;
                     break;
-            }
-
-            // Validate required fields
-            if (question.required && !val) {
-                alert("Please provide an answer.");
-                return;
             }
 
             // Save to localStorage
             localStorage.setItem(`block${block.id}_${qId}`, val);
 
-            // Reset editing state
-            editingQuestionId = null;
-
-            // Re-render to show updated state and handle conditional fields
-            loadBlock(currentBlockIndex);
+            // Conditional Logic & Nav
+            const triggersCondition = block.questions.some(q => q.conditional && q.conditional.field === qId);
+            if (triggersCondition) {
+                loadBlock(currentBlockIndex);
+            } else {
+                updateNavButtons(block);
+            }
         }
 
         function updateCharCount(e) {
@@ -793,7 +701,24 @@
 
         function isBlockComplete(block) {
             return block.questions.every(q => {
+                // Check if conditional and if condition is NOT met, then we ignore this question (it's complete validly)
+                if (q.conditional) {
+                    const condField = block.questions.find(quest => quest.id === q.conditional.field);
+                    if (condField) {
+                        const condValue = localStorage.getItem(`block${block.id}_${condField.id}`) || '';
+                        if (condValue !== q.conditional.value) {
+                            return true; // Condition not met, so this question is effectively skipped/complete
+                        }
+                    }
+                }
+
+                // If not required, it's always complete
+                if (!q.required) return true;
+
                 const saved = localStorage.getItem(`block${block.id}_${q.id}`) || '';
+                if (q.type === 'checkbox') {
+                    return saved !== '' && saved !== '[]';
+                }
                 return saved.trim() !== '';
             });
         }
