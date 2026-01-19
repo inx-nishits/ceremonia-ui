@@ -26,33 +26,33 @@
 
     <!-- Header -->
     <nav
-        class="shrink-0 min-h-20 border-b border-beige bg-white flex justify-between items-center px-4 md:px-8 py-4 z-20">
+        class="shrink-0 border-b border-beige bg-white flex flex-col md:flex-row justify-between items-center px-4 md:px-8 py-4 z-20 gap-4 md:gap-0">
         <!-- Left: Logo and Dashboard Link -->
         <div class="flex items-center gap-6">
             <a href="../../index.html" class="flex-shrink-0">
                 <img src="../../assets/images/approved-logo.svg" alt="CeremonIA" class="h-12 md:h-16 w-auto">
             </a>
             <a id="dashboard-link" href="../../views/dashboard.html"
-                class="bg-plum text-white  text-[10px] md:text-xs uppercase tracking-[0.2em] px-4 md:px-6 py-2 md:py-3 hover:bg-plum-light transition-colors hidden md:inline-block">
+                class="bg-plum text-white text-[10px] md:text-xs uppercase tracking-[0.2em] px-4 md:px-6 py-2 md:py-3 hover:bg-plum-light transition-colors hidden md:inline-block">
                 Go to Dashboard
             </a>
         </div>
 
         <!-- Right: Actions -->
-        <div class="flex items-center gap-2 md:gap-4">
+        <div class="flex flex-wrap justify-center items-center gap-2 md:gap-4">
             <button onclick="window.location.href='edit.html'"
-                class=" text-[10px] md:text-xs uppercase tracking-[0.2em] border border-beige px-3 md:px-6 py-2 md:py-3 hover:border-plum hover:text-plum transition-colors">Edit</button>
+                class="text-[10px] md:text-xs uppercase tracking-[0.2em] border border-beige px-3 md:px-6 py-2 md:py-3 hover:border-plum hover:text-plum transition-colors">Edit</button>
             <button onclick="document.getElementById('download-modal').classList.remove('hidden')"
-                class=" text-[10px] md:text-xs uppercase tracking-[0.2em] border border-beige px-3 md:px-6 py-2 md:py-3 hover:border-plum hover:text-plum transition-colors">Download</button>
+                class="text-[10px] md:text-xs uppercase tracking-[0.2em] border border-beige px-3 md:px-6 py-2 md:py-3 hover:border-plum hover:text-plum transition-colors">Download</button>
             <button onclick="document.getElementById('share-modal').classList.remove('hidden')"
-                class=" text-[10px] md:text-xs uppercase tracking-[0.2em] border border-beige px-3 md:px-6 py-2 md:py-3 hover:border-plum hover:text-plum transition-colors">Share</button>
+                class="text-[10px] md:text-xs uppercase tracking-[0.2em] border border-beige px-3 md:px-6 py-2 md:py-3 hover:border-plum hover:text-plum transition-colors">Share</button>
             <button onclick="document.getElementById('regenerate-modal').classList.remove('hidden')"
-                class=" text-[10px] md:text-xs uppercase tracking-[0.2em] border border-beige px-3 md:px-6 py-2 md:py-3 hover:border-plum hover:text-plum transition-colors">Regenerate</button>
+                class="text-[10px] md:text-xs uppercase tracking-[0.2em] border border-beige px-3 md:px-6 py-2 md:py-3 hover:border-plum hover:text-plum transition-colors">Regenerate</button>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <main class="flex-grow bg-cream overflow-y-auto p-4 md:p-8 lg:p-16">
+    <main class="flex-grow bg-cream overflow-y-auto p-4 md:p-8 lg:p-16 pb-24 2xl:pb-8">
         <div class="max-w-4xl mx-auto mb-6 md:mb-8">
             <h1 class="font-goldney text-3xl md:text-4xl text-charcoal mb-3 md:mb-4">Your Ceremony Text</h1>
             <p class=" text-sm text-taupe mb-6">Review the generated script below. You can download, share
@@ -82,7 +82,7 @@
         <div class="flex justify-center">
 
             <article id="story-content"
-                class="w-full max-w-[800px] bg-white min-h-[1200px] p-12 md:p-24 paper-shadow text-charcoal hidden">
+                class="w-full max-w-[800px] bg-white min-h-[1200px] p-6 md:p-24 paper-shadow text-charcoal hidden">
 
                 <!-- Branding on Paper -->
                 <div class="text-center mb-24">
@@ -96,10 +96,12 @@
                 <div class="space-y-16">
 
                     <!-- Editable Section -->
-                    <div class="group relative pl-8 border-l border-transparent hover:border-plum/30 transition-colors cursor-pointer"
+                    <div class="group relative pl-0 md:pl-8 border-l border-transparent hover:border-plum/30 transition-colors cursor-pointer"
                         onclick="window.location.href='edit.html'">
-                        <div class="absolute -left-16 top-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <span class="text-xs uppercase tracking-wide-caps bg-plum text-white px-2 py-1">Edit</span>
+                        <div
+                            class="static mb-2 opacity-100 md:absolute md:-left-16 md:top-0 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+                            <span
+                                class="text-[10px] md:text-xs uppercase tracking-wide-caps bg-plum text-white px-2 py-1">Edit</span>
                         </div>
                         <h2 class="font-goldney text-3xl italic mb-6 text-charcoal">The Opening</h2>
                         <p class="text-xl leading-loose text-taupe" style="font-family: 'Cormorant Garamond', serif;">
@@ -110,11 +112,12 @@
                     </div>
 
                     <!-- Editable Section -->
-                    <div class="group relative pl-8 border-l border-transparent hover:border-plum/30 transition-colors cursor-pointer"
+                    <div class="group relative pl-0 md:pl-8 border-l border-transparent hover:border-plum/30 transition-colors cursor-pointer"
                         onclick="window.location.href='edit.html'">
-                        <div class="absolute -left-16 top-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div
+                            class="static mb-2 opacity-100 md:absolute md:-left-16 md:top-0 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                             <span
-                                class="text-[10px] uppercase tracking-wide-caps bg-plum text-white px-2 py-1">Edit</span>
+                                class="text-[10px] md:text-xs uppercase tracking-wide-caps bg-plum text-white px-2 py-1">Edit</span>
                         </div>
                         <h2 class="font-goldney text-3xl italic mb-6 text-charcoal">The Story</h2>
                         <p class="text-xl leading-loose text-taupe" style="font-family: 'Cormorant Garamond', serif;">
@@ -284,11 +287,21 @@
     </div>
 
     <!-- Booking CTA (End Users Only) -->
-    <div id="booking-cta" class="fixed bottom-8 right-8 bg-plum text-white p-6 shadow-2xl max-w-sm hidden">
-        <h3 class="font-goldney text-2xl mb-2">Need an Officiant?</h3>
-        <p class=" text-xs mb-4 leading-relaxed">Book a professional officiant to perform your ceremony.</p>
+    <!-- Booking CTA (End Users Only) -->
+    <div id="booking-cta"
+        class="fixed bottom-0 left-0 right-0 w-full 2xl:w-auto 2xl:bottom-8 2xl:right-8 2xl:max-w-56 2xl:left-auto bg-plum text-white p-3 2xl:p-6 shadow-2xl flex 2xl:block items-center justify-between gap-4 z-40 2xl:rounded-sm transition-all animate-[fadeInUp_0.5s_ease-out] hidden">
+
+        <!-- Mobile Layout: Horizontal Belt -->
+        <!-- Desktop Layout: Vertical Box -->
+
+        <div class="flex flex-col 2xl:block">
+            <h3 class="font-goldney text-lg 2xl:text-2xl 2xl:mb-2">Need an Officiant?</h3>
+            <p class="hidden 2xl:block text-xs mb-4 leading-relaxed">Book a professional officiant to perform your
+                ceremony.</p>
+        </div>
+
         <a href="#" target="_blank"
-            class="inline-block bg-white text-plum  text-xs uppercase tracking-[0.2em] px-6 py-3 hover:bg-cream transition-colors">
+            class="inline-block bg-white text-plum text-[10px] 2xl:text-xs uppercase tracking-[0.2em] px-4 py-2 2xl:px-6 2xl:py-3 hover:bg-cream transition-colors whitespace-nowrap">
             Book Officiant
         </a>
     </div>
@@ -325,10 +338,10 @@
                 story.sections.forEach((section, index) => {
                     sectionsHTML += `
                         <!-- Editable Section -->
-                        <div class="group relative pl-8 border-l border-transparent hover:border-plum/30 transition-colors cursor-pointer"
+                        <div class="group relative pl-0 md:pl-8 border-l border-transparent hover:border-plum/30 transition-colors cursor-pointer"
                             onclick="window.location.href='edit.html'">
-                            <div class="absolute -left-16 top-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <span class="text-xs uppercase tracking-wide-caps bg-plum text-white px-2 py-1">Edit</span>
+                            <div class="static mb-2 opacity-100 md:absolute md:-left-16 md:top-0 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+                                <span class="text-[10px] md:text-xs uppercase tracking-wide-caps bg-plum text-white px-2 py-1">Edit</span>
                             </div>
                             <h2 class="font-goldney text-3xl italic mb-6 text-charcoal">${section.title}</h2>
                             <p class="text-xl leading-loose text-taupe" style="font-family: 'Cormorant Garamond', serif;">
