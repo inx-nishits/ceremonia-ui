@@ -23,7 +23,7 @@
 
         <!-- LEFT SIDEBAR: Summary Panel -->
         <aside
-            class="w-full md:w-80 bg-white border-r border-beige flex flex-col z-30 shadow-lg md:shadow-none order-2 md:order-1 md:h-screen">
+            class="w-full md:w-80 bg-white border-r border-beige hidden md:flex flex-col z-30 shadow-lg md:shadow-none order-2 md:order-1 md:h-screen">
             <div class="px-8 py-2 border-b border-beige hidden md:block shrink-0">
                 <a href="../../index.html" class="block">
                     <img src="../../assets/images/approved-logo.svg" alt="CeremonIA" class="h-12 w-auto">
@@ -71,7 +71,17 @@
             <!-- Mobile Header (Logo) -->
             <div
                 class="md:hidden p-4 flex justify-between items-center bg-white border-b border-beige sticky top-0 z-20 shrink-0">
-                <img src="../../assets/images/approved-logo.svg" alt="CeremonIA" class="h-8 w-auto">
+                <div class="flex items-center gap-3">
+                    <a href="../../index.html" class="text-taupe hover:text-plum transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="../../index.html">
+                        <img src="../../assets/images/approved-logo.svg" alt="CeremonIA" class="h-8 w-auto">
+                    </a>
+                </div>
                 <span id="mobile-progress" class="text-xs text-plum font-bold">0%</span>
             </div>
 
@@ -529,7 +539,7 @@
                 if (q.type === 'info') {
                     qText = `<div class="bg-lavender border-l-4 border-plum p-4 mb-4"><p class="text-sm text-charcoal italic">${q.text}</p></div>`;
                 } else {
-                    qText = `<h3 class="text-lg md:text-xl text-charcoal mb-4 font-medium"><span class="text-plum text-base mr-2 font-semibold">${idx + 1}.</span> ${q.text} ${q.required ? '<span class="text-plum text-sm">*</span>' : ''}</h3>`;
+                    qText = `<h3 class="text-base md:text-xl text-charcoal mb-4 font-medium"><span class="text-plum text-base mr-2 font-semibold">${idx + 1}.</span> ${q.text} ${q.required ? '<span class="text-plum text-sm">*</span>' : ''}</h3>`;
                 }
 
                 if (q.type === 'info') {
@@ -733,7 +743,7 @@
                         try {
                             const selected = JSON.parse(val);
                             if (!Array.isArray(selected) || selected.length === 0) {
-                                alert("Please select at least one option.");
+                                showCustomAlert("Please select at least one option.");
                                 return;
                             }
                         } catch (e) {
@@ -756,7 +766,7 @@
 
             // Validate required fields
             if (question.required && !val) {
-                alert("Please provide an answer.");
+                showCustomAlert("Please provide an answer.");
                 return;
             }
 
@@ -818,7 +828,7 @@
 
         function goToNextBlock() {
             const block = questionnaireBlocks[currentBlockIndex];
-            if (!isBlockComplete(block)) { alert("Please answer all questions."); return; }
+            if (!isBlockComplete(block)) { showCustomAlert("Please answer all questions."); return; }
 
             if (currentBlockIndex === 0 && !block.isLocked) {
                 localStorage.setItem('block1Locked', 'true');
@@ -886,10 +896,49 @@
             document.getElementById('mobile-progress').textContent = `${pct}%`;
         }
 
+        // --- CUSTOM ALERT ---
+        function showCustomAlert(message, title = "Attention") {
+            const modal = document.getElementById('custom-alert-modal');
+            const msgEl = document.getElementById('custom-alert-message');
+            const titleEl = document.getElementById('custom-alert-title');
+            if (modal && msgEl) {
+                msgEl.textContent = message;
+                if (titleEl) titleEl.textContent = title;
+                modal.classList.remove('hidden');
+            } else {
+                alert(message);
+            }
+        }
+
+        function closeCustomAlert() {
+            const modal = document.getElementById('custom-alert-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
         // --- INIT ---
         document.addEventListener('DOMContentLoaded', init);
 
     </script>
+    <!-- CUSTOM ALERT MODAL -->
+    <div id="custom-alert-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity" onclick="closeCustomAlert()">
+        </div>
+        <div
+            class="bg-white p-8 max-w-sm w-full shadow-2xl relative animate-[fadeInUp_0.3s_ease-out] border border-beige m-4 rounded-sm">
+            <div class="text-center">
+                <div
+                    class="w-12 h-12 rounded-full bg-cream text-plum border border-plum flex items-center justify-center font-goldney text-xl mx-auto mb-4">
+                    !</div>
+                <h3 id="custom-alert-title" class="font-goldney text-3xl text-charcoal mb-2">Attention</h3>
+                <p id="custom-alert-message" class="font-luz text-sm text-taupe leading-relaxed mb-8">Please provide an
+                    answer.</p>
+                <button onclick="closeCustomAlert()"
+                    class="bg-plum text-white text-[10px] uppercase tracking-[0.2em] px-8 py-3 hover:bg-plum-light transition-colors w-full rounded shadow-md">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
