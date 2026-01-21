@@ -593,7 +593,7 @@
                         case 'select':
                             const options = q.options || [];
                             const defaultVal = q.default || '';
-                            inputHtml = `<select id="${inputId}" class="w-full max-w-full box-border bg-white border border-beige p-4 focus:border-plum outline-none font-system text-base text-charcoal rounded shadow-sm min-w-0">
+                            inputHtml = `<select id="${inputId}" class="block w-full max-w-full box-border bg-white border border-beige p-3 focus:border-plum outline-none font-system text-base text-charcoal rounded shadow-sm min-w-0">
                                 <option value="">-- Select --</option>
                                 ${options.map(opt => `<option value="${opt}" ${val === opt || (!val && defaultVal === opt) ? 'selected' : ''}>${opt}</option>`).join('')}
                             </select>`;
@@ -630,12 +630,12 @@
                             break;
 
                         case 'date':
-                            inputHtml = `<input type="date" id="${inputId}" value="${val}" class="w-full max-w-full box-border bg-white border border-beige p-4 focus:border-plum outline-none font-system text-base text-charcoal rounded shadow-sm min-w-0">`;
+                            inputHtml = `<input type="date" id="${inputId}" value="${val}" class="block w-full max-w-full box-border bg-white border border-beige p-3 focus:border-plum outline-none font-system text-base text-charcoal rounded shadow-sm min-w-0">`;
                             showVoiceButton = false;
                             break;
 
                         case 'time':
-                            inputHtml = `<input type="time" id="${inputId}" value="${val}" class="w-full max-w-full box-border bg-white border border-beige p-4 focus:border-plum outline-none font-system text-base text-charcoal rounded shadow-sm min-w-0">`;
+                            inputHtml = `<input type="time" id="${inputId}" value="${val}" class="block w-full max-w-full box-border bg-white border border-beige p-3 focus:border-plum outline-none font-system text-base text-charcoal rounded shadow-sm min-w-0">`;
                             showVoiceButton = false;
                             break;
 
