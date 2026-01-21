@@ -142,8 +142,14 @@ img {
 }
 
 .section-spacing {
-    padding: 8rem 0;
+    padding: 4rem 0;
     /* Generous vertical rhythm */
+}
+
+@media (min-width: 768px) {
+    .section-spacing {
+        padding: 8rem 0;
+    }
 }
 
 /* 7. Animations */
