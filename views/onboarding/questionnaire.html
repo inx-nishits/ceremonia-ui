@@ -17,9 +17,9 @@
     <link rel="stylesheet" href="../../assets/css/main.css">
 </head>
 
-<body class="bg-cream h-screen overflow-hidden text-charcoal">
+<body class="bg-cream h-[100dvh] w-full fixed inset-0 overflow-hidden text-charcoal">
 
-    <div class="flex flex-col md:flex-row h-screen">
+    <div class="flex flex-col md:flex-row h-full w-full">
 
         <!-- LEFT SIDEBAR: Summary Panel -->
         <aside
@@ -67,10 +67,11 @@
         </aside>
 
         <!-- MAIN CONTENT -->
-        <main class="flex-1 flex flex-col relative order-1 md:order-2 md:h-screen overflow-y-auto bg-cream">
-            <!-- Mobile Header (Logo) -->
+        <main
+            class="flex-1 flex flex-col relative order-1 md:order-2 h-full overflow-y-auto overflow-x-hidden bg-cream w-full"
+            id="main-scroll-container">
             <div
-                class="md:hidden p-4 flex justify-between items-center bg-white border-b border-beige sticky top-0 z-20 shrink-0">
+                class="md:hidden p-4 flex justify-between items-center bg-white border-b border-beige fixed top-0 left-0 right-0 z-50 h-16 shadow-sm">
                 <div class="flex items-center gap-3">
                     <a href="../../index.html" class="text-taupe hover:text-plum transition-colors">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -85,7 +86,7 @@
                 <span id="mobile-progress" class="text-xs text-plum font-bold">0%</span>
             </div>
 
-            <div class="max-w-3xl w-full mx-auto p-6 md:p-12 lg:p-20 flex-grow pb-32">
+            <div class="max-w-3xl w-full mx-auto p-4 pt-24 md:p-12 lg:p-20 flex-grow pb-32 min-w-0">
                 <!-- Block Header -->
                 <div id="block-header" class="mb-12 animate-[fadeInUp_0.5s_ease-out]">
                     <!-- Populated by JS -->
@@ -97,15 +98,14 @@
                 </div>
             </div>
 
-            <!-- Navigation Footer -->
             <div
-                class="bg-white/90 backdrop-blur py-2 px-4 sticky bottom-0 z-20 flex justify-between items-center shrink-0">
+                class="bg-white/90 backdrop-blur py-2 px-4 md:py-2 md:px-4 fixed bottom-0 left-0 right-0 md:sticky md:bottom-0 z-50 flex justify-between items-center shrink-0 border-t border-beige md:border-t-0 shadow-[0_-4px_20px_rgba(0,0,0,0.05)] md:shadow-none">
                 <button id="back-button" onclick="goToPreviousBlock()"
-                    class=" text-xs uppercase tracking-[0.2em] text-taupe hover:text-charcoal transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-2 px-8 py-4 border border-transparent hover:border-beige rounded">
+                    class=" text-xs uppercase tracking-[0.2em] text-taupe hover:text-charcoal transition-colors disabled:opacity-30 disabled:cursor-not-allowed flex items-center gap-2 px-4 py-3 md:px-8 md:py-4 border border-transparent hover:border-beige rounded">
                     <span class="text-lg">←</span> Previous
                 </button>
                 <button id="next-button" onclick="goToNextBlock()"
-                    class="bg-plum text-white  text-xs uppercase tracking-[0.2em] px-8 py-4 hover:bg-plum-light transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed rounded">
+                    class="bg-plum text-white  text-xs uppercase tracking-[0.2em] px-4 py-3 md:px-8 md:py-4 hover:bg-plum-light transition-colors shadow-lg disabled:opacity-50 disabled:cursor-not-allowed rounded">
                     Next Block
                 </button>
             </div>
@@ -483,8 +483,8 @@
             const headerDiv = document.getElementById('block-header');
             headerDiv.innerHTML = `
                 <span class=" text-xs uppercase tracking-[0.3em] text-plum mb-2 block">Step ${index + 1} of ${questionnaireBlocks.length}</span>
-                <h1 class="font-goldney text-4xl md:text-5xl text-charcoal mb-4">${block.title}</h1>
-                <p class=" text-lg text-taupe leading-relaxed">${block.instruction}</p>
+                <h1 class="font-goldney text-4xl md:text-5xl text-charcoal mb-4 break-words">${block.title}</h1>
+                <p class=" text-lg text-taupe leading-relaxed break-words">${block.instruction}</p>
             `;
 
             // Render Questions
@@ -539,7 +539,7 @@
                 if (q.type === 'info') {
                     qText = `<div class="bg-lavender border-l-4 border-plum p-4 mb-4"><p class="text-sm text-charcoal italic">${q.text}</p></div>`;
                 } else {
-                    qText = `<h3 class="text-base md:text-xl text-charcoal mb-4 font-medium"><span class="text-plum text-base mr-2 font-semibold">${idx + 1}.</span> ${q.text} ${q.required ? '<span class="text-plum text-sm">*</span>' : ''}</h3>`;
+                    qText = `<h3 class="text-base md:text-xl text-charcoal mb-4 font-medium break-words"><span class="text-plum text-base mr-2 font-semibold">${idx + 1}.</span> ${q.text} ${q.required ? '<span class="text-plum text-sm">*</span>' : ''}</h3>`;
                 }
 
                 if (q.type === 'info') {
@@ -566,7 +566,7 @@
                     el.innerHTML = `
                         ${qText}
                         <div class="bg-white p-6 border-l-4 border-plum shadow-sm relative group animate-[fadeIn_0.3s]">
-                            <p class=" text-taupe leading-relaxed whitespace-pre-wrap">${displayValue}</p>
+                            <p class=" text-taupe leading-relaxed whitespace-pre-wrap break-words">${displayValue}</p>
                             ${!isLocked ? `
                                 <button onclick="startEditing('${q.id}')" class="absolute top-4 right-4 text-xs  uppercase tracking-widest text-taupe hover:text-plum opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
@@ -586,14 +586,14 @@
 
                     switch (q.type) {
                         case 'textarea':
-                            inputHtml = `<textarea id="${inputId}" rows="4" maxlength="1500" placeholder="${q.placeholder || ''}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none font-system text-charcoal resize-none rounded shadow-sm">${val}</textarea>`;
+                            inputHtml = `<textarea id="${inputId}" rows="4" maxlength="1500" placeholder="${q.placeholder || ''}" class="w-full max-w-full box-border bg-white border border-beige p-4 focus:border-plum outline-none font-system text-base text-charcoal resize-none rounded shadow-sm min-w-0 appearance-none">${val}</textarea>`;
                             showCharCount = true;
                             break;
 
                         case 'select':
                             const options = q.options || [];
                             const defaultVal = q.default || '';
-                            inputHtml = `<select id="${inputId}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none font-system text-charcoal rounded shadow-sm">
+                            inputHtml = `<select id="${inputId}" class="w-full max-w-full box-border bg-white border border-beige p-4 focus:border-plum outline-none font-system text-base text-charcoal rounded shadow-sm min-w-0">
                                 <option value="">-- Select --</option>
                                 ${options.map(opt => `<option value="${opt}" ${val === opt || (!val && defaultVal === opt) ? 'selected' : ''}>${opt}</option>`).join('')}
                             </select>`;
@@ -607,9 +607,9 @@
                                 ${(q.options || []).map(opt => `
                                     <label class="flex items-center gap-3 cursor-pointer group">
                                         <input type="checkbox" value="${opt}" ${selectedOptions.includes(opt) ? 'checked' : ''} 
-                                            class="w-5 h-5 text-plum border-beige rounded focus:ring-plum focus:ring-2" 
+                                            class="w-5 h-5 text-plum border-beige rounded focus:ring-plum focus:ring-2 shrink-0" 
                                             onchange="updateCheckboxValue('${inputId}')">
-                                        <span class="text-charcoal group-hover:text-plum transition-colors">${opt}</span>
+                                        <span class="text-charcoal group-hover:text-plum transition-colors flex-1 min-w-0 break-words">${opt}</span>
                                     </label>
                                 `).join('')}
                             </div>`;
@@ -621,8 +621,8 @@
                                 ${(q.options || []).map(opt => `
                                     <label class="flex items-center gap-3 cursor-pointer group">
                                         <input type="radio" name="${inputId}" value="${opt}" ${val === opt ? 'checked' : ''} 
-                                            class="w-5 h-5 text-plum border-beige focus:ring-plum focus:ring-2">
-                                        <span class="text-charcoal group-hover:text-plum transition-colors">${opt}</span>
+                                            class="w-5 h-5 text-plum border-beige focus:ring-plum focus:ring-2 shrink-0">
+                                        <span class="text-charcoal group-hover:text-plum transition-colors flex-1 min-w-0 break-words">${opt}</span>
                                     </label>
                                 `).join('')}
                             </div>`;
@@ -630,26 +630,26 @@
                             break;
 
                         case 'date':
-                            inputHtml = `<input type="date" id="${inputId}" value="${val}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none font-system text-charcoal rounded shadow-sm">`;
+                            inputHtml = `<input type="date" id="${inputId}" value="${val}" class="w-full max-w-full box-border bg-white border border-beige p-4 focus:border-plum outline-none font-system text-base text-charcoal rounded shadow-sm min-w-0">`;
                             showVoiceButton = false;
                             break;
 
                         case 'time':
-                            inputHtml = `<input type="time" id="${inputId}" value="${val}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none font-system text-charcoal rounded shadow-sm">`;
+                            inputHtml = `<input type="time" id="${inputId}" value="${val}" class="w-full max-w-full box-border bg-white border border-beige p-4 focus:border-plum outline-none font-system text-base text-charcoal rounded shadow-sm min-w-0">`;
                             showVoiceButton = false;
                             break;
 
                         case 'dynamic-list':
                             inputHtml = `<div id="${inputId}" class="bg-lavender p-6 rounded border border-beige">
                                 <p class="text-sm text-taupe mb-4">${q.placeholder || 'List entries...'}</p>
-                                <textarea rows="4" maxlength="1500" placeholder="Entries separated by commas..." class="w-full bg-white border border-beige p-4 focus:border-plum outline-none font-system text-charcoal resize-none rounded">${val}</textarea>
+                                <textarea rows="4" maxlength="1500" placeholder="Entries separated by commas..." class="w-full max-w-full box-border bg-white border border-beige p-4 focus:border-plum outline-none font-system text-charcoal resize-none rounded">${val}</textarea>
                             </div>`;
                             showVoiceButton = false;
                             break;
 
                         default: // text, number, tel
                             const type = q.type === 'text' || q.type === 'number' || q.type === 'tel' ? q.type : 'text';
-                            inputHtml = `<input type="${type}" id="${inputId}" maxlength="1500" placeholder="${q.placeholder || ''}" value="${val}" class="w-full bg-white border border-beige p-4 focus:border-plum outline-none font-system text-charcoal rounded shadow-sm">`;
+                            inputHtml = `<input type="${type}" id="${inputId}" maxlength="1500" placeholder="${q.placeholder || ''}" value="${val}" class="w-full max-w-full box-border bg-white border border-beige p-4 focus:border-plum outline-none font-system text-base text-charcoal rounded shadow-sm min-w-0 appearance-none">`;
                             break;
                     }
 
